@@ -3360,3 +3360,4 @@ parkfinder-app/node_modules/yocto-queue/readme.md
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/.gitignore
