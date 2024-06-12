@@ -1,17 +1,23 @@
 package com.profile.service.profileservice.service;
 
+import com.profile.service.profileservice.config.JwtService;
 import com.profile.service.profileservice.entity.EmailConfirmationEntity;
 import com.profile.service.profileservice.entity.UserEntity;
 import com.profile.service.profileservice.repository.EmailConfirmationRepository;
 import com.profile.service.profileservice.repository.UserRepository;
 import com.profile.service.profileservice.request.UserRegisterRequest;
+import com.profile.service.profileservice.request.UserSignInRequest;
 import com.profile.service.profileservice.response.UserRegisterResponse;
+import com.profile.service.profileservice.response.UserSignInResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,8 +32,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-//	@Autowired
-//	private JwtService jwtService;
+	@Autowired
+	private JwtService jwtService;
 	
 	@Autowired
 	private EmailConfirmationRepository emailConfirmationRepository;
@@ -80,20 +86,19 @@ public class UserServiceImpl implements UserService {
         return userRegisterResponse;
     }
 
-//	@Override
-//	public UserSignInResponse userSignIn(UserSignInRequest userSignInRequest) {
-//		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userSignInRequest.getUserEmail(), userSignInRequest.getUserPassword()));
-//		var user = userRepository.findByUserEmail(userSignInRequest.getUserEmail()).orElseThrow();
-//		var jwtToken = jwtService.generateToken(user);
-//		UserSignInResponse userSignInResponse = new UserSignInResponse();
-//		userSignInResponse.setToken(jwtToken);
-//		userSignInResponse.setMessage("Login Successfull!!");
-//		userSignInResponse.setUserRole(user.getUserRole().toString());
-//		userSignInResponse.setUserEmail(user.getUserEmail());
-//		userSignInResponse.setUserFirstName(user.getUserFirstName());
-//		return userSignInResponse;
-//	}
-//
+	@Override
+	public UserSignInResponse userSignIn(UserSignInRequest userSignInRequest) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userSignInRequest.getUserEmail(), userSignInRequest.getUserPassword()));
+		var user = userRepository.findByUserEmail(userSignInRequest.getUserEmail()).orElseThrow();
+		var jwtToken = jwtService.generateToken(user);
+		UserSignInResponse userSignInResponse = new UserSignInResponse();
+		userSignInResponse.setToken(jwtToken);
+		userSignInResponse.setMessage("Login Successfull!!");
+		userSignInResponse.setUserEmail(user.getUserEmail());
+		userSignInResponse.setUserFirstName(user.getUserFirstName());
+		return userSignInResponse;
+	}
+
 	private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
@@ -162,96 +167,96 @@ public class UserServiceImpl implements UserService {
                 "\n" +
                 "</div></div>";
     }
-//
-//	@Override
-//	@Transactional
-//    public String confirmToken(String token) {
-//		Optional<EmailConfirmationEntity> emailConfirmationEntity = emailConfirmationRepository.findByEmailConfirmationToken(token);
-//
-//		if(emailConfirmationEntity.isEmpty()) {
-//			return "User not found";
-//		}
-//
-//		EmailConfirmationEntity emailConfirmation = emailConfirmationEntity.get();
-//
-//        if (emailConfirmation.getEmailConfirmationConfirmedAt() != null) {
-//            return "Email already confirmed";
-//        }
-//
-//        LocalDateTime expiredAt = emailConfirmation.getEmailConfirmationExpiresAt();
-//
-//        if (expiredAt.isBefore(LocalDateTime.now())) {
-//            return "Activation expired";
-//        }
-//
-//        emailConfirmationRepository.updateEmailConfirmationConfirmedAt(token, LocalDateTime.now());
-//
-//        userRepository.enableUserEntity(emailConfirmation.getUserId().getUserEmail());
-//        return buildAccountConfirmationEmail();
-//    }
-//
-//	@Override
-//	public void validateToken(String token) {
-//		jwtService.validateToken(token);
-//	}
+
+	@Override
+	@Transactional
+    public String confirmToken(String token) {
+		Optional<EmailConfirmationEntity> emailConfirmationEntity = emailConfirmationRepository.findByEmailConfirmationToken(token);
+
+		if(emailConfirmationEntity.isEmpty()) {
+			return "User not found";
+		}
+
+		EmailConfirmationEntity emailConfirmation = emailConfirmationEntity.get();
+
+        if (emailConfirmation.getEmailConfirmationConfirmedAt() != null) {
+            return "Email already confirmed";
+        }
+
+        LocalDateTime expiredAt = emailConfirmation.getEmailConfirmationExpiresAt();
+
+        if (expiredAt.isBefore(LocalDateTime.now())) {
+            return "Activation expired";
+        }
+
+        emailConfirmationRepository.updateEmailConfirmationConfirmedAt(token, LocalDateTime.now());
+
+        userRepository.enableUserEntity(emailConfirmation.getUserId().getUserEmail());
+        return buildAccountConfirmationEmail();
+    }
+
+	@Override
+	public void validateToken(String token) {
+		jwtService.validateToken(token);
+	}
 	
-//	public String buildAccountConfirmationEmail() {
-//		return "<!DOCTYPE html>\n"
-//        		+ "<html>\n"
-//        		+ "<head>\n"
-//        		+ "    <meta charset=\"UTF-8\">\n"
-//        		+ "    <title>Email Confirmation</title>\n"
-//        		+ "    <style>\n"
-//        		+ "        /* Add some basic styling to your email */\n"
-//        		+ "        body {\n"
-//        		+ "            font-family: Arial, sans-serif;\n"
-//        		+ "        }\n"
-//        		+ "\n"
-//        		+ "        .container {\n"
-//        		+ "            width: 100%;\n"
-//        		+ "            max-width: 600px;\n"
-//        		+ "            margin: 0 auto;\n"
-//        		+ "            padding: 20px;\n"
-//        		+ "        }\n"
-//        		+ "\n"
-//        		+ "        .header {\n"
-//        		+ "            background-color: #007BFF;\n"
-//        		+ "            color: #fff;\n"
-//        		+ "            text-align: center;\n"
-//        		+ "            padding: 20px;\n"
-//        		+ "        }\n"
-//        		+ "\n"
-//        		+ "        .content {\n"
-//        		+ "            padding: 20px;\n"
-//        		+ "        }\n"
-//        		+ "\n"
-//        		+ "        .button {\n"
-//        		+ "            display: inline-block;\n"
-//        		+ "            background-color: #007BFF;\n"
-//        		+ "            color: #fff;\n"
-//        		+ "            padding: 10px 20px;\n"
-//        		+ "            text-decoration: none;\n"
-//        		+ "            border-radius: 5px;\n"
-//        		+ "        }\n"
-//        		+ "    </style>\n"
-//        		+ "</head>\n"
-//        		+ "<body>\n"
-//        		+ "    <div class=\"container\">\n"
-//        		+ "        <div class=\"header\">\n"
-//        		+ "            <h1>Email Confirmation Successful</h1>\n"
-//        		+ "        </div>\n"
-//        		+ "        <div class=\"content\">\n"
-//        		+ "            <p>Your email has been successfully confirmed. You can now start using our services.</p>\n"
-//        		+ "            <p>If you have any questions or need assistance, please don't hesitate to contact us.</p>\n"
-//        		+ "            <p>Thank you for choosing our service!</p>\n"
-//        		+ "        </div>\n"
-//        		+ "        <div style=\"text-align: center;\">\n"
-//        		+ "            <a class=\"button\" href=\"http://localhost:3000/signup\">Go to Website</a>\n"
-//        		+ "        </div>\n"
-//        		+ "    </div>\n"
-//        		+ "</body>\n"
-//        		+ "</html>\n"
-//        		+ "";
-//	}
-//
+	public String buildAccountConfirmationEmail() {
+		return "<!DOCTYPE html>\n"
+        		+ "<html>\n"
+        		+ "<head>\n"
+        		+ "    <meta charset=\"UTF-8\">\n"
+        		+ "    <title>Email Confirmation</title>\n"
+        		+ "    <style>\n"
+        		+ "        /* Add some basic styling to your email */\n"
+        		+ "        body {\n"
+        		+ "            font-family: Arial, sans-serif;\n"
+        		+ "        }\n"
+        		+ "\n"
+        		+ "        .container {\n"
+        		+ "            width: 100%;\n"
+        		+ "            max-width: 600px;\n"
+        		+ "            margin: 0 auto;\n"
+        		+ "            padding: 20px;\n"
+        		+ "        }\n"
+        		+ "\n"
+        		+ "        .header {\n"
+        		+ "            background-color: #007BFF;\n"
+        		+ "            color: #fff;\n"
+        		+ "            text-align: center;\n"
+        		+ "            padding: 20px;\n"
+        		+ "        }\n"
+        		+ "\n"
+        		+ "        .content {\n"
+        		+ "            padding: 20px;\n"
+        		+ "        }\n"
+        		+ "\n"
+        		+ "        .button {\n"
+        		+ "            display: inline-block;\n"
+        		+ "            background-color: #007BFF;\n"
+        		+ "            color: #fff;\n"
+        		+ "            padding: 10px 20px;\n"
+        		+ "            text-decoration: none;\n"
+        		+ "            border-radius: 5px;\n"
+        		+ "        }\n"
+        		+ "    </style>\n"
+        		+ "</head>\n"
+        		+ "<body>\n"
+        		+ "    <div class=\"container\">\n"
+        		+ "        <div class=\"header\">\n"
+        		+ "            <h1>Email Confirmation Successful</h1>\n"
+        		+ "        </div>\n"
+        		+ "        <div class=\"content\">\n"
+        		+ "            <p>Your email has been successfully confirmed. You can now start using our services.</p>\n"
+        		+ "            <p>If you have any questions or need assistance, please don't hesitate to contact us.</p>\n"
+        		+ "            <p>Thank you for choosing our service!</p>\n"
+        		+ "        </div>\n"
+        		+ "        <div style=\"text-align: center;\">\n"
+        		+ "            <a class=\"button\" href=\"http://localhost:3000/signup\">Go to Website</a>\n"
+        		+ "        </div>\n"
+        		+ "    </div>\n"
+        		+ "</body>\n"
+        		+ "</html>\n"
+        		+ "";
+	}
+
 }
