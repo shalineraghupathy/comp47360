@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Modal, Button } from "react-bootstrap";
 import _default from "react-bootstrap/esm/Accordion";
 
