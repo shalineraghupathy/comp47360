@@ -1,3 +1,5 @@
+node_modules/
+
 parkfinder-app/node_modules/@isaacs/cliui/index.mjs
 parkfinder-app/node_modules/@isaacs/cliui/LICENSE.txt
 parkfinder-app/node_modules/@isaacs/cliui/package.json
