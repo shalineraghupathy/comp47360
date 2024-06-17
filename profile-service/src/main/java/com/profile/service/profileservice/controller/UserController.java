@@ -1,6 +1,8 @@
 package com.profile.service.profileservice.controller;
 import com.profile.service.profileservice.request.UserRegisterRequest;
+import com.profile.service.profileservice.request.UserSignInRequest;
 import com.profile.service.profileservice.response.UserRegisterResponse;
+import com.profile.service.profileservice.response.UserSignInResponse;
 import com.profile.service.profileservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +23,23 @@ public class UserController {
 		return ResponseEntity.ok(userRegisterResponse);
 
 	}
+	@GetMapping("/confirm")
+	public ResponseEntity<?> confirm(@RequestParam("token") String token) {
+		return ResponseEntity.ok(userService.confirmToken(token));
+	}
 
-//	@PostMapping("/signin")
-//	public ResponseEntity<?> userSignin(
-//			@Valid @RequestBody UserSignInRequest userSignInRequest) {
-//		UserSignInResponse userSignInResponse = new UserSignInResponse();
-//		userSignInResponse = userService.userSignIn(userSignInRequest);
-//		return ResponseEntity.ok(userSignInResponse);
-//	}
-//
-//	@GetMapping("/confirm")
-//	public ResponseEntity<?> confirm(@RequestParam("token") String token) {
-//		return ResponseEntity.ok(userService.confirmToken(token));
-//	}
-//
-//	@GetMapping("/validateToken")
-//	public String validateToken(@RequestParam("token") String token) {
-//		userService.validateToken(token);
-//		return "Token is valid";
-//	}
+	@PostMapping("/signin")
+	public ResponseEntity<?> userSignin(
+			@Valid @RequestBody UserSignInRequest userSignInRequest) {
+		UserSignInResponse userSignInResponse = new UserSignInResponse();
+		userSignInResponse = userService.userSignIn(userSignInRequest);
+		return ResponseEntity.ok(userSignInResponse);
+	}
+	
+	@GetMapping("/validateToken")
+	public String validateToken(@RequestParam("token") String token) {
+		userService.validateToken(token);
+		return "Token is valid";
+	}
 
 }
