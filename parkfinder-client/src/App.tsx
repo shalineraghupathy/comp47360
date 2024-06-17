@@ -1,5 +1,5 @@
-import NavBar from "./components/NavBar";
-import MainContent from "./components/MainContent";
+import NavBar from "./components/navbar/NavBar";
+import MainContent from "./components/home/MainContent";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App() {

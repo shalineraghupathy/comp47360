@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import ParkModal from "./ParkModal.tsx";
+import ParkModal from "../parkmodal/ParkModal.tsx";
 interface ParkCardProps {
   name: string;
   image: string;

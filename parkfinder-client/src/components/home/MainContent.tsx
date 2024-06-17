@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
-import ParkSearchForm from "./ParkSearchForm";
-import ParkCard from "./ParkCard";
+import ParkSearchForm from "../parksearch/ParkSearchForm";
+import ParkCard from "../parkcard/ParkCard";
 import "./MainContent.css";
 
 function MainContent() {
