@@ -1,14 +1,20 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
-import MainContent from "./components/home/MainContent";
+import Home from "./components/home/MainContent";
+import SignUp from "./components/signup/SignUp";
 import "bootstrap/dist/css/bootstrap.css";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <>
+    <Router>
       <NavBar />
-      <MainContent />
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
