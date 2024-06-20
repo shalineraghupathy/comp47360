@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
+import { useNavigate } from "react-router-dom";
 interface ParkSearchFormProps {
   onSubmit: (
     location: { lat: number; lng: number },
@@ -17,6 +18,8 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [preference, setPreference] = useState("");
+
+  const navigate = useNavigate();
 
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
@@ -45,6 +48,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
       console.log("Form data as JSON:", formDataJson);
 
       onSubmit(location, date, time, preference);
+      navigate("/results");
     } else {
       alert("Please select a location");
     }
