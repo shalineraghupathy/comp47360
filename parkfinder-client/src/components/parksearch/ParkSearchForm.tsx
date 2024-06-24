@@ -1,75 +1,100 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-
+import GoogleSearchBar from "./GoogleSearchBar";
+import { useNavigate } from "react-router-dom";
 interface ParkSearchFormProps {
-  onSubmit: (park: string, date: string, preference: string) => void;
+  onSubmit: (
+    location: { lat: number; lng: number },
+    date: string,
+    time: string,
+    preference: string
+  ) => void;
 }
 
 function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
-  const [park, setPark] = useState("");
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [preference, setPreference] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // prevent default submission behaviour (page reload)
+  const navigate = useNavigate();
+
+  function handleSelectLocation(lat: number, lng: number) {
+    setLocation({ lat, lng });
+  }
+
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSubmit(park, date, preference);
-  };
+    if (location) {
+      //Submission POSTed to backend here in future
+      console.log("Latitude:", location.lat);
+      console.log("Longitude:", location.lng);
+      console.log("Date:", date);
+      console.log("Time:", time);
+      console.log("Preference:", preference);
+
+      //as json
+      const formData = {
+        latitude: location.lat,
+        longitude: location.lng,
+        date: date,
+        time: time,
+        preference: preference,
+      };
+
+      const formDataJson = JSON.stringify(formData);
+      console.log("Form data as JSON:", formDataJson);
+
+      onSubmit(location, date, time, preference);
+      navigate("/results");
+    } else {
+      alert("Please select a location");
+    }
+  }
 
   return (
     <Form onSubmit={handleSubmit} className="search-form">
       <Row className="align-items-center">
         <Col xs={12} sm={12} md={12} lg={3}>
-          <Form.Group controlId="park">
-            {/* <Form.Label className="sr-only">I'm looking for:</Form.Label> */}
-            <Form.Control
-              as="select"
-              value={park}
-              onChange={(e) => setPark(e.target.value)}
-            >
-              <option value="disabled selected hidden">
-                I'm looking for...
-              </option>
-              <option value="all">All Parks</option>
-              {/* add more options as needed */}
-            </Form.Control>
+          <Form.Group controlId="location">
+            <GoogleSearchBar onSelectLocation={handleSelectLocation} />
           </Form.Group>
         </Col>
         <Col xs={12} sm={12} md={12} lg={2}>
           <Form.Group controlId="date">
-            {/* <Form.Label className="sr-only">When:</Form.Label> */}
             <Form.Control
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+              placeholder="Date"
+            />
+          </Form.Group>
+        </Col>
+        <Col xs={12} sm={12} md={12} lg={2}>
+          <Form.Group controlId="time">
+            <Form.Control
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              placeholder="Time"
+              step="3600" //1hr - need to fix seconds input
             />
           </Form.Group>
         </Col>
         <Col xs={12} sm={12} md={12} lg={3}>
           <Form.Group controlId="preference">
-            {/* <Form.Label className="sr-only">Preferences:</Form.Label> */}
             <Form.Control
               as="select"
               value={preference}
               onChange={(e) => setPreference(e.target.value)}
             >
-              <option value="disabled selected hidden">Amenities</option>
-              <option value="amenities">Amenities</option>
-              {/* add more options as needed */}
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={2}>
-          <Form.Group controlId="busyness">
-            <Form.Control
-              as="select"
-              value={preference}
-              onChange={(e) => setPreference(e.target.value)}
-            >
-              <option value="disabled selected hidden">Busyness</option>
-              <option value="low">Low</option>
-              <option value="med">Medium</option>
-              <option value="high">High</option>
+              <option value="" disabled>
+                Amenities
+              </option>
+              <option value="toilets">Toilets</option>
+              <option value="playground">Playground</option>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -82,21 +107,5 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
     </Form>
   );
 }
-export default ParkSearchForm;
 
-// Range slider code
-/* <Col xs={12} sm={12} md={12} lg={8}>
-<Form.Group controlId="range">
-  <Form.Control
-    type="range"
-    className="form-range"
-    min="0"
-    max="100"
-    value={rangeValue}
-    onChange={(e) => setRangeValue(parseInt(e.target.value))}
-  />
-  <Form.Text className="text-muted">
-    How Busy? {rangeValue}/100
-  </Form.Text>
-</Form.Group>
-</Col> */
+export default ParkSearchForm;

@@ -1,4 +1,5 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function NavBar() {
   /* This function renders a simple nav bar styled using bootstrap. Displays a logo aligned to the left and nav links aligned right. The final link is a dropdown menu. */
@@ -26,13 +27,17 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           {/* Nav component, applies ms-auto, pushes nav links to right */}
           <Nav className="ms-auto">
-            <Nav.Link href="#">Home</Nav.Link>
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
             <Nav.Link href="#">Park Search</Nav.Link>
             <Nav.Link href="#">Amenities</Nav.Link>
             <Nav.Link href="#">About</Nav.Link>
             {/* Possibly unnecessary dropdown. */}
             <NavDropdown title="Menu" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#">1</NavDropdown.Item>
+              <LinkContainer to="/signup">
+                <NavDropdown.Item>Account</NavDropdown.Item>
+              </LinkContainer>
               <NavDropdown.Item href="#">2</NavDropdown.Item>
               <NavDropdown.Item href="#">3</NavDropdown.Item>
             </NavDropdown>
