@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,20 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
   const [showToast, setShowToast] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Set the default date to today
+    const today = new Date().toISOString().split("T")[0];
+    setDate(today);
+
+    const now = new Date();
+    const minutes = Math.ceil(now.getMinutes() / 15) * 15;
+    now.setMinutes(minutes);
+    const hours = String(now.getHours()).padStart(2, "0");
+    const roundedMinutes = String(now.getMinutes()).padStart(2, "0");
+    const currentTime = `${hours}:${roundedMinutes}`;
+    setTime(currentTime);
+  }, []);
 
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
@@ -70,6 +84,8 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                onFocus={(e) => (e.target.placeholder = "")}
+                onBlur={(e) => (e.target.placeholder = "Date")}
                 placeholder="Date"
               />
             </Form.Group>
@@ -81,7 +97,6 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="Time"
-                step="3600" //1hr - need to fix minutes input
               />
             </Form.Group>
           </Col>

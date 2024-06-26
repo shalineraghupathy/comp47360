@@ -1,0 +1,77 @@
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-header .modal-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .modal-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .park-info-table td {
+    padding: 4px 100px 2px 2px;
+  }
+  
+  .park-info-table td:first-child {
+    font-weight: bold;
+  }
+  
+  
+  .weather-box {
+    width: 40%;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .weather-box h5 {
+    margin-top: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .weather-info p {
+    margin: 5px 0;
+  }
+  
+  .weather-info img {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .busyness-section {
+    padding: 10px 0;
+  }
+  
+  .busyness-section h5 {
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .busyness-chart {
+    height: 100px;
+    background-color: #f0f0f0;
+    text-align: center;
+    line-height: 100px;
+  }
+  
+  .icons-section {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
+  
+  .icon-share,
+  .icon-save {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  
