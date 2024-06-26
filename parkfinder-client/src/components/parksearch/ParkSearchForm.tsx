@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
 interface ParkSearchFormProps {
@@ -18,6 +18,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [preference, setPreference] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const navigate = useNavigate();
 
@@ -50,61 +51,77 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
       onSubmit(location, date, time, preference);
       navigate("/results");
     } else {
-      alert("Please select a location");
+      setShowToast(true);
     }
   }
 
   return (
-    <Form onSubmit={handleSubmit} className="search-form">
-      <Row className="align-items-center">
-        <Col xs={12} sm={12} md={12} lg={3}>
-          <Form.Group controlId="location">
-            <GoogleSearchBar onSelectLocation={handleSelectLocation} />
-          </Form.Group>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={2}>
-          <Form.Group controlId="date">
-            <Form.Control
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              placeholder="Date"
-            />
-          </Form.Group>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={2}>
-          <Form.Group controlId="time">
-            <Form.Control
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              placeholder="Time"
-              step="3600" //1hr - need to fix seconds input
-            />
-          </Form.Group>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={3}>
-          <Form.Group controlId="preference">
-            <Form.Control
-              as="select"
-              value={preference}
-              onChange={(e) => setPreference(e.target.value)}
-            >
-              <option value="" disabled>
-                Amenities
-              </option>
-              <option value="toilets">Toilets</option>
-              <option value="playground">Playground</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col xs={12} sm={12} md={12} lg={2}>
-          <Button variant="success" type="submit" className="search-button">
-            Search
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit} className="search-form">
+        <Row className="align-items-center">
+          <Col xs={12} sm={12} md={12} lg={3}>
+            <Form.Group controlId="location">
+              <GoogleSearchBar onSelectLocation={handleSelectLocation} />
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={2}>
+            <Form.Group controlId="date">
+              <Form.Control
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                placeholder="Date"
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={2}>
+            <Form.Group controlId="time">
+              <Form.Control
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                placeholder="Time"
+                step="3600" //1hr - need to fix minutes input
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={3}>
+            <Form.Group controlId="preference">
+              <Form.Control
+                as="select"
+                value={preference}
+                onChange={(e) => setPreference(e.target.value)}
+              >
+                <option value="" disabled>
+                  Amenities
+                </option>
+                <option value="toilets">Toilets</option>
+                <option value="playground">Playground</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col xs={12} sm={12} md={12} lg={2}>
+            <Button variant="success" type="submit" className="search-button">
+              Search
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+      <ToastContainer position="top-center" className="p-3">
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={5000}
+          autohide
+          bg="light"
+        >
+          <Toast.Header style={{ color: "white", backgroundColor: "grey" }}>
+            <strong className="me-auto">Alert</strong>
+          </Toast.Header>
+          <Toast.Body>Please select a location.</Toast.Body>
+        </Toast>
+      </ToastContainer>
+    </>
   );
 }
 

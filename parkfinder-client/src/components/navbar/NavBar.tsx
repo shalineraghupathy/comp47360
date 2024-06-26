@@ -20,7 +20,9 @@ function NavBar() {
       {/* {/* This is equivalent to className='container-fluid'. Container ensures grid adherence. */}
       <Container fluid>
         {/* Brand subcomponent */}
-        <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+        </LinkContainer>
         {/* Adds a toggle for collapsible content on small screens */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         {/* Makes links collapsible */}
