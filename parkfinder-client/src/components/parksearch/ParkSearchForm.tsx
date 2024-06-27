@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
+import { useNavigate } from "react-router-dom";
 interface ParkSearchFormProps {
   onSubmit: (
     location: { lat: number; lng: number },
@@ -17,6 +18,8 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [preference, setPreference] = useState("");
+
+  const navigate = useNavigate();
 
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
@@ -45,6 +48,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
       console.log("Form data as JSON:", formDataJson);
 
       onSubmit(location, date, time, preference);
+      navigate("/results");
     } else {
       alert("Please select a location");
     }
@@ -86,7 +90,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
               value={preference}
               onChange={(e) => setPreference(e.target.value)}
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled>
                 Amenities
               </option>
               <option value="toilets">Toilets</option>
@@ -105,20 +109,3 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
 }
 
 export default ParkSearchForm;
-
-// Range slider code
-/* <Col xs={12} sm={12} md={12} lg={8}>
-<Form.Group controlId="range">
-  <Form.Control
-    type="range"
-    className="form-range"
-    min="0"
-    max="100"
-    value={rangeValue}
-    onChange={(e) => setRangeValue(parseInt(e.target.value))}
-  />
-  <Form.Text className="text-muted">
-    How Busy? {rangeValue}/100
-  </Form.Text>
-</Form.Group>
-</Col> */
