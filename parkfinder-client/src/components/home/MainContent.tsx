@@ -2,6 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import ParkSearchForm from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
 import "./MainContent.css";
+import HeroImage from "./HeroImage";
 
 function MainContent() {
   const handleSearchSubmit = (
@@ -42,29 +43,38 @@ function MainContent() {
   ];
 
   return (
-    <Container className="main-content">
-      <Row className="justify-content-start align-items-start heading-row">
-        <Col xs={12} md={12} lg={12}>
-          <h1 className="main-heading">Find Your Perfect Park</h1>
-          <p className="tag-line">Nature is just a few clicks away</p>
-        </Col>
-      </Row>
-      <Row className="justify-content-center align-items-center search-row">
-        <Col xs={12} md={12} lg={10}>
-          <ParkSearchForm onSubmit={handleSearchSubmit} />
-        </Col>
-      </Row>
-      <Col xs={12}>
-        <h2 className="section-heading">Popular Parks</h2>
-        <Row className="card-row">
-          {popularParks.map((park, index) => (
-            <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-              <ParkCard name={park.name} image={park.image} link={park.link} />{" "}
-            </Col>
-          ))}
+    <>
+      <Container className="main-content">
+        <HeroImage />
+        <Row className="justify-content-start align-items-start heading-row">
+          <Col xs={12} md={12} lg={12}>
+            <h1 className="main-heading">Find Your Perfect Park</h1>
+            <p className="tag-line">Nature is just a few clicks away</p>
+          </Col>
         </Row>
-      </Col>
-    </Container>
+        <Row className="justify-content-center align-items-center search-row">
+          <Col xs={12} md={12} lg={10}>
+            <ParkSearchForm onSubmit={handleSearchSubmit} />
+          </Col>
+        </Row>
+      </Container>
+      <div className="card-section">
+        <Col xs={12}>
+          <h2 className="section-heading">Popular Parks</h2>
+          <Row className="card-row">
+            {popularParks.map((park, index) => (
+              <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                <ParkCard
+                  name={park.name}
+                  image={park.image}
+                  link={park.link}
+                />{" "}
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </div>
+    </>
   );
 }
 

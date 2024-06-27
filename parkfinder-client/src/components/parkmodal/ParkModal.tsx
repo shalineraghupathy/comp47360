@@ -87,24 +87,33 @@ function ParkModal({ show, handleClose, park }: ParkModalProps) {
               </tbody>
             </table>
             <div className="weather-box">
-              <h5>Weather</h5>
-              <div className="weather-info">
-                {weather ? (
-                  <>
-                    <p>
-                      {weather.main.temp}°C, {weather.weather[0].description}
-                      <img
-                        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-                        alt="Weather icon"
-                      />
-                    </p>
-                    <p>Sunrise at {formatTime(weather.sunrise)}</p>
-                    <p>Sunset at {formatTime(weather.sunset)}</p>
-                  </>
-                ) : (
-                  <p>No weather information available.</p>
-                )}
-              </div>
+              {weather ? (
+                <div className="weather-info">
+                  <div className="weather-header">
+                    <p>Manhattan, NYC</p>
+                    <p>{weather.weather[0].description}</p>
+                  </div>
+                  <div className="weather-main">
+                    <div className="weather-temp">
+                      <p>{weather.main.temp}°C</p>
+                    </div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
+                      alt="Weather icon"
+                    />
+                  </div>
+                  <div className="weather-details-container">
+                    <div className="weather-detail">
+                      <p>Sunrise {formatTime(weather.sunrise)}</p>
+                    </div>
+                    <div className="weather-detail">
+                      <p>Sunset {formatTime(weather.sunset)}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p>No weather information available.</p>
+              )}
             </div>
           </div>
           <div className="busyness-section">
