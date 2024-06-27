@@ -1,5 +1,4 @@
 package com.profile.service.profileservice.controller;
-import com.profile.service.profileservice.request.ResetPasswordRequest;
 import com.profile.service.profileservice.request.UserRegisterRequest;
 import com.profile.service.profileservice.request.UserSignInRequest;
 import com.profile.service.profileservice.response.UserRegisterResponse;
@@ -41,24 +40,6 @@ public class UserController {
 	public String validateToken(@RequestParam("token") String token) {
 		userService.validateToken(token);
 		return "Token is valid";
-	}
-
-	@PostMapping("/resendVerificationEmail")
-	public ResponseEntity<String> resendVerificationEmail(@RequestParam("email") String email) {
-		userService.resendVerificationEmail(email);
-		return ResponseEntity.ok("Verification email resent successfully");
-	}
-
-	@PostMapping("/forgotPassword")
-	public ResponseEntity<String> forgotPassword(@RequestParam("email") String email) {
-		userService.forgotPassword(email);
-		return ResponseEntity.ok("Password reset link sent successfully");
-	}
-
-	@PostMapping("/resetPassword")
-	public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
-		userService.resetPassword(resetPasswordRequest);
-		return ResponseEntity.ok("Password reset successfully");
 	}
 
 }

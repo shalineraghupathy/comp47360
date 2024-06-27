@@ -30,9 +30,7 @@ function NavBar() {
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/parkmap">
-              <Nav.Link>Park Search</Nav.Link>
-            </LinkContainer>
+            <Nav.Link href="#">Park Search</Nav.Link>
             <Nav.Link href="#">Amenities</Nav.Link>
             <Nav.Link href="#">About</Nav.Link>
             {/* Possibly unnecessary dropdown. */}
