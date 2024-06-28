@@ -1,8 +1,24 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
-function NavBar() {
-  /* This function renders a simple nav bar styled using bootstrap. Displays a logo aligned to the left and nav links aligned right. The final link is a dropdown menu. */
+const NavBar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/signin");
+  };
+
   return (
     <Navbar
       className="Navbar"
@@ -17,15 +33,10 @@ function NavBar() {
         zIndex: "10",
       }}
     >
-      {/* {/* This is equivalent to className='container-fluid'. Container ensures grid adherence. */}
       <Container fluid>
-        {/* Brand subcomponent */}
         <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
-        {/* Adds a toggle for collapsible content on small screens */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        {/* Makes links collapsible */}
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* Nav component, applies ms-auto, pushes nav links to right */}
           <Nav className="ms-auto">
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
@@ -33,21 +44,34 @@ function NavBar() {
             <LinkContainer to="/parkmap">
               <Nav.Link>Park Search</Nav.Link>
             </LinkContainer>
-            <Nav.Link href="#">Amenities</Nav.Link>
-            <Nav.Link href="#">About</Nav.Link>
-            {/* Possibly unnecessary dropdown. */}
-            <NavDropdown title="Menu" id="basic-nav-dropdown">
-              <LinkContainer to="/signup">
-                <NavDropdown.Item>Account</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Item href="#">2</NavDropdown.Item>
-              <NavDropdown.Item href="#">3</NavDropdown.Item>
+            <LinkContainer to="/amenities">
+              <Nav.Link>Amenities</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/about">
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
+            <NavDropdown
+              title={<FaUserCircle size={24} />}
+              id="basic-nav-dropdown"
+              align="end"
+            >
+              {!isLoggedIn ? (
+                <>
+                  <LinkContainer to="/signup">
+                    <NavDropdown.Item>Sign In</NavDropdown.Item>
+                  </LinkContainer>
+                </>
+              ) : (
+                <NavDropdown.Item onClick={handleSignOut}>
+                  Sign Out
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 export default NavBar;
