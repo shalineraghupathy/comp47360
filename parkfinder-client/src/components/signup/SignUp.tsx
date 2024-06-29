@@ -1,5 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import * as Components from "./SignUp.styles";
+import { registerUser, userSignIn } from "../../services/signin";
+import { useNavigate } from "react-router-dom";
+import { showToastError, showToastSuccess } from "../toast/toast";
 
 interface SignUpFormData {
   firstName: string;
@@ -39,6 +42,7 @@ function SignUp() {
   });
   const [signUpErrors, setSignUpErrors] = useState<SignUpErrors>({});
   const [signInErrors, setSignInErrors] = useState<SignInErrors>({});
+  const navigate = useNavigate();
 
   const handleToggle = (shouldSignIn: boolean) => {
     setIsSignInActive(shouldSignIn);
@@ -98,23 +102,53 @@ function SignUp() {
     return validationErrors;
   };
 
-  const handleSignUpSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSignUpSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validateSignUp();
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Sign Up Form submitted:", signUpFormData);
-      // Add your sign-up logic here
+      try {
+        const response = await registerUser({
+          userFirstName: signUpFormData.firstName,
+          userLastName: signUpFormData.lastName,
+          userEmail: signUpFormData.email,
+          userPassword: signUpFormData.password,
+        });
+        console.log("Sign Up Form submitted:", response);
+        showToastSuccess("Activation email sent. Please check your inbox.");
+        navigate("/");
+      } catch (error) {
+        console.error("Sign Up Error:", error);
+        showToastError("Sign Up failed. Please try again.");
+        setSignUpErrors({ email: "Sign Up failed. Please try again." });
+      }
     } else {
       setSignUpErrors(validationErrors);
     }
   };
 
-  const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSignInSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationErrors = validateSignIn();
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Sign In Form submitted:", signInFormData);
-      // Add your sign-in logic here
+      try {
+        const response = await userSignIn({
+          userEmail: signInFormData.email,
+          userPassword: signInFormData.password,
+        });
+        console.log("Sign In Form submitted:", response);
+
+        // Store the token and user info in local storage
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("userEmail", response.userEmail);
+        localStorage.setItem("userFirstName", response.userFirstName);
+
+        showToastSuccess("Sign In successful.");
+        navigate("/");
+      } catch (error) {
+        console.error("Sign In Error:", error);
+        showToastError("Sign In failed. Please try again.");
+        setSignInErrors({ email: "Sign In failed. Please try again." });
+      }
     } else {
       setSignInErrors(validationErrors);
     }
@@ -131,16 +165,16 @@ function SignUp() {
             <Components.Title>Create Account</Components.Title>
             <Components.Input
               type="text"
-              placeholder="Name"
-              name="name"
+              placeholder="First Name"
+              name="firstName"
               value={signUpFormData.firstName}
               onChange={handleSignUpChange}
             />
             {signUpErrors.firstName && <span>{signUpErrors.firstName}</span>}
             <Components.Input
               type="text"
-              placeholder="Name"
-              name="name"
+              placeholder="Last Name"
+              name="lastName"
               value={signUpFormData.lastName}
               onChange={handleSignUpChange}
             />
