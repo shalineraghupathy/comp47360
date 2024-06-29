@@ -13,11 +13,12 @@ function NavBar() {
       style={{
         paddingLeft: "4rem",
         paddingRight: "4rem",
-        paddingBottom: "1rem",
+        paddingTop: "0rem",
+        paddingBottom: "0rem",
       }}
     >
       {/* {/* This is equivalent to className='container-fluid'. Container ensures grid adherence. */}
-      <Container fluid>
+      <Container>
         {/* Brand subcomponent */}
         <LinkContainer to="/">
           <Navbar.Brand id="logo" href="#">

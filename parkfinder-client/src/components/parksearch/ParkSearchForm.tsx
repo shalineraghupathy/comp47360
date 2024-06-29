@@ -74,12 +74,12 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
       <Form onSubmit={handleSubmit} className="search-form">
         <Row className="align-items-center">
           <Col xs={12} sm={12} md={12} lg={3}>
-            <Form.Group controlId="location">
+            <Form.Group className="form-row" controlId="location">
               <GoogleSearchBar onSelectLocation={handleSelectLocation} />
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
-            <Form.Group controlId="date">
+            <Form.Group className="form-row" controlId="date">
               <Form.Control
                 type="date"
                 value={date}
@@ -91,7 +91,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
-            <Form.Group controlId="time">
+            <Form.Group className="form-row" controlId="time">
               <Form.Control
                 type="time"
                 value={time}
@@ -101,7 +101,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={3}>
-            <Form.Group controlId="preference">
+            <Form.Group className="form-row" controlId="preference">
               <Form.Control
                 as="select"
                 value={preference}
@@ -122,7 +122,16 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
           </Col>
         </Row>
       </Form>
-      <ToastContainer position="top-center" className="p-3">
+      <ToastContainer
+        position="top-center"
+        className="p-3"
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          zIndex: 1050,
+        }}
+      >
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}

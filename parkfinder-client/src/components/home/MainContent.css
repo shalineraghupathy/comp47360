@@ -1,4 +1,4 @@
-
+/* everything needs to be tidied up*/
 .main-content {
   position: relative;
   z-index: 2;
@@ -15,56 +15,102 @@
 }
 
 .main-heading {
-  font-size: 3.5rem; /* Adjust font size */
-  font-weight: bold;
+  font-size: 5rem;
+  font-family: "Inter", sans-serif; 
+  font-weight: 600;
   color: white;
+  padding-top: 4rem;
   padding-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.tag-line {
-  font-size: 1.3rem;
+#tagline2 {
+  font-family: "Inter", sans-serif; /* Adjust font size */
   color: white;
+  font-size: 22px;
+  padding: 10px 20px 10px 0;
+  border-radius: 10px;
 }
-  
+
+.jump-button {
+  width: 100%;
+  max-width: 150px;
+  margin-left: 1rem;
+}
+
+.search-description {
+  padding: 10px 20px; 
+  font-size: 1.15rem;
+  font-family: "Inter", sans-serif; /* Adjust font size */
+  color: black;
+  /* font-weight: 400; */
+  overflow:hidden !important;
+  display: inline-block;
+  width: 0; 
+  white-space: nowrap; 
+  margin: 0 auto; 
+  letter-spacing: 0; 
+  animation: 
+    typing 3.2s steps(42, end) forwards,
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 40% }
+} 
+
+
+
 .search-row {
   display: flex;
   justify-content: center;
   align-items: center;
-} 
+  } 
    
-.search-form {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); 
-  justify-content: center;
-  align-items: center;
-}
-  
-.search-form .form-group {
-  /* Space between form groups */
-  margin-bottom: 1rem; 
+.search-form-div {
+  z-index: 5;
+  margin-top: 6rem;
+  padding: 2rem 1rem 2rem 1rem;
+  background-color: whitesmoke;
+  text-align: center;
+  font-family: "Inter", sans-serif; 
 }
 
-.form-range {
-  border: none !important;
+.search-heading {
+  font-size: 40px;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.search-form {
+  margin-top:2rem;
+  margin-bottom: 2rem;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid whitesmoke;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+
+}
+
+.form-row {
+  margin-right: 0; 
 }
 
 .search-button {
   width: 100%;
-  max-width: 150px;
 }
-
 .card-section {
-  margin-top: 125px;
+  font-family: "Inter", sans-serif; 
+  padding-bottom: 50px;
   background-color: whitesmoke;
   
 }
 .section-heading {
   padding: 2.5rem 0 2.5rem 0;
+  font-size: 40px;
   text-align: center;
 }
 
-.card-row {
-  padding: 0 4rem 0 4rem;
-}
