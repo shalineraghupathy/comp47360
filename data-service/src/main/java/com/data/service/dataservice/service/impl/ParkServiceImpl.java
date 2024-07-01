@@ -2,15 +2,13 @@ package com.data.service.dataservice.service.impl;
 
 import com.data.service.dataservice.entity.Entrance;
 import com.data.service.dataservice.entity.Park;
+import com.data.service.dataservice.entity.ParkOfUser;
 import com.data.service.dataservice.repository.ParkMapper;
 import com.data.service.dataservice.service.ParkService;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +18,7 @@ public class ParkServiceImpl implements ParkService {
 
     @Autowired
     private ParkMapper parkMapper;
+
     private List<Park> parkList = new ArrayList<>();
 
     private static final double EARTH_RADIUS_KM = 6371.0;
@@ -38,8 +37,8 @@ public class ParkServiceImpl implements ParkService {
     }
 
     @Override
-    public List<Park> findNearbyParks(double userLat, double userLon, int playTime) {
-        List<Park> nearbyParks = new ArrayList<>();
+    public List<ParkOfUser> findNearbyParks(double userLat, double userLon, int playTime) {
+        List<ParkOfUser> nearbyParks = new ArrayList<>();
 
         for (Park park : parkList) {
             double minDistance = Double.MAX_VALUE;
@@ -50,11 +49,9 @@ public class ParkServiceImpl implements ParkService {
                 }
             }
 
-//            Unit: km, can be changed
+//            Unit: km, can be changed as needed
             if (minDistance < 4.0) {
-                park.setDistance(minDistance);
-                park.setBusyness(predictBusyness(park.getParkId(), playTime));
-                nearbyParks.add(park);
+                nearbyParks.add(new ParkOfUser(park, minDistance, predictBusyness(park.getParkId(), playTime)));
             }
         }
 
@@ -63,7 +60,7 @@ public class ParkServiceImpl implements ParkService {
 
     @Override
     public double predictBusyness(int parkId, int playTime) {
-        // Fake Impl! Need ML Model
+        // Fake Impl!
         Random random = new Random();
         return random.nextDouble() * 100;
     }

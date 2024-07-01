@@ -2,6 +2,7 @@ package com.data.service.dataservice.controller;
 
 
 import com.data.service.dataservice.entity.Park;
+import com.data.service.dataservice.entity.ParkOfUser;
 import com.data.service.dataservice.service.ParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class ParkController {
     }
 
     @GetMapping("/findNearby")
-    public List<Park> findNearbyParks(@RequestParam double userLat, @RequestParam double userLon, @RequestParam int playTime) {
+    public List<ParkOfUser> findNearbyParks(@RequestParam double userLat, @RequestParam double userLon, @RequestParam int playTime) {
         return parkService.findNearbyParks(userLat, userLon, playTime);
     }
 }

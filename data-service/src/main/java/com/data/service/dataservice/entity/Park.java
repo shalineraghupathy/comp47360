@@ -12,8 +12,6 @@ public class Park {
     private String parkEntrance;
     private Integer isToilet;
     private Integer isCoffeeShop;
-    private double distance;
-    private double busyness;
     private List<Entrance> entrances;
 
     // Getters and Setters
@@ -56,22 +54,6 @@ public class Park {
 
     public void setIsCoffeeShop(Integer isCoffeeShop) {
         this.isCoffeeShop = isCoffeeShop;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    public double getBusyness() {
-        return busyness;
-    }
-
-    public void setBusyness(double busyness) {
-        this.busyness = busyness;
     }
 
     public List<Entrance> getEntrances() {
