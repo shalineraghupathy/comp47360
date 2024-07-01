@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ParkSearchForm from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
@@ -8,6 +9,7 @@ import "./MainContent.css";
 
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
+  const navigate = useNavigate();
 
   const handleSearchSubmit = (
     park: string,
@@ -51,6 +53,10 @@ function MainContent() {
       .getElementById("search-form-div")
       ?.scrollIntoView({ behavior: "smooth" });
     setTypingKey((prevKey) => prevKey + 1);
+  };
+
+  const navigateToNationalParks = () => {
+    navigate("/nationalparks");
   };
 
   return (
@@ -114,6 +120,26 @@ function MainContent() {
               ))}
             </Row>
           </Container>
+        </Col>
+      </div>
+      <div className="nat-parks-section">
+        <Col xs={12}>
+          <h2 className="nat-parks-heading">
+            Discover the National Parks of NYC
+          </h2>
+          <div className="nat-parks-link">
+            <p>
+              New York City is home to 10 National Park Sites. Click the button
+              to begin.
+            </p>
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={navigateToNationalParks}
+            >
+              Find out more
+            </Button>
+          </div>
         </Col>
       </div>
       <CustomFooter />

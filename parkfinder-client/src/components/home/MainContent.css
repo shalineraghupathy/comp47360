@@ -114,3 +114,32 @@
   text-align: center;
 }
 
+.nat-parks-section {
+  background-image: url(https://images.unsplash.com/photo-1577185705906-b0063887174e?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position: center;
+  text-align: left;
+  padding: 14rem 1rem;
+}
+
+.nat-parks-heading {
+  padding-left: 5rem;
+  font-size: 50px;
+  font-family: "Inter", sans-serif; 
+  font-weight: 600;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.nat-parks-link {
+  margin-left: 5rem;
+  color:white;
+  font-style: italic;
+}
+
+.nat-parks-link p {
+  padding: 1rem 0;
+}
+
+/* .nat-parks-link Button {
+} */

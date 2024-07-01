@@ -5,6 +5,7 @@ import NavBar from "./components/navbar/NavBar";
 import Home from "./components/home/MainContent";
 import SignUp from "./components/signup/SignUp";
 import Results from "./components/results/Results";
+import NationalParks from "./components/nationalparks/NationalParks";
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/nationalparks" element={<NationalParks />} />
       </Routes>
     </BrowserRouter>
   );
