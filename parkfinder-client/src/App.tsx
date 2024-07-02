@@ -8,6 +8,7 @@ import ProjectMap from "./components/maps/ProjectsMap";
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.css";
 import { UserProvider } from "./contexts/userContext"; // Import UserProvider
+import NationalParks from "./components/nationalparks/nationalparks";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Route path="/signin" element={<SignUp />} />
           <Route path="/parkmap" element={<ProjectMap />} />
           <Route path="/results" element={<Results />} />
+          <Route path="/NationalParks" element={<NationalParks />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
