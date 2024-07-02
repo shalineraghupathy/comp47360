@@ -116,9 +116,9 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
-            <Button variant="success" type="submit" className="search-button">
+            <button type="submit" className="search-button" style={{}}>
               Search
-            </Button>
+            </button>
           </Col>
         </Row>
       </Form>

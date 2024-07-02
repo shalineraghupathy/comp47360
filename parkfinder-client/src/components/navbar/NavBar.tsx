@@ -47,13 +47,15 @@ function NavBar() {
             <LinkContainer to="/signup">
               <Nav.Link>
                 <Button
-                  variant="success"
                   type="submit"
                   className="search-button"
                   style={{
                     cursor: "pointer",
                     fontSize: "0.9rem",
                     fontWeight: "500",
+                    backgroundColor: "rgba(46, 139, 87)",
+                    borderRadius: "30px",
+                    border: "0",
                   }}
                 >
                   Login

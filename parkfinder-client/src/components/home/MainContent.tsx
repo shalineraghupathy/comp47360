@@ -65,26 +65,22 @@ function MainContent() {
         <HeroImage />
         <Row className="justify-content-start align-items-start heading-row">
           <Col xs={12} md={12} lg={12}>
-            <h1 className="main-heading">Find Your Perfect Park</h1>
-            <span id="tagline2">
+            <h1 className="main-heading">Find Your Perfect Park.</h1>
+            <span id="tagline">
               Nature is just a click away. <br />
               Find events, check busyness, explore amenities.
             </span>
-            {/* <span className="span-container">
-              <span className="tag-line">Search for parks near you</span>
-            </span> */}
           </Col>
         </Row>
         <Row className="justify-content-center align-items-center">
           <Col xs={12} md={12} lg={10}>
-            <Button
-              variant="success"
+            <button
               type="submit"
               onClick={scrollToSearchForm}
               className="jump-button"
             >
-              Get Started
-            </Button>
+              Get started
+            </button>
             {/* <ParkSearchForm onSubmit={handleSearchSubmit} /> */}
           </Col>
         </Row>
@@ -124,21 +120,23 @@ function MainContent() {
       </div>
       <div className="nat-parks-section">
         <Col xs={12}>
-          <h2 className="nat-parks-heading">
-            Discover the National Parks of NYC
-          </h2>
-          <div className="nat-parks-link">
-            <p>
-              New York City is home to 10 National Park Sites. Click the button
-              to begin.
-            </p>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={navigateToNationalParks}
-            >
-              Find out more
-            </Button>
+          <div className="nat-parks-content">
+            <h2 className="nat-parks-heading">
+              Explore the National Parks of NYC.
+            </h2>
+            <span className="nat-parks-link">
+              <p>
+                New York City is home to 10 National Park Sites. Click the
+                button to begin.
+              </p>
+              <button
+                className="nat-park-button"
+                type="submit"
+                onClick={navigateToNationalParks}
+              >
+                Find out more
+              </button>
+            </span>
           </div>
         </Col>
       </div>
