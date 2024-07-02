@@ -4,6 +4,7 @@ import NavBar from "./components/navbar/NavBar";
 import Home from "./components/home/MainContent";
 import SignUp from "./components/signup/SignUp";
 import Results from "./components/results/Results";
+
 import ProjectMap from "./components/maps/ProjectsMap";
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.css";

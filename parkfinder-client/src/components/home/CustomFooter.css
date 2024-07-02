@@ -1,0 +1,18 @@
+.footer {
+    border-top: 1px solid #e0e0e0;
+    padding: 0 3rem 0 3rem;
+  }
+  
+  .footer-logo {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .footer a {
+    font-size: 1.2rem;
+  }
+  
+  .footer a:hover {
+    color: #007bff;
+  }
+  
