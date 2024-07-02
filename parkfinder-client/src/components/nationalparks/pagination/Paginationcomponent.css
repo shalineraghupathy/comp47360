@@ -1,0 +1,31 @@
+.custompagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.custompagination .page-item {
+  margin: 0 5px;
+}
+
+.custompagination .page-link {
+  color: #333;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  text-transform: capitalize;
+}
+
+.custompagination .page-link:hover {
+  color: #555;
+  background-color: transparent;
+}
+
+.custompagination .page-item.active .page-link {
+  color: #000;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+}

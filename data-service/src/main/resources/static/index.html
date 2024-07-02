@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parks List</title>
+    <script>
+        function fetchParks() {
+            const userLat = parseFloat(document.getElementById('userLat').value);
+            const userLon = parseFloat(document.getElementById('userLon').value);
+            const playTime = parseInt(document.getElementById('playTime').value);
+
+
+            fetch(`/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`)
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById('parksTable');
+                    table.innerHTML = `
+                        <tr>
+                            <th>Park ID</th>
+                            <th>Park Name</th>
+                            <th>Has Toilet</th>
+                            <th>Has Coffee Shop</th>
+                            <th>Distance (km)</th>
+                            <th>Busyness</th>
+                        </tr>`;
+                    data.forEach(park => {
+                        const row = table.insertRow();
+                        row.insertCell(0).innerText = park.parkId;
+                        row.insertCell(1).innerText = park.parkName;
+                        row.insertCell(2).innerText = park.isToilet ? 'Yes' : 'No';
+                        row.insertCell(3).innerText = park.isCoffeeShop ? 'Yes' : 'No';
+                        row.insertCell(4).innerText = park.distance.toFixed(2);
+                        row.insertCell(5).innerText = park.busyness.toFixed(2);
+                    });
+                })
+                .catch(error => console.error('Error fetching parks:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>Parks List</h1>
+<div>
+    <label for="userLat">Your Latitude:</label>
+    <input type="text" id="userLat">
+</div>
+<div>
+    <label for="userLon">Your Longitude:</label>
+    <input type="text" id="userLon">
+</div>
+<div>
+    <label for="playTime">Play Time (timestamp, s):</label>
+    <input type="text" id="playTime">
+</div>
+<button onclick="fetchParks()">Load Parks</button>
+<table id="parksTable" border="1">
+    <!-- Table content will be inserted here -->
+</table>
+</body>
+</html>

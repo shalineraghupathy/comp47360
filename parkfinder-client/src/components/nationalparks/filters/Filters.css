@@ -1,0 +1,91 @@
+/* .filterscontainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.filteritem {
+  flex: 1 1 200px;
+  min-width: 200px;
+  margin: 5px;
+}
+
+.filteritem select,
+.filteritem input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filterbuttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.filterbuttons button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filterbuttons button:hover {
+  background-color: #555;
+} */
+
+.filterscontainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filteritem {
+  flex: 1 1 200px;
+  min-width: 200px;
+  margin: 5px;
+}
+
+.filteritem select,
+.filteritem input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filterbuttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.filterbuttons button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filterbuttons button:hover {
+  background-color: #555;
+}

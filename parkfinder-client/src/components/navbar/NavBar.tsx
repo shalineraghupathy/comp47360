@@ -1,72 +1,91 @@
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import "./NavBar.css";
+import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
-function NavBar() {
-  // /* This function renders a simple nav bar styled using bootstrap. Displays a logo aligned to the left and nav links aligned right. The final link is a dropdown menu. */
+const NavBar: React.FC = () => {
+  const [token, setToken] = useLocalStorage("token");
+  const [userFirstName, setUserFirstName] = useLocalStorage("userFirstName");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+    setUserFirstName(localStorage.getItem("userFirstName"));
+  }, [setToken, setUserFirstName]);
+
+  const isLoggedIn = !!token;
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userFirstName");
+    setToken(null);
+    setUserFirstName(null);
+    navigate("/signin");
+  };
+
   return (
-    <Navbar
-      className="Navbar"
-      expand="lg"
-      fixed="top"
-      sticky="top"
-      style={{
-        paddingLeft: "4rem",
-        paddingRight: "4rem",
-        paddingTop: "0rem",
-        paddingBottom: "0rem",
-      }}
-    >
-      {/* {/* This is equivalent to className='container-fluid'. Container ensures grid adherence. */}
-      <Container>
-        {/* Brand subcomponent */}
-        <LinkContainer to="/">
-          <Navbar.Brand id="logo" href="#">
-            ParkFinder
-          </Navbar.Brand>
-        </LinkContainer>
-        {/* Adds a toggle for collapsible content on small screens */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        {/* Makes links collapsible */}
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* Nav component, applies ms-auto, pushes nav links to right */}
-          <Nav
-            className="ms-auto"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
-            </LinkContainer>
-            <Nav.Link href="#">Map View</Nav.Link>
-            <Nav.Link href="#">Amenities</Nav.Link>
-            <Nav.Link href="#">About</Nav.Link>
-            <LinkContainer to="/signup">
-              <Nav.Link>
-                <Button
-                  type="submit"
-                  className="login-button"
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "0.9rem",
-                    fontWeight: "500",
-                    backgroundColor: "rgba(46, 139, 87)",
-                    borderRadius: "30px",
-                    border: "0",
-                  }}
-                >
-                  Login
-                </Button>
-              </Nav.Link>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-2">
+      <Navbar
+        className="Navbar"
+        expand="lg"
+        fixed="top"
+        sticky="top"
+        style={{
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          borderBottom: "1px solid #ccc",
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          zIndex: 10,
+        }}
+      >
+        <Container fluid>
+          <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/parkmap">
+                <Nav.Link>Park Search</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/amenities">
+                <Nav.Link>Amenities</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/about">
+                <Nav.Link>About</Nav.Link>
+              </LinkContainer>
+              <NavDropdown
+                title={<FaUserCircle size={24} />}
+                id="basic-nav-dropdown"
+                align="end"
+              >
+                {isLoggedIn ? (
+                  <>
+                    <NavDropdown.Header>
+                      Welcome, {userFirstName}
+                    </NavDropdown.Header>
+                    <NavDropdown.Item onClick={handleSignOut}>
+                      Sign Out
+                    </NavDropdown.Item>
+                  </>
+                ) : (
+                  <>
+                    <LinkContainer to="/signin">
+                      <NavDropdown.Item>Sign In</NavDropdown.Item>
+                    </LinkContainer>
+                  </>
+                )}
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </div>
   );
-}
+};
 
 export default NavBar;

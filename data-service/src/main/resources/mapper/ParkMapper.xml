@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.data.service.dataservice.repository.ParkMapper">
+
+    <resultMap id="ParkResultMap" type="com.data.service.dataservice.entity.Park">
+        <id column="park_id" property="parkId"/>
+        <result column="park_name" property="parkName"/>
+        <result column="park_entrance" property="parkEntrance"/>
+        <result column="is_toilet" property="isToilet"/>
+        <result column="is_coffee_shop" property="isCoffeeShop"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="ParkResultMap">
+        SELECT * FROM amenities
+    </select>
+
+</mapper>
