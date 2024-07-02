@@ -48,7 +48,7 @@ function NavBar() {
               <Nav.Link>
                 <Button
                   type="submit"
-                  className="search-button"
+                  className="login-button"
                   style={{
                     cursor: "pointer",
                     fontSize: "0.9rem",
