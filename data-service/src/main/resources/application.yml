@@ -1,15 +1,23 @@
 #spring.application.name=data-service
 server:
-    port: 8080
+  port: 8080
 
 spring:
-    datasource:
-        url: jdbc:mysql://localhost:3306/parkfinder
-        username: root
-        password: yanwen
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3306/nycparkfinder
+    username: root
+    password: mariecurie
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
+  cloud:
+    gateway:
+    default-filters:
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+    globalcors:
+      corsConfigurations:
+      "[/**]":
+        allowedOrigins: "*"
+        allowedMethods: "*"
 mybatis:
-    mapper-locations: classpath:mapper/*.xml
-    type-aliases-package: com.data.service.dataservice.entity
-
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.data.service.dataservice.entity

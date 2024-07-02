@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 interface ParkSearchFormProps {
   onSubmit: (
     location: { lat: number; lng: number },
@@ -39,31 +40,85 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
   }
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   if (location) {
+  //     const formData = {
+  //       // no date no pref
+  //       userLat: location.lat,
+  //       userLon: location.lng,
+  //       playTime: time,
+  //     };
+
+  //     try {
+  //       const response = await fetch("/parks/findNearby", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(formData),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch data");
+  //       }
+
+  //       const data = await response.json();
+  //       console.log("Fetched data:", data);
+
+  //       navigate("/results", { state: { parks: data } });
+  //     } catch (error) {
+  //       console.error("Error fetching parks:", error);
+  //       setShowToast(true);
+  //     }
+  //   } else {
+  //     setShowToast(true);
+  //   }
+  // }
+
+  async function getParks(userLat: number, userLon: number, playTime: number) {
+    const response = await axios.get(
+      `http://localhost:8080/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+    );
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    // })
+    // .catch((error) => console.error("Error fetching parks:", error));
+    console.log("HERE");
+    console.log(response.data);
+    return response.data;
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
-      //Submission POSTed to backend here in future
       console.log("Latitude:", location.lat);
       console.log("Longitude:", location.lng);
       console.log("Date:", date);
       console.log("Time:", time);
       console.log("Preference:", preference);
 
-      //as json
-      const formData = {
-        latitude: location.lat,
-        longitude: location.lng,
-        date: date,
-        time: time,
-        preference: preference,
-      };
+      const timestamp = new Date(`${date}T${time}`).getTime() / 1000;
+      getParks(location.lat, location.lng, timestamp).then((parksResult) => {
+        //as json
+        const formData = {
+          latitude: location.lat,
+          longitude: location.lng,
+          date: date,
+          time: time,
+          preference: preference,
+        };
 
-      const formDataJson = JSON.stringify(formData);
-      console.log("Form data as JSON:", formDataJson);
+        const formDataJson = JSON.stringify(formData);
+        console.log("Form data as JSON:", formDataJson);
 
-      onSubmit(location, date, time, preference);
-      navigate("/results");
+        onSubmit(location, date, time, preference);
+        console.log("AAAAAHHHHHAHAHAHAHAHA");
+        console.log(parksResult);
+        navigate("/results", { state: { parks: parksResult } });
+        // navigate("/results");
+      });
     } else {
       setShowToast(true);
     }
