@@ -16,7 +16,6 @@ function MainContent() {
     date: string,
     preference: string
   ) => {
-    // Search logic
     console.log({ park, date, preference });
   };
 
@@ -94,7 +93,7 @@ function MainContent() {
               Simply enter your location to get started.
             </span>
             <div className="search-component">
-              <ParkSearchForm onSubmit={handleSearchSubmit} />
+              <ParkSearchForm onSubmit={handleSearchSubmit} withShadow={true} />
             </div>
           </Col>
         </Row>

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import ParkModal from "../parkmodal/ParkModal";
+import "./ResultCard.css";
 
 interface ResultCardProps {
   parkName: string;
-  distance: string;
+  distance: number;
   busyness: number;
   entrances: string;
   isCoffeeShop: number;
@@ -51,23 +52,39 @@ ResultCardProps) {
     }
   }
 
+  function resolveDistance(distance: number): string {
+    return `${distance.toFixed(2)} km`;
+  }
+
   return (
     <>
-      <Card style={{ minWidth: "200px" }}>
-        {/* <Card.Img variant="left" src={park.image} alt={park.name} /> */}
-        <Card.Body>
-          <Card.Title>{parkName}</Card.Title>
-          <p className="card-text">
-            Distance: {distance} <br />
-            Busyness: {busynessScore(busyness)}
-            <br />
-            Coffee Shop: {formatYesNo(isCoffeeShop)}
-            <br />
-            Toilets: {formatYesNo(isToilet)}
-            <br />
-            {/* Park Entrance: {parkEntrance} */}
-          </p>
-          <Button onClick={handleShow}>View Details</Button>
+      <Card
+        className="result-card"
+        style={{ minWidth: "200px", borderRadius: "20px", cursor: "pointer" }}
+        onClick={handleShow}
+      >
+        <Card.Body className="p-0">
+          <Row>
+            <Col xs={4}>
+              <Card.Img
+                className="card-img-left"
+                src="./1.jpg"
+                alt={parkName}
+              />
+            </Col>
+            <Col xs={8} className="card-col">
+              <Card.Title className="card-title">{parkName}</Card.Title>
+              <p className="card-text">
+                Distance: {resolveDistance(distance)} <br />
+                Busyness: {busynessScore(busyness)}
+                <br />
+                Coffee Shop: {formatYesNo(isCoffeeShop)}
+                <br />
+                Toilets: {formatYesNo(isToilet)}
+                <br />
+              </p>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
       <ParkModal

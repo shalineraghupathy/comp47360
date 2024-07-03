@@ -10,9 +10,10 @@ interface ParkSearchFormProps {
     time: string,
     preference: string
   ) => void;
+  withShadow?: boolean;
 }
 
-function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
+function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
     null
   );
@@ -121,7 +122,10 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
 
   return (
     <>
-      <Form onSubmit={handleSubmit} className="search-form">
+      <Form
+        onSubmit={handleSubmit}
+        className={`search-form ${withShadow ? "with-shadow" : ""}`}
+      >
         <Row className="align-items-center">
           <Col xs={12} sm={12} md={12} lg={3}>
             <Form.Group className="form-row" controlId="location">

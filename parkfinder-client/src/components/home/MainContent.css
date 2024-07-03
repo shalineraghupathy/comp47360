@@ -1,3 +1,6 @@
+.with-shadow {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
 /* everything needs to be tidied up*/
 .main-content {
   position: relative;
@@ -97,8 +100,6 @@
   background-color: white;
   padding: 1.5rem;
   border-radius: 1rem;
-  border: 1px solid whitesmoke;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
 
 }
