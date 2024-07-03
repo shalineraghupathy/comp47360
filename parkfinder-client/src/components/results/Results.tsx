@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
-import ResultCard from "./ResultCard"; // Adjust the import based on your file structure
-
+import ResultCard from "./ResultCard";
 const Results = () => {
   const location = useLocation();
   const parksResult = location.state?.parks || [];

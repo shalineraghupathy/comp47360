@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
+import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -80,11 +80,7 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
     const response = await axios.get(
       `http://localhost:8080/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
     );
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // .catch((error) => console.error("Error fetching parks:", error));
+
     console.log("HERE");
     console.log(response.data);
     return response.data;
@@ -101,7 +97,6 @@ function ParkSearchForm({ onSubmit }: ParkSearchFormProps) {
 
       const timestamp = new Date(`${date}T${time}`).getTime() / 1000;
       getParks(location.lat, location.lng, timestamp).then((parksResult) => {
-        //as json
         const formData = {
           latitude: location.lat,
           longitude: location.lng,
