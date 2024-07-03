@@ -7,11 +7,33 @@ import "./ParkModal.css";
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
-  park: { name: string };
+  parkName: string;
+  distance: string;
+  busyness: number;
+  isCoffeeShop: number;
+  isToilet: number;
 }
 
-function ParkModal({ show, handleClose, park }: ParkModalProps) {
+function ParkModal({
+  show,
+  handleClose,
+  parkName,
+  distance,
+  busyness,
+  isCoffeeShop,
+  isToilet,
+}: ParkModalProps) {
   const [weather, setWeather] = useState(null);
+
+  const park = {
+    parkName,
+    distance,
+    busyness,
+    // entrances (returns an array of lat-long)
+    isCoffeeShop,
+    isToilet,
+    // parkEntrance,
+  };
 
   useEffect(() => {
     if (show) {
@@ -47,15 +69,36 @@ function ParkModal({ show, handleClose, park }: ParkModalProps) {
     });
   };
 
+  function formatYesNo(value: number): string {
+    return value === 1 ? "Yes" : "No";
+  }
+
+  function busynessScore(value: number): string {
+    if (value >= 66) {
+      return "High";
+    } else if (value >= 33) {
+      return "Medium";
+    } else {
+      return "Low";
+    }
+  }
+
   return (
     <>
       <Modal show={show} onHide={handleClose} centered size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>{park.name}</Modal.Title>
+          <Modal.Title>{parkName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="modal-content-wrapper">
-            <table className="park-info-table">
+            Distance: {distance} <br />
+            Busyness: {busynessScore(busyness)}
+            <br />
+            Coffee Shop: {formatYesNo(isCoffeeShop)}
+            <br />
+            Toilets: {formatYesNo(isToilet)}
+            <br />
+            {/* <table className="park-info-table">
               <tbody>
                 <tr>
                   <td colSpan={2}>
@@ -85,7 +128,7 @@ function ParkModal({ show, handleClose, park }: ParkModalProps) {
                   <td>Yes</td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
             <div className="weather-box">
               {weather ? (
                 <div className="weather-info">
