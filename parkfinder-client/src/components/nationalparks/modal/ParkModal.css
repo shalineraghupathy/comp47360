@@ -1,0 +1,73 @@
+.parkmodal .modal-header {
+  border-bottom: none;
+}
+
+.parkmodal .modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.parkmodal-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.parkmodalimage {
+  width: 30%; /* Fixed width */
+  height: 40%; /* Fixed height */
+  object-fit: cover; /* Ensure the image fits within the specified dimensions */
+  margin-right: 20px;
+}
+
+.parkmodalcontent {
+  flex: 1; /* Take up the remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.parkmodalinfo {
+  margin-bottom: 15px;
+}
+
+.parkmodalinfo p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.parkmodalinfo a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.parkmodalinfo a:hover {
+  text-decoration: underline;
+}
+
+.parkmodalactivities {
+  margin-top: 20px;
+}
+
+.parkmodalactivities h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.activitiesgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.activityitem {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.activityicon {
+  width: 24px; /* Adjust the size as needed */
+  height: 24px; /* Adjust the size as needed */
+  margin-right: 10px;
+}

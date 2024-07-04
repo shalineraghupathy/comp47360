@@ -7,7 +7,8 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  min-height: 500px;
+  max-height: 550px;
+  min-height: 550px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   position: relative;
@@ -19,8 +20,8 @@
 
 .parkcard img {
   width: 100%;
-  height: 230px;
-  object-fit: cover;
+  height: 55%;
+  object-fit: fill;
 }
 
 .parkcardtitle {

@@ -3,14 +3,15 @@ import "./Filters.css";
 
 interface FiltersProps {
   onApply: (filters: {
-    activity: string;
-    zipCode: string;
-    parkName: string;
+    activity?: string;
+    zipCode?: string;
+    parkName?: string;
   }) => void;
   onReset: () => void;
+  activities: string[];
 }
 
-const Filters: React.FC<FiltersProps> = ({ onApply, onReset }) => {
+const Filters: React.FC<FiltersProps> = ({ onApply, onReset, activities }) => {
   const [activity, setActivity] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [parkName, setParkName] = useState("");
@@ -31,16 +32,12 @@ const Filters: React.FC<FiltersProps> = ({ onApply, onReset }) => {
       <div className="filteritem">
         <select value={activity} onChange={(e) => setActivity(e.target.value)}>
           <option value="">Filter by Activity...</option>
-          {/* Add more activity options here */}
+          {activities.map((activity, index) => (
+            <option key={index} value={activity}>
+              {activity}
+            </option>
+          ))}
         </select>
-      </div>
-      <div className="filteritem">
-        <input
-          type="text"
-          placeholder="New York"
-          value={zipCode}
-          onChange={(e) => setZipCode(e.target.value)}
-        />
       </div>
       <div className="filteritem">
         <input
