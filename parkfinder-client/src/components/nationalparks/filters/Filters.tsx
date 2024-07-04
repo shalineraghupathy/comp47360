@@ -3,9 +3,9 @@ import "./Filters.css";
 
 interface FiltersProps {
   onApply: (filters: {
-    activity: string;
-    zipCode: string;
-    parkName: string;
+    activity?: string;
+    zipCode?: string;
+    parkName?: string;
   }) => void;
   onReset: () => void;
   activities: string[];
@@ -32,8 +32,8 @@ const Filters: React.FC<FiltersProps> = ({ onApply, onReset, activities }) => {
       <div className="filteritem">
         <select value={activity} onChange={(e) => setActivity(e.target.value)}>
           <option value="">Filter by Activity...</option>
-          {activities.map((activity) => (
-            <option key={activity} value={activity}>
+          {activities.map((activity, index) => (
+            <option key={index} value={activity}>
               {activity}
             </option>
           ))}

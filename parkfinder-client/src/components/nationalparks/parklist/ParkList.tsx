@@ -5,13 +5,23 @@ import PaginationComponent from "../pagination/Paginationcomponent";
 import "./ParkList.css";
 const { VITE_NPS_API_KEY: apiconfig } = import.meta.env;
 
+interface Activity {
+  id: string;
+  name: string;
+}
+
+interface Address {
+  postalCode: string;
+}
+
 interface Park {
   id: string;
   fullName: string;
   description: string;
   url: string;
   images: { url: string }[];
-  activities: { id: string; name: string }[];
+  activities: Activity[];
+  addresses: Address[];
 }
 
 interface ParksListProps {
@@ -33,13 +43,16 @@ const ParksList: React.FC<ParksListProps> = ({ filters, setActivities }) => {
         const response = await axios.get(
           `https://developer.nps.gov/api/v1/parks?api_key=${apiconfig}&limit=471&stateCode=NY`
         );
-        const parksData = response.data.data;
-        setParks(parksData);
-        const activities = new Set<string>();
-        parksData.forEach((park: Park) => {
-          park.activities.forEach((activity) => activities.add(activity.name));
-        });
-        setActivities(Array.from(activities));
+        const fetchedParks: Park[] = response.data.data;
+        setParks(fetchedParks);
+        const uniqueActivities = Array.from(
+          new Set(
+            fetchedParks.flatMap((park: Park) =>
+              park.activities.map((activity) => activity.name)
+            )
+          )
+        );
+        setActivities(uniqueActivities);
         setLoading(false);
       } catch (err) {
         if (err instanceof Error) {
@@ -59,16 +72,18 @@ const ParksList: React.FC<ParksListProps> = ({ filters, setActivities }) => {
   };
 
   const filteredParks = parks.filter((park) => {
-    const matchesActivity = filters.activity
-      ? park.activities.some((activity) => activity.name === filters.activity)
-      : true;
-    const matchesParkName = filters.parkName
-      ? park.fullName.toLowerCase().includes(filters.parkName.toLowerCase())
-      : true;
-    const matchesZipCode = filters.zipCode
-      ? park.description.toLowerCase().includes(filters.zipCode.toLowerCase()) // Assuming zipCode is mentioned in description
-      : true;
-    return matchesActivity && matchesParkName && matchesZipCode;
+    const matchesActivity =
+      !filters.activity ||
+      park.activities.some((activity) => activity.name === filters.activity);
+    const matchesZipCode =
+      !filters.zipCode ||
+      park.addresses.some((address) =>
+        address.postalCode.startsWith(filters.zipCode || "")
+      );
+    const matchesParkName =
+      !filters.parkName ||
+      park.fullName.toLowerCase().includes(filters.parkName.toLowerCase());
+    return matchesActivity && matchesZipCode && matchesParkName;
   });
 
   const indexOfLastPark = currentPage * parksPerPage;
