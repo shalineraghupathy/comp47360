@@ -50,7 +50,9 @@ const ParkModal: React.FC<ParkModalProps> = ({ show, handleClose, park }) => {
                 {park.activities.map((activity) => (
                   <div key={activity.id} className="activityitem">
                     <img
-                      src={activityIcons[activity.name]}
+                      src={
+                        activityIcons[activity.name] || activityIcons.default
+                      }
                       alt={activity.name}
                       className="activityicon"
                     />

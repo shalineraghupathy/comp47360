@@ -1,6 +1,7 @@
+const defaultIcon = "/icons/icon-info.svg";
+
 const activityIcons: { [key: string]: string } = {
   "Arts and Culture": "/icons/icons-art.svg",
-  Astronomy: "/icons/astronomy.svg",
   "Auto and ATV": "/icons/icon-atv.svg",
   Biking: "/icons/icons-biking.svg",
   Boating: "/icons/icon-boating.svg",
@@ -44,6 +45,7 @@ const activityIcons: { [key: string]: string } = {
   Tubing: "/icons/icon-tubing.svg",
   "Water Skiing": "/icons/icon-skiing1.svg",
   "Wildlife Watching": "/icons/icon-wildlifeviewing.svg",
+  default: defaultIcon,
 };
 
 export default activityIcons;
