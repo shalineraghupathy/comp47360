@@ -125,8 +125,8 @@ function MainContent() {
             </h2>
             <span className="nat-parks-link">
               <p>
-                New York City is home to 10 National Park Sites. Click the
-                button to begin.
+                New York State is home to 24 National Park Sites. 10 are in New
+                York City. <br /> Click the button to learn more.
               </p>
               <button
                 className="nat-park-button"
