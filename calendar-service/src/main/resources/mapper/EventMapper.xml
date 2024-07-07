@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.calendar.service.calendarservice.repository.EventMapper">
+
+    <resultMap id="EventResultMap" type="com.calendar.service.calendarservice.entity.Event">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="category" column="category" />
+        <result property="labels" column="labels" />
+        <result property="startLocal" column="start_local" />
+        <result property="endLocal" column="end_local" />
+        <result property="longitude" column="longitude" />
+        <result property="latitude" column="latitude" />
+        <result property="address" column="address" />
+        <result property="description" column="description" />
+    </resultMap>
+
+    <select id="findAll" resultMap="EventResultMap">
+        SELECT * FROM events
+    </select>
+
+    <insert id="insertEvents">
+        INSERT INTO events (id, title, category, labels, start_local, end_local, longitude, latitude, address, description)
+        VALUES
+        <foreach collection="events" item="event" separator=",">
+            (#{event.id}, #{event.title}, #{event.category}, #{event.labels}, #{event.startLocal}, #{event.endLocal}, #{event.longitude}, #{event.latitude}, #{event.address}, #{event.description})
+        </foreach>
+            ON DUPLICATE KEY UPDATE
+                                 title=VALUES(title), category=VALUES(category), labels=VALUES(labels), start_local=VALUES(start_local),
+                                 end_local=VALUES(end_local), longitude=VALUES(longitude), latitude=VALUES(latitude),
+                                 address=VALUES(address), description=VALUES(description)
+    </insert>
+
+    <select id="findEventByIds" resultMap="EventResultMap">
+        SELECT * FROM events
+        WHERE id IN (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+            )
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/parkfinder
+    username: root
+#    replace password with local MySql password
+    password: yanwen
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.calendar.service.calendarservice.entity
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.calendar.service.calendarservice: DEBUG
+
+api:
+  key: replace with true api key
+  url: https://api.predicthq.com/v1/events
