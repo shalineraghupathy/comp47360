@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./HeroImage.css";
+import "../parkmodal/ParkModal.css";
 
 const images = ["./1.jpg", "./3.jpg", "./6.jpg"];
 
