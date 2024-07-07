@@ -14,14 +14,14 @@ function HeroImage() {
   }, []);
 
   return (
-    <>
+    <div>
       <div
         className="hero-image"
         style={{ backgroundImage: `url(${images[currentImage]})` }}
       >
         <div className="overlay"></div>
       </div>
-    </>
+    </div>
   );
 }
 
