@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ParkSearchForm from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
@@ -12,12 +12,13 @@ function MainContent() {
   const navigate = useNavigate();
 
   const handleSearchSubmit = (
-    park: string,
+    location: { lat: number; lng: number },
     date: string,
+    time: string,
     preference: string
   ) => {
     // Search logic
-    console.log({ park, date, preference });
+    console.log({ location, date, time, preference });
   };
 
   const popularParks = [
@@ -111,6 +112,11 @@ function MainContent() {
                     name={park.name}
                     image={park.image}
                     link={park.link}
+                    distance={""}
+                    busyness={0}
+                    isCoffeeShop={0}
+                    isToilet={0}
+                    activities={[]}
                   />{" "}
                 </Col>
               ))}

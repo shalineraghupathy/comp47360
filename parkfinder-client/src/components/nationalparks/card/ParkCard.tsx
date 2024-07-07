@@ -9,6 +9,7 @@ export interface Park {
   description: string;
   url: string;
   images: { url: string }[];
+  activities: { id: string; name: string }[]; // Add activities property
 }
 
 interface ParkCardProps {

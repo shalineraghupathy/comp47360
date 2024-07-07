@@ -27,15 +27,15 @@ ResultCardProps) {
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
-  const park = {
-    parkName,
-    distance,
-    busyness,
-    // entrances (returns an array of lat-long)
-    isCoffeeShop,
-    isToilet,
-    // parkEntrance,
-  };
+  // const park = {
+  //   parkName,
+  //   distance,
+  //   busyness,
+  //   // entrances (returns an array of lat-long)
+  //   isCoffeeShop,
+  //   isToilet,
+  //   // parkEntrance,
+  // };
 
   function formatYesNo(value: number): string {
     return value === 1 ? "Yes" : "No";
@@ -78,6 +78,7 @@ ResultCardProps) {
         busyness={busyness}
         isCoffeeShop={isCoffeeShop}
         isToilet={isToilet}
+        activities={[]}
       />
     </>
   );

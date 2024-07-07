@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation } from "react-router-dom";
 import ResultCard from "./ResultCard";
 const Results = () => {
@@ -16,6 +17,8 @@ const Results = () => {
             busyness={parkResult.busyness}
             isCoffeeShop={parkResult.park.isCoffeeShop}
             isToilet={parkResult.park.isToilet}
+            entrances={""}
+            parkEntrance={""}
           />
         ))}
       </ul>
