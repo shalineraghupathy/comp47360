@@ -63,5 +63,10 @@ jobs:
         run: docker pull shalineraghupathy/parkfinder-client:latest
       - name: Delete Old Container
         run: docker rm -f parkfinder-client-container
+      #   - name: Run docker container
+      #     run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
       - name: Run docker container
-        run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
+        env:
+          VITE_GOOGLEMAP_KEY: ${{ secrets.VITE_GOOGLEMAP_KEY }}
+          VITE_NPS_API_KEY: ${{ secrets.VITE_NPS_API_KEY }}
+        run: docker run -d -p 3000:80 --env VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY --env VITE_NPS_API_KEY=$VITE_NPS_API_KEY --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
