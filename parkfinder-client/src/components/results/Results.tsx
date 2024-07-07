@@ -16,7 +16,6 @@ const Results = () => {
       let match = true;
 
       if (filters.isToilet !== undefined) {
-        console.log(park.park.isToilet === filters.isToilet);
         match = match && park.park.isToilet === (filters.isToilet ? 1 : 0);
       }
 
@@ -31,7 +30,7 @@ const Results = () => {
       }
       return match;
     });
-    console.log(filtered);
+
     setFilteredParks(filtered);
   }
 
