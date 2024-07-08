@@ -7,8 +7,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  max-height: 550px;
+  min-height: 550px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  position: relative;
 }
 
 .parkcard:hover {
@@ -17,8 +20,8 @@
 
 .parkcard img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 55%;
+  object-fit: fill;
 }
 
 .parkcardtitle {
@@ -26,18 +29,28 @@
   margin: 10px;
 }
 
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 10px;
+}
+
 .parkcardbutton {
-  display: block;
-  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px;
   background-color: #333;
   color: white;
   text-decoration: none;
-  padding: 10px;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border: none;
   transition: background-color 0.2s;
+  font-size: 0.875rem;
 }
 
-.parkcard-button:hover {
+.parkcardbutton:hover {
   background-color: #555;
 }

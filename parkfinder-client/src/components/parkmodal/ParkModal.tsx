@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import _default from "react-bootstrap/esm/Accordion";
 import "./ParkModal.css";
 
 interface ParkModalProps {
@@ -12,6 +11,7 @@ interface ParkModalProps {
   busyness: number;
   isCoffeeShop: number;
   isToilet: number;
+  activities: { id: string; name: string }[];
 }
 
 function ParkModal({
@@ -22,18 +22,9 @@ function ParkModal({
   busyness,
   isCoffeeShop,
   isToilet,
+  activities,
 }: ParkModalProps) {
-  const [weather, setWeather] = useState(null);
-
-  const park = {
-    parkName,
-    distance,
-    busyness,
-    // entrances (returns an array of lat-long)
-    isCoffeeShop,
-    isToilet,
-    // parkEntrance,
-  };
+  const [weather, setWeather] = useState<any | null>(null);
 
   useEffect(() => {
     if (show) {
@@ -59,8 +50,7 @@ function ParkModal({
     }
   };
 
-  //convert UNIX timestamp to real time for sunrise/sunset info
-  const formatTime = (timestamp) => {
+  const formatTime = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -69,11 +59,9 @@ function ParkModal({
     });
   };
 
-  function formatYesNo(value: number): string {
-    return value === 1 ? "Yes" : "No";
-  }
+  const formatYesNo = (value: number): string => (value === 1 ? "Yes" : "No");
 
-  function busynessScore(value: number): string {
+  const busynessScore = (value: number): string => {
     if (value >= 66) {
       return "High";
     } else if (value >= 33) {
@@ -81,195 +69,68 @@ function ParkModal({
     } else {
       return "Low";
     }
-  }
+  };
 
   return (
-    <>
-      <Modal show={show} onHide={handleClose} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{parkName}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-content-wrapper">
-            Distance: {distance} <br />
-            Busyness: {busynessScore(busyness)}
-            <br />
-            Coffee Shop: {formatYesNo(isCoffeeShop)}
-            <br />
-            Toilets: {formatYesNo(isToilet)}
-            <br />
-            {/* <table className="park-info-table">
-              <tbody>
-                <tr>
-                  <td colSpan={2}>
-                    <h5>Park Information</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Location</td>
-                  <td>
-                    <a href="#">View on Map</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Opening Hours</td>
-                  <td>9am – 9pm</td>
-                </tr>
-                <tr>
-                  <td>Toilets</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Disabled Toilets</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Playground</td>
-                  <td>Yes</td>
-                </tr>
-              </tbody>
-            </table> */}
-            <div className="weather-box">
-              {weather ? (
-                <div className="weather-info">
-                  <div className="weather-header">
-                    <p>Manhattan, NYC</p>
-                    <p>{weather.weather[0].description}</p>
+    <Modal show={show} onHide={handleClose} centered size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title>{parkName}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="modal-content-wrapper">
+          Distance: {distance} <br />
+          Busyness: {busynessScore(busyness)}
+          <br />
+          Coffee Shop: {formatYesNo(isCoffeeShop)}
+          <br />
+          Toilets: {formatYesNo(isToilet)}
+          <br />
+          Activities: {activities.map((activity) => activity.name).join(", ")}
+          <br />
+          <div className="weather-box">
+            {weather ? (
+              <div className="weather-info">
+                <div className="weather-header">
+                  <p>Manhattan, NYC</p>
+                  <p>{weather.weather[0].description}</p>
+                </div>
+                <div className="weather-main">
+                  <div className="weather-temp">
+                    <p>{weather.main.temp}°C</p>
                   </div>
-                  <div className="weather-main">
-                    <div className="weather-temp">
-                      <p>{weather.main.temp}°C</p>
-                    </div>
-                    <img
-                      src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-                      alt="Weather icon"
-                    />
+                  <img
+                    src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
+                    alt="Weather icon"
+                  />
+                </div>
+                <div className="weather-details-container">
+                  <div className="weather-detail">
+                    <p>Sunrise {formatTime(weather.sunrise)}</p>
                   </div>
-                  <div className="weather-details-container">
-                    <div className="weather-detail">
-                      <p>Sunrise {formatTime(weather.sunrise)}</p>
-                    </div>
-                    <div className="weather-detail">
-                      <p>Sunset {formatTime(weather.sunset)}</p>
-                    </div>
+                  <div className="weather-detail">
+                    <p>Sunset {formatTime(weather.sunset)}</p>
                   </div>
                 </div>
-              ) : (
-                <p>No weather information available.</p>
-              )}
-            </div>
+              </div>
+            ) : (
+              <p>No weather information available.</p>
+            )}
           </div>
-          <div className="busyness-section">
-            <h5>When is this park busy?</h5>
-            <div className="busyness-chart">
-              [Average Busyness Chart Placeholder]
-            </div>
+        </div>
+        <div className="busyness-section">
+          <h5>When is this park busy?</h5>
+          <div className="busyness-chart">
+            [Average Busyness Chart Placeholder]
           </div>
-          <div className="icons-section">
-            <i className="share-icon">[Share Icon]</i>
-            <i className="tweet-icon">[Twitter Icon]</i>
-            <i className="heart-icon">[Heart Icon]</i>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
+        </div>
+        <div className="icons-section">
+          <i className="share-icon">[Share Icon]</i>
+          <i className="tweet-icon">[Twitter Icon]</i>
+          <i className="heart-icon">[Heart Icon]</i>
+        </div>
+      </Modal.Body>
+    </Modal>
   );
 }
 
 export default ParkModal;
-
-{
-  /* //1
-  /* <div className="weather-box">
-{weather ? (
-  <div className="weather">
-    <p id="forecast">
-      <img
-        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-        alt="Weather icon"
-      />
-      {weather.main.temp}°C, {weather.weather[0].description}{" "}
-    </p>
-    <p id="sun">
-      Sunrise: {formatTime(weather.sunrise)} <br />
-      Sunset: {formatTime(weather.sunset)}
-    </p>
-  </div>
-) : (
-  <p>No weather information available.</p>
-)}
-</div>
-<p id="park-info">Park Information To Be Populated</p> */
-}
-
-// 2
-{
-  /* <div className="park-info">
-<div className="info-section">
-  <h5>Park Information</h5>
-  <p>
-    Location: <a href="#">View on map</a>
-  </p>
-  <p>Opening hours: 9am-9pm</p>
-  <p>Toilets: Yes</p>
-  <p>Disabled Access: Yes</p>
-  <p>Playground: Yes</p>
-</div>
-<div className="weather-section">
-  <h5>Weather</h5>
-  {weather ? (
-    <>
-      <p id="forecast">
-        <img
-          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
-          alt="Weather icon"
-        />
-        <br />
-        {weather.main.temp}°C, {weather.weather[0].description}{" "}
-      </p>
-      <p>Sunset: {formatTime(weather.sunset)}</p>
-      <p>Sunrise: {formatTime(weather.sunrise)}</p>
-    </>
-  ) : (
-    <p>No weather information available.</p>
-  )}
-</div>
-</div>
-<div className="busyness-section">
-<h5>Busyness by Day</h5>
-<div className="busyness-chart">[Chart Placeholder]</div>
-</div>
-<div className="icons">
-<i className="share-icon">[Share Icon]</i>
-<i className="tweet-icon">[Tweet Icon]</i>
-<i className="favourite-icon">[Heart Icon]</i>
-</div> */
-}
-
-{
-  /* <table className="weather-info-table">
-              <tbody>
-                <tr>
-                  <td colSpan={2}>
-                    <h5>Weather</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Temperature</td>
-                  <td>
-                    {weather
-                      ? `${weather.main.temp}°C, ${weather.weather[0].description}`
-                      : "No weather information available."}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Sunrise</td>
-                  <td>{weather ? formatTime(weather.sunrise) : "-"}</td>
-                </tr>
-                <tr>
-                  <td>Sunset</td>
-                  <td>{weather ? formatTime(weather.sunset) : "-"}</td>
-                </tr>
-              </tbody>
-            </table> */
-}

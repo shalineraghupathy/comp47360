@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import "./HeroImage.css";
+import "../parkmodal/ParkModal.css";
 
-const images = ["./public/1.jpg", "./public/3.jpg", "./public/6.jpg"];
+const images = ["./1.jpg", "./3.jpg", "./6.jpg"];
 
 function HeroImage() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -9,19 +9,19 @@ function HeroImage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage + 1) % images.length);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <>
+    <div>
       <div
         className="hero-image"
         style={{ backgroundImage: `url(${images[currentImage]})` }}
       >
         <div className="overlay"></div>
       </div>
-    </>
+    </div>
   );
 }
 

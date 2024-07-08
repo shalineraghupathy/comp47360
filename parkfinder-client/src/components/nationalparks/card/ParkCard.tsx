@@ -9,6 +9,7 @@ export interface Park {
   description: string;
   url: string;
   images: { url: string }[];
+  activities: { id: string; name: string }[]; // Add activities property
 }
 
 interface ParkCardProps {
@@ -26,9 +27,13 @@ const ParkCard: React.FC<ParkCardProps> = ({ park }) => {
       <Card className="parkcard">
         <Card.Img variant="top" src={park.images[0]?.url} alt={park.fullName} />
         <Card.Body>
-          <Card.Title>{park.fullName}</Card.Title>
-          <Card.Text>{park.description}</Card.Text>
-          <Button variant="link" onClick={handleShow}>
+          <Card.Title className="parkcardtitle">{park.fullName}</Card.Title>
+          <Card.Text className="description">{park.description}</Card.Text>
+          <Button
+            variant="link"
+            className="parkcardbutton"
+            onClick={handleShow}
+          >
             View Details
           </Button>
         </Card.Body>

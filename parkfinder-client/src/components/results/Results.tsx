@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ResultCard from "./ResultCard";
