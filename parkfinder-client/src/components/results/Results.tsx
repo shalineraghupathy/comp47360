@@ -1,68 +1,59 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ResultCard from "./ResultCard";
-import ParkSearchForm from "../parksearch/ParkSearchForm";
+import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
 import ResultFilters from "./ResultFilters";
 import "./Results.css";
+import { getParks, convertToTimestamp } from "../../services/parks";
+import { LocationData } from "../parksearch/ParkSearchForm";
+import { filterParks } from "../../services/parks";
 
 const Results = () => {
   const location = useLocation();
   const parksResult = location.state?.parks || [];
+  const [filters, setFilters] = useState(location.state?.filters || {});
+
   const [filteredParks, setFilteredParks] = useState(parksResult);
+  const [searchKey, setSearchKey] = useState(0);
 
-  function handleApplyFilters(filters) {
-    const filtered = parksResult.filter((park) => {
-      let match = true;
+  useEffect(() => {
+    if (filteredParks.length > 0) {
+      handleApplyFilters();
+    }
+  }, [filters, filteredParks]);
 
-      if (filters.isToilet !== undefined) {
-        match = match && park.park.isToilet === (filters.isToilet ? 1 : 0);
-      }
-
-      if (filters.isCoffeeShop !== undefined) {
-        match =
-          match && park.park.isCoffeeShop === (filters.isCoffeeShop ? 1 : 0);
-      }
-
-      if (filters.busyness) {
-        const [min, max] = busynessRange(filters.busyness);
-        match = match && park.busyness >= min && park.busyness <= max;
-      }
-      return match;
-    });
-
+  function handleApplyFilters() {
+    const filtered = filterParks(filters, parksResult);
     setFilteredParks(filtered);
   }
 
   function handleResetFilters() {
+    setFilters({});
     setFilteredParks(parksResult);
   }
 
-  const handleSearchSubmit = (
-    park: string,
+  const handleSearchSubmit = async (
+    location: LocationData,
     date: string,
-    preference: string
+    time: string,
+    filters: Filters
   ) => {
-    console.log({ park, date, preference });
+    const timestamp = convertToTimestamp(date, time);
+    setFilters(filters);
+
+    const parks = await getParks(location.lat, location.lng, timestamp);
+    setFilteredParks(parks);
+
+    handleApplyFilters();
+    setSearchKey(searchKey + 1);
   };
 
-  function busynessRange(category: string): [number, number] {
-    if (category === "high") {
-      return [66, 100];
-    } else if (category === "medium") {
-      return [33, 65];
-    } else if (category === "low") {
-      return [0, 32];
-    }
-  }
-
   return (
-    <Container className="results-container">
+    <Container className="results-container" key={searchKey}>
       <div>
-        <ParkSearchForm
-          className="results-search-form"
-          onSubmit={handleSearchSubmit}
-        />
+        <ParkSearchForm onSubmit={handleSearchSubmit} />
         <Row>
           <Col xs={12} s={12} md={12} lg={3}>
             <div className="left-column">
@@ -92,6 +83,7 @@ const Results = () => {
                 <ResultFilters
                   onApply={handleApplyFilters}
                   onReset={handleResetFilters}
+                  filters={filters}
                 />
               </div>
             </div>

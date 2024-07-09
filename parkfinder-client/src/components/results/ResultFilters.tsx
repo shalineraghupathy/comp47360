@@ -1,20 +1,28 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./ResultFilters.css";
+import { Filters } from "../parksearch/ParkSearchForm";
 
-const ResultFilters = ({ onApply, onReset }) => {
-  const [isToilet, setIsToilet] = useState<boolean | undefined>(undefined);
-  const [isCoffeeShop, setIsCoffeeShop] = useState<boolean | undefined>(
-    undefined
+interface ResultFiltersProps {
+  onApply: () => void;
+  onReset: () => void;
+  filters: Filters;
+}
+
+const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
+  const [isToilet, setIsToilet] = useState<boolean | undefined>(
+    filters.isToilet
   );
-  const [busyness, setBusyness] = useState<string>("");
+  const [isCoffeeShop, setIsCoffeeShop] = useState<boolean | undefined>(
+    filters.isCoffeeShop
+  );
+  const [busyness, setBusyness] = useState<string | undefined>(
+    filters.busyness
+  );
 
-  // const handleApply = () => {
-  //   onApply({ isToilet, isCoffeeShop, busyness });
-  // };
   useEffect(() => {
-    onApply({ isToilet, isCoffeeShop, busyness });
-  }, [isToilet, isCoffeeShop, busyness]);
+    onApply();
+  }, [isToilet, isCoffeeShop, busyness, filters]);
 
   const handleReset = () => {
     setIsToilet(undefined);
@@ -23,12 +31,31 @@ const ResultFilters = ({ onApply, onReset }) => {
     onReset();
   };
 
-  const handleCheckboxChange = (setter) => (event) => {
-    setter(event.target.checked ? true : undefined);
-  };
+  const handleCheckboxChange =
+    (setter: (value: boolean | undefined) => void) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const checked = event.target.checked ? true : undefined;
+      setter(checked);
+      console.log(event.target);
+      if (event.target.id == "toiletSelect") {
+        filters.isToilet = checked;
+      }
+      if (event.target.id == "coffeeShopSelect") {
+        filters.isCoffeeShop = checked;
+      }
+    };
 
-  const handleBusynessChange = (event) => {
-    setBusyness(event.target.checked ? event.target.value : "");
+  //set multiple busyness filters but must be reset by reset button
+  // const handleBusynessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setBusyness(event.target.value);
+  //   filters.busyness = event.target.value;
+  // };
+
+  // select one busyness filter but can uncheck the box
+  const handleBusynessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setBusyness((prevBusyness) => (prevBusyness === value ? undefined : value)); // Toggle the checkbox
+    filters.busyness = busyness === value ? undefined : value;
   };
 
   return (
@@ -142,17 +169,6 @@ const ResultFilters = ({ onApply, onReset }) => {
         </Row>
         <Row>
           <Col>
-            {/* <Button
-              variant="success"
-              onClick={handleApply}
-              style={{
-                marginRight: "1rem",
-                marginTop: "0.5rem",
-                borderRadius: "20px",
-              }}
-            >
-              APPLY
-            </Button> */}
             <Button
               variant="light"
               onClick={handleReset}
@@ -169,135 +185,5 @@ const ResultFilters = ({ onApply, onReset }) => {
     </div>
   );
 };
-
-//     <div className="filter-container">
-//       <Form>
-//         <Row className="mb-3">
-//           <Col>
-//             <Form.Group controlId="busynessSelect">
-//               {/* <Form.Label>Filter by Busyness</Form.Label> */}
-//               <Form.Control
-//                 as="select"
-//                 value={busyness}
-//                 onChange={(e) => setBusyness(e.target.value)}
-//                 style={{ borderRadius: "20px" }}
-//               >
-//                 <option value="">Busyness Level</option>
-//                 <option value="low">Low</option>
-//                 <option value="medium">Medium</option>
-//                 <option value="high">High</option>
-//               </Form.Control>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-//         <Row className="mb-3">
-//           <Col>
-//             <Form.Group controlId="toiletSelect">
-//               {/* <Form.Label>Filter by Toilets</Form.Label> */}
-//               <Form.Control
-//                 as="select"
-//                 value={isToilet !== undefined ? String(isToilet) : ""}
-//                 onChange={(e) => setIsToilet(e.target.value === "true")}
-//                 style={{ borderRadius: "20px" }}
-//               >
-//                 <option value="">Toilets</option>
-//                 <option value="true">Yes</option>
-//                 <option value="false">No</option>
-//               </Form.Control>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-//         <Row className="mb-3">
-//           <Col>
-//             <Form.Group controlId="coffeeShopSelect">
-//               {/* <Form.Label>Filter by Coffee Shop</Form.Label> */}
-//               <Form.Control
-//                 as="select"
-//                 value={isCoffeeShop !== undefined ? String(isCoffeeShop) : ""}
-//                 onChange={(e) => setIsCoffeeShop(e.target.value === "true")}
-//                 style={{ borderRadius: "20px" }}
-//               >
-//                 <option value="">Coffee Shop</option>
-//                 <option value="true">Yes</option>
-//                 <option value="false">No</option>
-//               </Form.Control>
-//             </Form.Group>
-//           </Col>
-//         </Row>
-//         <Row>
-//           <Col>
-//             <Button
-//               variant="success"
-//               onClick={handleApply}
-//               style={{
-//                 marginRight: "1rem",
-//                 marginTop: "0.5rem",
-//                 borderRadius: "20px",
-//               }}
-//             >
-//               APPLY
-//             </Button>
-//             <Button
-//               variant="secondary"
-//               onClick={handleReset}
-//               style={{ borderRadius: "20px" }}
-//             >
-//               RESET
-//             </Button>
-//           </Col>
-//         </Row>
-//       </Form>
-//     </div>
-//   );
-// };
-//   return (
-//     <div className="filters-container">
-//       <div className="filter-item">
-//         <select
-//           className="filter-drop"
-//           value={isToilet !== undefined ? String(isToilet) : ""}
-//           onChange={(e) => setIsToilet(e.target.value === "true")}
-//         >
-//           <option value="" disabled>
-//             Toilets
-//           </option>
-//           <option value="true">Yes</option>
-//           <option value="false">No</option>
-//         </select>
-//       </div>
-//       <div className="filter-item">
-//         <select
-//           className="filter-drop"
-//           value={isCoffeeShop !== undefined ? String(isCoffeeShop) : ""}
-//           onChange={(e) => setIsCoffeeShop(e.target.value === "true")}
-//         >
-//           <option value="" disabled>
-//             Coffee Shops
-//           </option>
-//           <option value="true">Yes</option>
-//           <option value="false">No</option>
-//         </select>
-//       </div>
-//       <div className="filter-item">
-//         <select
-//           className="filter-drop"
-//           value={busyness}
-//           onChange={(e) => setBusyness(e.target.value)}
-//         >
-//           <option value="" disabled>
-//             Busyness
-//           </option>
-//           <option value="low">Low</option>
-//           <option value="medium">Medium</option>
-//           <option value="high">High</option>
-//         </select>
-//       </div>
-//       <div className="filter-buttons">
-//         <button onClick={handleApply}>APPLY</button>
-//         <button onClick={handleReset}>RESET</button>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default ResultFilters;

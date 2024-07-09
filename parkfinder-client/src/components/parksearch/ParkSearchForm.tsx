@@ -2,31 +2,40 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { getParks, convertToTimestamp } from "../../services/parks";
+import Multiselect from "multiselect-react-dropdown";
+
+export interface Filters {
+  isToilet?: boolean;
+  isCoffeeShop?: boolean;
+  busyness?: string;
+}
+
+export interface LocationData {
+  lat: number;
+  lng: number;
+}
 
 interface ParkSearchFormProps {
   onSubmit: (
-    location: { lat: number; lng: number },
+    location: LocationData,
     date: string,
     time: string,
-    preference: string
+    filters: Filters
   ) => void;
   withShadow?: boolean;
 }
 
 function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-    null
-  );
+  const [location, setLocation] = useState<LocationData | null>(null);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [preference, setPreference] = useState("");
+  const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
-
   const navigate = useNavigate();
 
+  //Time & Date Management
   useEffect(() => {
-    // Set the default date to today
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
 
@@ -39,55 +48,34 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     setTime(currentTime);
   }, []);
 
+  //state handlers
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
   }
 
-  async function getParks(userLat: number, userLon: number, playTime: number) {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
-      );
-
-      console.log("Parks fetched successfully:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching parks:", error);
-      throw error;
-    }
+  function onFiltersSelect(selectedList: string[]) {
+    setFilters({
+      isToilet: selectedList.includes("Toilet") ? true : undefined,
+      isCoffeeShop: selectedList.includes("Cafe") ? true : undefined,
+    });
   }
 
+  //form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
-      console.log("Latitude:", location.lat);
-      console.log("Longitude:", location.lng);
-      console.log("Date:", date);
-      console.log("Time:", time);
-      console.log("Preference:", preference);
-
-      const timestamp = Math.floor(
-        new Date(`${date}T${time}`).getTime() / 1000
-      );
+      const timestamp = convertToTimestamp(date, time);
       try {
         const parksResult = await getParks(
           location.lat,
           location.lng,
           timestamp
         );
-        const formData = {
-          latitude: location.lat,
-          longitude: location.lng,
-          date: date,
-          time: time,
-          preference: preference,
-        };
 
-        const formDataJson = JSON.stringify(formData);
-        console.log("Form data as JSON:", formDataJson);
-
-        onSubmit(location, date, time, preference);
-        navigate("/results", { state: { parks: parksResult } });
+        onSubmit(location, date, time, filters);
+        navigate("/results", {
+          state: { parks: parksResult, filters: filters },
+        });
       } catch (error) {
         setShowToast(true);
       }
@@ -95,6 +83,16 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
       setShowToast(true);
     }
   }
+
+  const customStyles = {
+    searchBox: {
+      borderRadius: "6px",
+      height: "calc(1.4em + 0.75rem + 2px)",
+      lineHeight: "10px",
+      maxHeight: "10rem",
+      border: "1px solid #dee2e6",
+    },
+  };
 
   return (
     <>
@@ -131,18 +129,18 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={3}>
-            <Form.Group className="form-row" controlId="preference">
-              <Form.Control
-                as="select"
-                value={preference}
-                onChange={(e) => setPreference(e.target.value)}
-              >
-                <option value="" disabled>
-                  Amenities
-                </option>
-                <option value="toilets">Toilets</option>
-                <option value="playground">Playground</option>
-              </Form.Control>
+            <Form.Group
+              className="form-row"
+              id="multiselect"
+              controlId="filters"
+            >
+              <Multiselect
+                isObject={false}
+                onRemove={onFiltersSelect}
+                onSelect={onFiltersSelect}
+                options={["Toilet", "Cafe"]}
+                style={customStyles}
+              />
             </Form.Group>
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>

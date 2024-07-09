@@ -17,7 +17,7 @@ function MainContent() {
     time: string,
     preference: string
   ) => {
-    console.log({ park, date, preference });
+    console.log({ location, date, time, preference });
   };
 
   const popularParks = [
