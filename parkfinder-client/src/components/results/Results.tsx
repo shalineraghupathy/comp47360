@@ -18,12 +18,6 @@ const Results = () => {
   const [filteredParks, setFilteredParks] = useState(parksResult);
   const [searchKey, setSearchKey] = useState(0);
 
-  useEffect(() => {
-    if (filteredParks.length > 0) {
-      handleApplyFilters();
-    }
-  }, [filters, filteredParks]);
-
   function handleApplyFilters() {
     const filtered = filterParks(filters, parksResult);
     setFilteredParks(filtered);
