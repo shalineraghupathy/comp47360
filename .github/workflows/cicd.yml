@@ -87,3 +87,9 @@ jobs:
             --env VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY \
             --name parkfinder-client-container \
             shalineraghupathy/parkfinder-client:latest
+
+      - name: Test API Request
+        env:
+          VITE_NPS_API_KEY: ${{ secrets.VITE_NPS_API_KEY }}
+        run: |
+          curl -X GET "https://developer.nps.gov/api/v1/parks?api_key=$VITE_NPS_API_KEY&limit=471&stateCode=NY"
