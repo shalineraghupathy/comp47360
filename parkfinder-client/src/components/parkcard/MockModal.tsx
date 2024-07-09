@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import amenityIcons from "./AmenityIcon";
-import "./ParkModal.css";
+import amenityIcons from "../parkmodal/AmenityIcon";
+import "../parkmodal/ParkModal.css";
 
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
-  distance: number;
-  busyness: number;
   isCoffeeShop: number;
   isToilet: number;
 }
@@ -18,8 +15,6 @@ function ParkModal({
   show,
   handleClose,
   parkName,
-  distance,
-  busyness,
   isCoffeeShop,
   isToilet,
 }: ParkModalProps) {
@@ -48,42 +43,6 @@ function ParkModal({
       setWeather(null);
     }
   };
-
-  // const formatTime = (timestamp: number) => {
-  //   const date = new Date(timestamp * 1000);
-  //   return date.toLocaleTimeString("en-US", {
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     timeZone: "America/New_York",
-  //   });
-  // };
-
-  // const formatYesNo = (value: number): string => (value === 1 ? "Yes" : "No");
-
-  // const busynessScore = (value: number): string => {
-  //   if (value >= 66) {
-  //     return "High";
-  //   } else if (value >= 33) {
-  //     return "Medium";
-  //   } else {
-  //     return "Low";
-  //   }
-  // };
-
-  const getVariant = (busyness: number) => {
-    if (busyness <= 33) return "success";
-    if (busyness <= 66) return "warning";
-    return "danger";
-  };
-  const getLabel = (busyness: number) => {
-    if (busyness <= 33) return "Low";
-    if (busyness <= 66) return "Medium";
-    return "High";
-  };
-
-  // function resolveDistance(distance: number) {
-  //   return `${distance.toFixed(2)} km`;
-  // }
 
   const shareText = encodeURIComponent(
     `Heading to ${parkName}! Check it out on ParkFinder.`
@@ -137,16 +96,6 @@ function ParkModal({
                 )
             )}
           </div>
-        </div>
-        <div className="busyness-section">
-          <h5>How busy is {parkName} right now?</h5>
-          <span className="busyness-bar">
-            <ProgressBar
-              now={busyness}
-              label={getLabel(busyness)}
-              variant={getVariant(busyness)} // Color variant of the progress bar
-            />
-          </span>
         </div>
         <div className="icons-section">
           <a

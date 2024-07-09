@@ -23,27 +23,27 @@ function MainContent() {
   const popularParks = [
     {
       name: "Central Park",
-      image:
-        "https://media.cntraveler.com/photos/55f9aa4cc753332a5bcdfbb1/16:9/w_2560%2Cc_limit/central-park-nyc-cr-getty.jpg",
-      link: "More",
+      image: "/staticparkimages/centralp.jpeg",
+      isToilet: 1,
+      isCoffeeShop: 1,
     },
     {
-      name: "Prospect Park",
-      image:
-        "https://media.cntraveler.com/photos/55f9aa4cc753332a5bcdfbb1/16:9/w_2560%2Cc_limit/central-park-nyc-cr-getty.jpg",
-      link: "More",
+      name: "Bryant Park",
+      image: "/staticparkimages/bryantp.jpeg",
+      isToilet: 1,
+      isCoffeeShop: 1,
     },
     {
-      name: "Battery Park",
-      image:
-        "https://media.cntraveler.com/photos/55f9aa4cc753332a5bcdfbb1/16:9/w_2560%2Cc_limit/central-park-nyc-cr-getty.jpg",
-      link: "More",
+      name: "The High Line",
+      image: "/staticparkimages/highline.jpg",
+      isToilet: 1,
+      isCoffeeShop: 1,
     },
     {
-      name: "Another Park",
-      image:
-        "https://media.cntraveler.com/photos/55f9aa4cc753332a5bcdfbb1/16:9/w_2560%2Cc_limit/central-park-nyc-cr-getty.jpg",
-      link: "More",
+      name: "Washington Square Park",
+      image: "/staticparkimages/washington.jpg",
+      isToilet: 1,
+      isCoffeeShop: 1,
     },
     //etc.
   ];
@@ -108,15 +108,11 @@ function MainContent() {
               {popularParks.map((park, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
                   <ParkCard
-                    name={park.name}
+                    parkName={park.name}
                     image={park.image}
-                    link={park.link}
-                    distance={""}
-                    busyness={0}
-                    isCoffeeShop={0}
-                    isToilet={0}
-                    activities={[]}
-                  />{" "}
+                    isCoffeeShop={park.isCoffeeShop}
+                    isToilet={park.isToilet}
+                  />
                 </Col>
               ))}
             </Row>

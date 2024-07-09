@@ -83,7 +83,22 @@ const Results = () => {
             </div>
           </Col>
           <Col xs={12} s={12} md={12} lg={9}>
-            <h3 className="results-heading">Park Search Results</h3>
+            <p className="results-heading">
+              <i
+                className="fa fa-search"
+                aria-hidden="true"
+                style={{
+                  marginLeft: "1rem",
+                  marginRight: "1rem",
+                  fontSize: "1.25rem",
+                  padding: "0.5rem",
+                  borderRadius: "40px",
+                  border: "2px solid white",
+                }}
+              ></i>
+              See the results of your search below and apply additional filters
+              using the sidebar
+            </p>
             <div className="cards-container">
               {filteredParks.map((parkResult: any, index: number) => (
                 <ResultCard
