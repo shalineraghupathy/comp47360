@@ -72,21 +72,16 @@ jobs:
         run: sleep 30
 
       - name: Pull and run parkfinder-client container
-        env:
-          VITE_GOOGLEMAP_KEY: ${{ secrets.VITE_GOOGLEMAP_KEY }}
-          VITE_NPS_API_KEY: ${{ secrets.VITE_NPS_API_KEY }}
-          VITE_GOOGLE_API_KEY: ${{ secrets.VITE_GOOGLE_API_KEY }}
-          VITE_OPENWEATHER_API_KEY: ${{ secrets.VITE_OPENWEATHER_API_KEY }}
         run: |
           docker pull shalineraghupathy/parkfinder-client:latest
           docker rm -f parkfinder-client-container || true
           docker run -d -p 3000:80 \
-            --env VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY \
-            --env VITE_NPS_API_KEY=$VITE_NPS_API_KEY \
-            --env VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY \
-            --env VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY \
-            --name parkfinder-client-container \
-            shalineraghupathy/parkfinder-client:latest
+              --env VITE_GOOGLEMAP_KEY=${{ secrets.VITE_GOOGLEMAP_KEY }} \
+              --env VITE_NPS_API_KEY=${{ secrets.VITE_NPS_API_KEY }} \
+              --env VITE_GOOGLE_API_KEY=${{ secrets.VITE_GOOGLE_API_KEY }} \
+              --env VITE_OPENWEATHER_API_KEY=${{ secrets.VITE_OPENWEATHER_API_KEY }} \
+              --name parkfinder-client-container \
+              shalineraghupathy/parkfinder-client:latest
 
       - name: Test API Request
         env:
