@@ -9,8 +9,18 @@
         <id column="park_id" property="parkId"/>
         <result column="park_name" property="parkName"/>
         <result column="park_entrance" property="parkEntrance"/>
+        <result column="is_cafe" property="isCafe"/>
+        <result column="is_playground" property="isPlayground"/>
         <result column="is_toilet" property="isToilet"/>
-        <result column="is_coffee_shop" property="isCoffeeShop"/>
+        <result column="is_toilet_handicap_access" property="isToiletHandicapAccess"/>
+        <result column="is_restaurant" property="isRestaurant"/>
+        <result column="is_shelter" property="isShelter"/>
+        <result column="is_drinking_water" property="isDrinkingWater"/>
+        <result column="is_bar" property="isBar"/>
+        <result column="is_bench" property="isBench"/>
+        <result column="is_garden" property="isGarden"/>
+        <result column="is_fountain" property="isFountain"/>
+        <result column="is_monument" property="isMonument"/>
     </resultMap>
 
     <select id="findAll" resultMap="ParkResultMap">
