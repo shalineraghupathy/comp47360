@@ -59,7 +59,7 @@ public class ParkServiceImpl implements ParkService {
     }
 
     @Override
-    public double predictBusyness(int parkId, int playTime) {
+    public double predictBusyness(String parkId, int playTime) {
         // Fake Impl!
         Random random = new Random();
         return random.nextDouble() * 100;
