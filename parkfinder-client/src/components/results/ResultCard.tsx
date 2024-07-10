@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Card, Col, Row, ProgressBar } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Row,
+  ProgressBar,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import ParkModal from "../parkmodal/ParkModal";
 import amenityIcons from "../parkmodal/AmenityIcon";
 import "./ResultCard.css";
@@ -97,16 +104,23 @@ ResultCardProps) {
                   {amenities.map(
                     (amenity) =>
                       amenity.value === 1 && (
-                        <div key={amenity.name} className="amenity-item">
-                          <img
-                            src={
-                              amenityIcons[amenity.name] || amenityIcons.default
-                            }
-                            alt={amenity.name}
-                            className="amenity-icon"
-                          />
-                          {/* {amenity.name} */}
-                        </div>
+                        <OverlayTrigger
+                          key={amenity.name}
+                          placement="top"
+                          overlay={<Tooltip>{amenity.name}</Tooltip>}
+                        >
+                          <div key={amenity.name} className="amenity-item">
+                            <img
+                              src={
+                                amenityIcons[amenity.name] ||
+                                amenityIcons.default
+                              }
+                              alt={amenity.name}
+                              className="amenity-icon"
+                            />
+                            {/* {amenity.name} */}
+                          </div>
+                        </OverlayTrigger>
                       )
                   )}
                 </div>
