@@ -3368,3 +3368,8 @@ parkfinder-app/node_modules/yocto-queue/readme.md
 .idea/compiler.xml
 .idea/encodings.xml
 .idea/jarRepositories.xml
+calendar-service/.idea/compiler.xml
+calendar-service/.idea/encodings.xml
+calendar-service/.idea/jarRepositories.xml
+calendar-service/.idea/misc.xml
+calendar-service/.idea/vcs.xml
