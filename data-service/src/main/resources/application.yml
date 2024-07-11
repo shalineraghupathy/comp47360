@@ -4,9 +4,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/nycparkfinder
+    url: jdbc:mysql://localhost:3306/parkfinder
     username: root
-    password: mariecurie
+    password: yanwen
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   cloud:
