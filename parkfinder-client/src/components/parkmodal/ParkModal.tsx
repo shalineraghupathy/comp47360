@@ -24,10 +24,12 @@ function ParkModal({
   isToilet,
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
+  const [airQuality, setAirQuality] = useState<any | null>(null);
 
   useEffect(() => {
     if (show) {
       fetchWeather();
+      fetchAirQuality();
     }
   }, [show]);
 
@@ -37,6 +39,7 @@ function ParkModal({
     try {
       const response = await fetch(url);
       const data = await response.json();
+
       setWeather({
         ...data,
         sunrise: data.sys.sunrise,
@@ -46,6 +49,22 @@ function ParkModal({
     } catch (error) {
       console.error("Failed to fetch weather...", error);
       setWeather(null);
+    }
+  };
+
+  const fetchAirQuality = async () => {
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const lat = "40.7834";
+    const lon = "-73.9662";
+    const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+    try {
+      const airQualityResponse = await fetch(airQualityUrl);
+      const airQualityData = await airQualityResponse.json();
+      console.log("Air quality data", airQuality);
+      setAirQuality(airQualityData);
+    } catch (error) {
+      console.error("Failed to fetch air quality data...", error);
     }
   };
 
@@ -81,6 +100,14 @@ function ParkModal({
     return "High";
   };
 
+  function transformAQI(aqi) {
+    if (aqi === 1) return "good";
+    if (aqi === 2) return "fair";
+    if (aqi === 3) return "moderate";
+    if (aqi === 4) return "poor";
+    if (aqi === 5) return "very poor";
+    return "unknown";
+  }
   // function resolveDistance(distance: number) {
   //   return `${distance.toFixed(2)} km`;
   // }
@@ -113,6 +140,7 @@ function ParkModal({
                     src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
                     alt="Weather icon"
                   />
+                  {transformAQI(airQuality.list[0].main.aqi)} air quality
                 </span>
               </div>
             </div>

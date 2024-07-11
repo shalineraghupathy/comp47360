@@ -7,22 +7,44 @@ interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
-  isCoffeeShop: number;
-  isToilet: number;
+  hasToilet: number;
+  hasCafe: number;
+  hasPlayground: number;
+  hasToiletHandicapAccess: number;
+  hasRestaurant: number;
+  hasShelter: number;
+  hasDrinkingWater: number;
+  hasBar: number;
+  hasBench: number;
+  hasGarden: number;
+  hasFountain: number;
+  hasMonument: number;
 }
 
 function ParkModal({
   show,
   handleClose,
   parkName,
-  isCoffeeShop,
-  isToilet,
+  hasCafe,
+  hasToilet,
+  hasPlayground,
+  hasToiletHandicapAccess,
+  hasRestaurant,
+  hasShelter,
+  hasDrinkingWater,
+  hasBar,
+  hasBench,
+  hasGarden,
+  hasFountain,
+  hasMonument,
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
+  const [airQuality, setAirQuality] = useState<any | null>(null);
 
   useEffect(() => {
     if (show) {
       fetchWeather();
+      fetchAirQuality();
     }
   }, [show]);
 
@@ -44,6 +66,31 @@ function ParkModal({
     }
   };
 
+  const fetchAirQuality = async () => {
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const lat = "40.7834";
+    const lon = "-73.9662";
+    const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+    try {
+      const airQualityResponse = await fetch(airQualityUrl);
+      const airQualityData = await airQualityResponse.json();
+      console.log("Air quality data", airQuality);
+      setAirQuality(airQualityData);
+    } catch (error) {
+      console.error("Failed to fetch air quality data...", error);
+    }
+  };
+
+  function transformAQI(aqi) {
+    if (aqi === 1) return "good";
+    if (aqi === 2) return "fair";
+    if (aqi === 3) return "moderate";
+    if (aqi === 4) return "poor";
+    if (aqi === 5) return "very poor";
+    return "unknown";
+  }
+
   const shareText = encodeURIComponent(
     `Heading to ${parkName}! Check it out on ParkFinder.`
   );
@@ -51,8 +98,18 @@ function ParkModal({
   const whatsappShareUrl = `https://wa.me/?text=${shareText}`;
 
   const amenities = [
-    { name: "Toilets", value: isToilet },
-    { name: "Cafe", value: isCoffeeShop },
+    { name: "Toilet", value: hasToilet },
+    { name: "Accessible Toilet", value: hasToiletHandicapAccess },
+    { name: "Playground", value: hasPlayground },
+    { name: "Benches", value: hasBench },
+    { name: "Shelter", value: hasShelter },
+    { name: "Drinking Fountain", value: hasDrinkingWater },
+    { name: "Cafe", value: hasCafe },
+    { name: "Restaurant", value: hasRestaurant },
+    { name: "Bar", value: hasBar },
+    { name: "Garden", value: hasGarden },
+    { name: "Fountain", value: hasFountain },
+    { name: "Monument", value: hasMonument },
   ];
 
   return (
@@ -72,6 +129,7 @@ function ParkModal({
                     src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
                     alt="Weather icon"
                   />
+                  {transformAQI(airQuality.list[0].main.aqi)} air quality
                 </span>
               </div>
             </div>
@@ -82,19 +140,21 @@ function ParkModal({
         <div className="modal-content-wrapper">
           <div className="amenities-section">
             <h5 className="amenities-heading">Amenities</h5>
-            {amenities.map(
-              (amenity) =>
-                amenity.value === 1 && (
-                  <div key={amenity.name} className="amenity-item">
-                    <img
-                      src={amenityIcons[amenity.name] || amenityIcons.default}
-                      alt={amenity.name}
-                      className="amenity-icon"
-                    />
-                    {amenity.name}
-                  </div>
-                )
-            )}
+            <div className="amenities-grid">
+              {amenities.map(
+                (amenity) =>
+                  amenity.value === 1 && (
+                    <div key={amenity.name} className="amenity-item">
+                      <img
+                        src={amenityIcons[amenity.name] || amenityIcons.default}
+                        alt={amenity.name}
+                        className="amenity-icon"
+                      />
+                      {amenity.name}
+                    </div>
+                  )
+              )}
+            </div>
           </div>
         </div>
         <div className="icons-section">

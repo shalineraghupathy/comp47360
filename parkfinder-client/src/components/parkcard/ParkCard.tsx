@@ -4,11 +4,36 @@ import MockModal from "./MockModal";
 interface ParkCardProps {
   parkName: string;
   image: string;
-  isCoffeeShop: number;
-  isToilet: number;
+  hasToilet: number;
+  hasCafe: number;
+  hasPlayground: number;
+  hasToiletHandicapAccess: number;
+  hasRestaurant: number;
+  hasShelter: number;
+  hasDrinkingWater: number;
+  hasBar: number;
+  hasBench: number;
+  hasGarden: number;
+  hasFountain: number;
+  hasMonument: number;
 }
 
-function ParkCard({ parkName, image, isCoffeeShop, isToilet }: ParkCardProps) {
+function ParkCard({
+  parkName,
+  image,
+  hasCafe,
+  hasToilet,
+  hasPlayground,
+  hasToiletHandicapAccess,
+  hasRestaurant,
+  hasShelter,
+  hasDrinkingWater,
+  hasBar,
+  hasBench,
+  hasGarden,
+  hasFountain,
+  hasMonument,
+}: ParkCardProps) {
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -44,8 +69,18 @@ function ParkCard({ parkName, image, isCoffeeShop, isToilet }: ParkCardProps) {
         show={showModal}
         handleClose={handleClose}
         parkName={parkName}
-        isCoffeeShop={isCoffeeShop}
-        isToilet={isToilet}
+        hasCafe={hasCafe}
+        hasToilet={hasToilet}
+        hasPlayground={hasPlayground}
+        hasToiletHandicapAccess={hasToiletHandicapAccess}
+        hasRestaurant={hasRestaurant}
+        hasShelter={hasShelter}
+        hasDrinkingWater={hasDrinkingWater}
+        hasBar={hasBar}
+        hasBench={hasBench}
+        hasGarden={hasGarden}
+        hasFountain={hasFountain}
+        hasMonument={hasMonument}
       />
     </>
   );

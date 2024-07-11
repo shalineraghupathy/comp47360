@@ -24,26 +24,66 @@ function MainContent() {
     {
       name: "Central Park",
       image: "/staticparkimages/centralp.jpeg",
-      isToilet: 1,
-      isCoffeeShop: 1,
+      hasToilet: 1,
+      hasCafe: 1,
+      hasPlayground: 1,
+      hasToiletHandicapAccess: 1,
+      hasRestaurant: 1,
+      hasShelter: 1,
+      hasDrinkingWater: 1,
+      hasBar: 1,
+      hasBench: 1,
+      hasGarden: 1,
+      hasFountain: 1,
+      hasMonument: 1,
     },
     {
       name: "Bryant Park",
       image: "/staticparkimages/bryantp.jpeg",
-      isToilet: 1,
-      isCoffeeShop: 1,
+      hasToilet: 1,
+      hasCafe: 1,
+      hasPlayground: 1,
+      hasToiletHandicapAccess: 1,
+      hasRestaurant: 1,
+      hasShelter: 1,
+      hasDrinkingWater: 1,
+      hasBar: 1,
+      hasBench: 1,
+      hasGarden: 1,
+      hasFountain: 1,
+      hasMonument: 1,
     },
     {
       name: "The High Line",
       image: "/staticparkimages/highline.jpg",
-      isToilet: 1,
-      isCoffeeShop: 1,
+      hasToilet: 1,
+      hasCafe: 1,
+      hasPlayground: 1,
+      hasToiletHandicapAccess: 1,
+      hasRestaurant: 1,
+      hasShelter: 1,
+      hasDrinkingWater: 1,
+      hasBar: 1,
+      hasBench: 1,
+      hasGarden: 1,
+      hasFountain: 1,
+      hasMonument: 1,
     },
     {
       name: "Washington Square Park",
       image: "/staticparkimages/washington.jpg",
-      isToilet: 1,
-      isCoffeeShop: 1,
+      hasToilet: 1,
+      hasCafe: 1,
+      hasPlayground: 1,
+      hasToiletHandicapAccess: 1,
+      hasRestaurant: 1,
+      hasShelter: 1,
+      hasDrinkingWater: 1,
+      hasBar: 1,
+      hasBench: 1,
+      hasGarden: 1,
+      hasFountain: 1,
+      hasMonument: 1,
     },
     //etc.
   ];
@@ -110,8 +150,18 @@ function MainContent() {
                   <ParkCard
                     parkName={park.name}
                     image={park.image}
-                    isCoffeeShop={park.isCoffeeShop}
-                    isToilet={park.isToilet}
+                    hasCafe={park.hasCafe}
+                    hasToilet={park.hasToilet}
+                    hasPlayground={park.hasPlayground}
+                    hasToiletHandicapAccess={park.hasToiletHandicapAccess}
+                    hasRestaurant={park.hasRestaurant}
+                    hasBar={park.hasBar}
+                    hasShelter={park.hasShelter}
+                    hasBench={park.hasBench}
+                    hasGarden={park.hasGarden}
+                    hasFountain={park.hasFountain}
+                    hasMonument={park.hasMonument}
+                    hasDrinkingWater={park.hasDrinkingWater}
                   />
                 </Col>
               ))}

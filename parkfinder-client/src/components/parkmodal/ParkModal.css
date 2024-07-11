@@ -20,13 +20,14 @@
 /* amenities + icons styling */
 
 .amenities-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   flex-wrap: wrap;
-
 }
 
 .amenities-heading{
   padding-bottom: 1rem;
+  margin-top: 1rem;
 
 }
 
@@ -45,22 +46,22 @@
 
 /* weather styling  */
 .weather-box {
- float: right;
+ /* float: right; */
  margin-right: 1rem;
 }
 
 .weather-ticker {
-  /* background: linear-gradient(to right, whitesmoke, #87CEEB);   */
+  /* background: linear-gradient(to right, whitesmoke, #8c8a8e);   */
   background-color: whitesmoke;
   color: black;
-  border-radius: 10px;
+  border-radius: 20px;
   text-align: right;
 }
 
 .temp {
   font-size: 1.2rem;
-  padding-right: 1.5rem;
-  padding-left: 1rem;
+  margin-right: 1.5rem;
+  margin-left: 1rem;
   font-weight: 500;
   vertical-align: middle;
 }
@@ -68,6 +69,7 @@
 .forecast {
   font-size: 1rem;
   font-weight: 400;
+  padding-right: 1rem;
 }
 
 /* bottom stuff  */
@@ -94,9 +96,9 @@
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
+  margin-top: 2.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
 }
 .share-icons .fa {
   color: black;
