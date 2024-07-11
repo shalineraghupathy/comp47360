@@ -15,58 +15,58 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-      # - name: Build Project
-      #   working-directory: ./data-service
-      #   run: mvn clean install -DskipTests
+      - name: Build Project
+        working-directory: ./data-service
+        run: mvn clean install -DskipTests
       - name: Build Project
         working-directory: ./profile-service
         run: mvn clean install -DskipTests
       - name: Login to docker hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      # - name: Build docker image
-      #   working-directory: ./data-service
-      #   run: docker build -t shalineraghupathy/data-service .
-      # - name: Publish image to docker hub
-      #   run: docker push shalineraghupathy/data-service:latest
+      - name: Build docker image
+        working-directory: ./data-service
+        run: docker build -t shalineraghupathy/data-service .
+      - name: Publish image to docker hub
+        run: docker push shalineraghupathy/data-service:latest
       - name: Build docker image
         working-directory: ./profile-service
         run: docker build -t shalineraghupathy/profile-service .
       - name: Publish image to docker hub
         run: docker push shalineraghupathy/profile-service:latest
-      # - name: Build Docker Image
-      #   working-directory: ./parkfinder-client
-      #   run: docker build -t shalineraghupathy/parkfinder-client .
-      # - name: Publish image to docker hub
-      #   run: docker push shalineraghupathy/parkfinder-client:latest
+      - name: Build Docker Image
+        working-directory: ./parkfinder-client
+        run: docker build -t shalineraghupathy/parkfinder-client .
+      - name: Publish image to docker hub
+        run: docker push shalineraghupathy/parkfinder-client:latest
 
   deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
-      # - name: Pull Image from docker hub
-      #   run: docker pull shalineraghupathy/data-service:latest
-      # - name: Delete old container
-      #   run: docker rm -f data-service-container
-      # - name: Run docker container
-      #   run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
-      # - name: Wait for Service 1 to start
-      #   run: sleep 30
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/data-service:latest
+      - name: Delete old container
+        run: docker rm -f data-service-container
+      - name: Run docker container
+        run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
+      - name: Wait for Service 1 to start
+        run: sleep 30
       - name: Pull Image from docker hub
         run: docker pull shalineraghupathy/profile-service:latest
       - name: Delete old container
         run: docker rm -f profile-service-container
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
-      # - name: Wait for Service 2 to start
-      #   run: sleep 30
-      # - name: Pull image from docker hub
-      #   run: docker pull shalineraghupathy/parkfinder-client:latest
-      # - name: Delete Old Container
-      #   run: docker rm -f parkfinder-client-container
-      # #   - name: Run docker container
-      # #     run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
-      # - name: Run docker container
-      #   env:
-      #     VITE_GOOGLEMAP_KEY: ${{ secrets.VITE_GOOGLEMAP_KEY }}
-      #     VITE_NPS_API_KEY: ${{ secrets.VITE_NPS_API_KEY }}
-      #   run: docker run -d -p 3000:80 --env VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY --env VITE_NPS_API_KEY=$VITE_NPS_API_KEY --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
+      - name: Wait for Service 2 to start
+        run: sleep 30
+      - name: Pull image from docker hub
+        run: docker pull shalineraghupathy/parkfinder-client:latest
+      - name: Delete Old Container
+        run: docker rm -f parkfinder-client-container
+      #   - name: Run docker container
+      #     run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
+      - name: Run docker container
+        env:
+          VITE_GOOGLEMAP_KEY: ${{ secrets.VITE_GOOGLEMAP_KEY }}
+          VITE_NPS_API_KEY: ${{ secrets.VITE_NPS_API_KEY }}
+        run: docker run -d -p 3000:80 --env VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY --env VITE_NPS_API_KEY=$VITE_NPS_API_KEY --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
