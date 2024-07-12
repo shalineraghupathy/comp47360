@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
 		emailConfirmationRepository.save(confirmationToken);
 
-		String link = "http://localhost:8080/api/v1/auth/confirm?token=" + token;
+		String link = "http://34.245.187.188:8080/api/v1/auth/confirm?token=" + token;
 		emailService.send(
 				user.getUserEmail(),
 				buildEmail(user.getUserFirstName(), link));
@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService {
 				+ "            <p>Thank you for choosing our service!</p>\n"
 				+ "        </div>\n"
 				+ "        <div style=\"text-align: center;\">\n"
-				+ "            <a class=\"button\" href=\"http://localhost:3000/signup\">Go to Website</a>\n"
+				+ "            <a class=\"button\" href=\"http://34.245.187.188:3000/\">Go to Website</a>\n"
 				+ "        </div>\n"
 				+ "    </div>\n"
 				+ "</body>\n"
@@ -275,7 +275,7 @@ public class UserServiceImpl implements UserService {
 
 			emailConfirmationRepository.save(confirmationToken);
 
-			String link = "http://localhost:8080/api/v1/auth/confirm?token=" + token;
+			String link = "http://34.245.187.188:8080/api/v1/auth/confirm?token=" + token;
 			emailService.send(user.getUserEmail(), buildEmail(user.getUserFirstName(), link));
 		}
 	}
@@ -295,7 +295,7 @@ public class UserServiceImpl implements UserService {
 
 			emailConfirmationRepository.save(confirmationToken);
 
-			String link = "http://localhost:8080/api/v1/auth/resetPassword?token=" + token;
+			String link = "http://34.245.187.188:8080/api/v1/auth/resetPassword?token=" + token;
 			emailService.send(user.getUserEmail(), buildPasswordResetEmail(user.getUserFirstName(), link));
 		}
 	}
