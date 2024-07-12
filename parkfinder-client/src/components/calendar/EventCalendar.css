@@ -1,101 +1,69 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.cal-page {
+    margin-top: 2rem;
 }
-
-.calendar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-}
-
-.button-container {
+#day-container {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin: 10px 0;
-}
-
-.day-container {
-    display: flex;
-    width: 100%;
-    margin: 10px 0;
-}
-
-button {
-    padding: 10px;
-    background-color: #f1d483;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    font-weight: 500;
+  }
+  
+  .day {
     flex: 1;
-    max-width: 150px;
-}
-
-button:hover {
-    background-color: #edb81d;
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.day {
-    flex: 1;
-    margin: 0 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 1rem;
+    border-radius: 15px;
+    margin: 0 0.3rem;
+    background-color: whitesmoke;
+  }
+  
+  .day.today {
+    background-color: rgb(213, 237, 224);
+  }
+ 
+  .event {
     background-color: white;
-    font-size: 0.8em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.day.today {
-    background-color: #edb81d;
-}
-
-.day h2 {
+    border: 1px solid lightgray;
+    border-top: 5px solid seagreen;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 0.75rem;
+  }
+  
+  .event h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+  }
+  
+  .event p {
+    margin: 0.3rem 0rem;
+    font-size: 0.75rem;
+  }
+  
+  .date-per-day {
     text-align: center;
-    margin-bottom: 10px;
-}
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
 
-.day h3 {
+  .day-name {
     text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 3em;
-}
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
 
-.day h4 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-}
+  .week-of {
+    border: 1px solid lightgrey;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
 
-.event {
-    background-color: rgba(255, 255, 255, 0.80);
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    border: 1px solid cornflowerblue;
-}
-
-.event h4 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.event p {
-    margin: 5px 0 0;
+.event-heading {
+  font-size: 2rem;
+  font-weight:500;
 }

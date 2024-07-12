@@ -58,11 +58,11 @@ const Results = () => {
                     <img
                       style={{ height: "8rem", objectFit: "cover" }}
                       className="card-img-top"
-                      src="https://observer.com/wp-content/uploads/sites/2/2015/02/screen-shot-2015-02-06-at-3-25-41-pm.png?quality=80"
+                      src="./staticparkimages/mapview.png"
                       alt="Card image cap"
                     />
                     <a
-                      href="#"
+                      href="/parkmap"
                       className="card-body"
                       style={{
                         textAlign: "center",

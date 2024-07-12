@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import axios from "axios";
+import "./EventCalendar.css";
+import CustomFooter from "../home/CustomFooter";
 
 type Event = {
   id: string;
@@ -30,6 +41,22 @@ const EventCalendar = () => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
+  };
+
+  const formatDateForDisplay = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.toLocaleString("default", { month: "long" });
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day} ${month}`;
+  };
+
+  const formatTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const getWeekDates = (date: Date) => {
@@ -90,44 +117,123 @@ const EventCalendar = () => {
   const prevWeekDisabled = weeksFromToday <= -maxWeeksBackward;
   const nextWeekDisabled = weeksFromToday >= maxWeeksForward;
 
+  const getCategoryColor = (category: string): string => {
+    if (category.includes("concert")) {
+      return "#8ab17d";
+    } else if (category.includes("community")) {
+      return "#2a9d8f";
+    } else if (category.includes("conference")) {
+      return "#e76f51";
+    } else if (category.includes("expo")) {
+      return "#6a994e";
+    } else if (category.includes("performing-arts")) {
+      return "#c05761";
+    } else if (category.includes("festival")) {
+      return "#c05761";
+    } else if (category.includes("sport")) {
+      return "#e9c46a";
+    } else {
+      return "black";
+    }
+  };
+
+  const changeCatName = (category: string): string => {
+    if (category.includes("concert")) {
+      return "Concert";
+    } else if (category.includes("community")) {
+      return "Community";
+    } else if (category.includes("conference")) {
+      return "Conference";
+    } else if (category.includes("expo")) {
+      return "Expo";
+    } else if (category.includes("performing-arts")) {
+      return "Performing Arts";
+    } else if (category.includes("festival")) {
+      return "Festival";
+    } else if (category.includes("sport")) {
+      return "Sports";
+    } else {
+      return "General";
+    }
+  };
+
   return (
-    <div>
+    <div className="cal-page">
+      <Container className="text-center my-4">
+        <Row className="align-items-center">
+          <Col xs={6} className="text-start">
+            <span className="event-heading">
+              <i
+                className="fa fa-calendar-o"
+                aria-hidden="true"
+                style={{ marginRight: "1rem" }}
+              ></i>
+              Events at Central Park
+            </span>
+          </Col>
+          <Col xs={6} className="text-end">
+            <Button
+              variant="success"
+              onClick={handlePrevWeek}
+              disabled={prevWeekDisabled}
+              size="sm"
+              className="rounded-circle me-1"
+            >
+              <FaChevronLeft />
+            </Button>
+            <span className="mx-2 week-of">
+              Week of {formatDateForDisplay(getWeekDates(currentDate)[0])} -{" "}
+              {formatDateForDisplay(getWeekDates(currentDate)[6])}
+            </span>
+            <Button
+              variant="success"
+              onClick={handleNextWeek}
+              disabled={nextWeekDisabled}
+              size="sm"
+              className="rounded-circle ms-1"
+            >
+              <FaChevronRight />
+            </Button>
+          </Col>
+        </Row>
+      </Container>
       <div id="day-container">
         {getWeekDates(currentDate).map((date) => (
           <div
-            key={date}
+            key={date.toDateString()}
             className={`day ${
               date.toDateString() === today.toDateString() ? "today" : ""
             }`}
           >
-            <h3>{getDayName(date)}</h3>
-            <h2>{formatDate(date)}</h2>
+            <p className="day-name">{getDayName(date)}</p>
+            <p className="date-per-day">{formatDateForDisplay(date)}</p>
             {events[formatDate(date)]?.map((event) => (
-              <div key={event.id} className="event">
-                <h4>{event.title}</h4>
-                <p>Category: {event.category}</p>
-                <p>Start: {event.startLocal}</p>
-                <p>End: {event.endLocal}</p>
-                <p>Address: {event.address}</p>
-              </div>
+              <OverlayTrigger
+                key={event.id}
+                placement="bottom"
+                overlay={<Tooltip>{changeCatName(event.category)}</Tooltip>}
+              >
+                <div
+                  key={event.id}
+                  className="event"
+                  style={{
+                    borderTop: `5px solid ${getCategoryColor(event.category)}`,
+                  }}
+                >
+                  <h4>{event.title}</h4>
+                  <p style={{ color: "seagreen" }}>
+                    {formatTime(event.startLocal)}- {formatTime(event.endLocal)}
+                  </p>
+                  <p className="address" style={{ fontSize: "0.7rem" }}>
+                    {event.address}
+                  </p>
+                </div>
+              </OverlayTrigger>
             ))}
           </div>
         ))}
       </div>
-      <button
-        id="prev-week"
-        onClick={handlePrevWeek}
-        disabled={prevWeekDisabled}
-      >
-        Previous Week
-      </button>
-      <button
-        id="next-week"
-        onClick={handleNextWeek}
-        disabled={nextWeekDisabled}
-      >
-        Next Week
-      </button>
+      <CustomFooter />
     </div>
   );
 };
