@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/calendar
-    username: root
-    #    replace password with local MySql password
-    password: mariecurie
+    url: jdbc:mysql://findmypark.cfwsayiqmgbz.eu-west-1.rds.amazonaws.com:3306/findmyparkdb
+    username: admin
+    password: gS175WKh
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 cloud:
