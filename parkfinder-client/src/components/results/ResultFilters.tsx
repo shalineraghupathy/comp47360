@@ -90,11 +90,10 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const checked = event.target.checked ? true : undefined;
       setter(checked);
-      console.log(event.target);
       if (event.target.id == "toiletSelect") {
         filters.isToilet = checked;
       }
-      if (event.target.id == "coffeeShopSelect") {
+      if (event.target.id == "cafeSelect") {
         filters.isCafe = checked;
       }
       if (event.target.id == "accessibleToiletSelect") {
@@ -119,6 +118,7 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
         filters.isBench = checked;
       }
       if (event.target.id == "gardenSelect") {
+        console.log("isGarden", filters.isGarden);
         filters.isGarden = checked;
       }
       if (event.target.id == "fountainSelect") {
@@ -236,7 +236,7 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
             <Form.Group>
               <Form.Label className="form-label">Food & Drink</Form.Label>
               <Form.Check
-                id="coffeeShopSelect"
+                id="cafeSelect"
                 type="checkbox"
                 label=" Cafe"
                 checked={isCafe === true}
@@ -270,12 +270,14 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
                 id="gardenSelect"
                 type="checkbox"
                 label="Garden"
+                onChange={handleCheckboxChange(setIsBar)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
                 id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
+                onChange={handleCheckboxChange(setIsBar)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check

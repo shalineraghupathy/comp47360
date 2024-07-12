@@ -108,7 +108,7 @@ const Results = () => {
                     parkName={parkResult.park.parkName}
                     distance={parkResult.distance}
                     busyness={parkResult.busyness}
-                    isCafe={parkResult.park.Cafe}
+                    isCafe={parkResult.park.isCafe}
                     isToilet={parkResult.park.isToilet}
                     isPlayground={parkResult.park.isPlayground}
                     isToiletHandicapAccess={
