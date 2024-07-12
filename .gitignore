@@ -3373,3 +3373,12 @@ calendar-service/.idea/encodings.xml
 calendar-service/.idea/jarRepositories.xml
 calendar-service/.idea/misc.xml
 calendar-service/.idea/vcs.xml
+data-service/bin/src/main/java/com/data/service/dataservice/DataServiceApplication.class
+data-service/bin/src/main/java/com/data/service/dataservice/config/SecurityConfiguration.class
+data-service/bin/src/main/java/com/data/service/dataservice/controller/ParkController.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/Entrance.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/Park.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/ParkOfUser.class
+data-service/bin/src/main/java/com/data/service/dataservice/repository/ParkMapper.class
+data-service/bin/src/main/java/com/data/service/dataservice/service/ParkService.class
+data-service/bin/src/main/java/com/data/service/dataservice/service/impl/ParkServiceImpl.class
