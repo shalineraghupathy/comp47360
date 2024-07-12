@@ -5,6 +5,17 @@ spring:
     password: gS175WKh
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+cloud:
+  gateway:
+  default-filters:
+    - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+  globalcors:
+    corsConfigurations:
+    "[/**]":
+      allowedOrigins: "http://localhost:3000"
+      allowedMethods: "*"
+      allowedCredentials: true
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.calendar.service.calendarservice.entity
@@ -14,6 +25,8 @@ server:
 
 logging:
   level:
+    org.springframework.web: DEBUG
+    org.springframework.web.filter.CorsFilter: DEBUG
     com.calendar.service.calendarservice: DEBUG
 
 api:

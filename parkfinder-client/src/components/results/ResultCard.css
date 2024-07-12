@@ -1,0 +1,75 @@
+.result-card .card-img-left {
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+.result-card {
+  position: relative; }
+
+.card-title {
+  display: flex;
+  flex-direction: row;
+    padding-top: 1rem;
+    font-size: 1.5rem !important;
+}
+
+td {
+  font-size: 0.75rem;
+  padding-right:0.25rem;
+  color:rgb(30, 94, 58) !important;
+  font-size: 0.9rem;
+
+}
+
+table {
+  margin-bottom: 1.5rem;
+}
+
+.amenities-container {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: nowrap; see if this is needed with more icons!*/ 
+  gap: 10px;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+}
+
+.amenity-icon {
+  width: 1rem; 
+  height: 1rem; 
+  margin-right: 0.25rem; }
+
+
+.card-busyness-bar {
+  margin-top: 1rem;
+
+}
+
+.busyness-label {
+  margin-left: 0.125rem;
+  font-size: 0.75rem;
+  color: grey;
+  font-style: italic;
+}
+
+
+.bottom-right-button {
+  position: absolute;
+  bottom: 2.25rem;
+  right: 2rem; 
+  z-index: 1; 
+  padding: 0.3rem 1rem;
+  border-radius: 30px;
+  color: slategray;
+  border: 1px solid slategray;
+  background-color: white;
+  font-weight: 400;
+  cursor: pointer;
+}

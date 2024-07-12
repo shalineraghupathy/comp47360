@@ -1,47 +1,42 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import amenityIcons from "./AmenityIcon";
-import "./ParkModal.css";
+import amenityIcons from "../parkmodal/AmenityIcon";
+import "../parkmodal/ParkModal.css";
 
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
-  distance: number;
-  busyness: number;
-  isCafe: number;
-  isToilet: number;
-  isToiletHandicapAccess: number;
-  isPlayground: number;
-  isRestaurant: number;
-  isShelter: number;
-  isDrinkingWater: number;
-  isBar: number;
-  isBench: number;
-  isGarden: number;
-  isFountain: number;
-  isMonument: number;
+  hasToilet: number;
+  hasCafe: number;
+  hasPlayground: number;
+  hasToiletHandicapAccess: number;
+  hasRestaurant: number;
+  hasShelter: number;
+  hasDrinkingWater: number;
+  hasBar: number;
+  hasBench: number;
+  hasGarden: number;
+  hasFountain: number;
+  hasMonument: number;
 }
 
 function ParkModal({
   show,
   handleClose,
   parkName,
-  // distance,
-  busyness,
-  isCafe,
-  isToilet,
-  isPlayground,
-  isToiletHandicapAccess,
-  isRestaurant,
-  isShelter,
-  isDrinkingWater,
-  isBar,
-  isBench,
-  isGarden,
-  isFountain,
-  isMonument,
+  hasCafe,
+  hasToilet,
+  hasPlayground,
+  hasToiletHandicapAccess,
+  hasRestaurant,
+  hasShelter,
+  hasDrinkingWater,
+  hasBar,
+  hasBench,
+  hasGarden,
+  hasFountain,
+  hasMonument,
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
@@ -59,7 +54,6 @@ function ParkModal({
     try {
       const response = await fetch(url);
       const data = await response.json();
-
       setWeather({
         ...data,
         sunrise: data.sys.sunrise,
@@ -88,17 +82,6 @@ function ParkModal({
     }
   };
 
-  const getVariant = (busyness: number) => {
-    if (busyness <= 33) return "success";
-    if (busyness <= 66) return "warning";
-    return "danger";
-  };
-  const getLabel = (busyness: number) => {
-    if (busyness <= 33) return "Low";
-    if (busyness <= 66) return "Medium";
-    return "High";
-  };
-
   function transformAQI(aqi: number) {
     if (aqi === 1) return "good";
     if (aqi === 2) return "fair";
@@ -107,9 +90,6 @@ function ParkModal({
     if (aqi === 5) return "very poor";
     return "unknown";
   }
-  // function resolveDistance(distance: number) {
-  //   return `${distance.toFixed(2)} km`;
-  // }
 
   const shareText = encodeURIComponent(
     `Heading to ${parkName}! Check it out on ParkFinder.`
@@ -118,18 +98,18 @@ function ParkModal({
   const whatsappShareUrl = `https://wa.me/?text=${shareText}`;
 
   const amenities = [
-    { name: "Toilet", value: isToilet },
-    { name: "Accessible Toilet", value: isToiletHandicapAccess },
-    { name: "Playground", value: isPlayground },
-    { name: "Benches", value: isBench },
-    { name: "Shelter", value: isShelter },
-    { name: "Drinking Fountain", value: isDrinkingWater },
-    { name: "Cafe", value: isCafe },
-    { name: "Restaurant", value: isRestaurant },
-    { name: "Bar", value: isBar },
-    { name: "Garden", value: isGarden },
-    { name: "Fountain", value: isFountain },
-    { name: "Monument", value: isMonument },
+    { name: "Toilet", value: hasToilet },
+    { name: "Accessible Toilet", value: hasToiletHandicapAccess },
+    { name: "Playground", value: hasPlayground },
+    { name: "Benches", value: hasBench },
+    { name: "Shelter", value: hasShelter },
+    { name: "Drinking Fountain", value: hasDrinkingWater },
+    { name: "Cafe", value: hasCafe },
+    { name: "Restaurant", value: hasRestaurant },
+    { name: "Bar", value: hasBar },
+    { name: "Garden", value: hasGarden },
+    { name: "Fountain", value: hasFountain },
+    { name: "Monument", value: hasMonument },
   ];
 
   return (
@@ -176,16 +156,6 @@ function ParkModal({
               )}
             </div>
           </div>
-        </div>
-        <div className="busyness-section">
-          <h5>How busy is {parkName} right now?</h5>
-          <span className="busyness-bar">
-            <ProgressBar
-              now={busyness}
-              label={getLabel(busyness)}
-              variant={getVariant(busyness)} // Color variant of the progress bar
-            />
-          </span>
         </div>
         <div className="icons-section">
           <a
