@@ -1,66 +1,3 @@
-.modal-content-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.weather-box {
-  background: #2b3a42;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.weather-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.weather-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  margin-bottom: 10px;
-}
-
-.weather-temp {
-  font-size: 3rem;
-}
-
-.weather-icon {
-  width: 60px;
-  height: 60px;
-}
-
-.weather-details-container {
-  display: flex;
-  width: 100%;
-}
-
-.weather-detail {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  width: 100%;
-}
-
-.busyness-section {
-  margin-top: 20px;
-}
-
-.icons-section {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-around;
-}
-
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -74,46 +11,106 @@
 
 .modal-content-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  padding-left: 1rem;
+
 }
 
-.park-info-table td {
-  padding: 4px 100px 2px 2px;
+/* amenities + icons styling */
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-wrap: wrap;
 }
 
-.park-info-table td:first-child {
-  font-weight: bold;
+.amenities-heading{
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+
 }
 
-.busyness-section {
-  padding: 10px 0;
-}
-
-.busyness-section h5 {
-  font-size: 18px;
-  margin-top: 30px;
+.amenity-item {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
+  margin-right: 10px;
 }
 
-.busyness-chart {
-  height: 100px;
-  background-color: #f0f0f0;
+.amenity-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+/* weather styling  */
+.weather-box {
+ /* float: right; */
+ margin-right: 1rem;
+}
+
+.weather-ticker {
+  /* background: linear-gradient(to right, whitesmoke, #8c8a8e);   */
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 20px;
+  text-align: right;
+}
+
+.temp {
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
+  margin-left: 1rem;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.forecast {
+  font-size: 1rem;
+  font-weight: 400;
+  padding-right: 1rem;
+}
+
+/* bottom stuff  */
+.busyness-section {
+  margin-top: 2rem;
   text-align: center;
-  line-height: 100px;
+  border-top: 1px solid lightgray;
+  margin-bottom: 2rem;
+}
+
+.busyness-bar {
+  display: inline-block;
+  padding-top:1rem;
+  width: 50%;
+
+}
+.busyness-section h5 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .icons-section {
   display: flex;
   justify-content: flex-end;
-  padding-top: 10px;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+}
+.share-icons .fa {
+  color: black;
+  font-size: 1.75rem; 
+}
+.share-icons .fa:hover {
+  transform: scale(1.2); /* Scale up the icon on hover */
+  color: rgba(46, 139, 87); /* Change color on hover */
 }
 
-.icon-share,
-.icon-save {
-  margin-left: 20px;
-  cursor: pointer;
-}
 
+/* hero img css... */
 .hero-image {
   width: 98%;
   height: 625px;

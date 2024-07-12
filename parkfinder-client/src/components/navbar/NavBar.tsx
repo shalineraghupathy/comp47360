@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link as ScrollLink } from "react-scroll";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -42,7 +43,9 @@ const NavBar: React.FC = () => {
       }}
     >
       <Container fluid>
-        <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -50,14 +53,29 @@ const NavBar: React.FC = () => {
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/parkmap">
-              <Nav.Link>Park Search</Nav.Link>
+              <Nav.Link>Park Map</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/amenities">
-              <Nav.Link>Amenities</Nav.Link>
+            <ScrollLink
+              to="natParks"
+              smooth={true}
+              duration={200}
+              offset={-70}
+              style={{ cursor: "pointer" }}
+            >
+              <Nav.Link as="span">National Parks</Nav.Link>
+            </ScrollLink>
+            <LinkContainer to="/eventcalendar">
+              <Nav.Link>Event Calendar</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/about">
-              <Nav.Link>About</Nav.Link>
-            </LinkContainer>
+            <ScrollLink
+              to="aboutSection"
+              smooth={true}
+              duration={200}
+              offset={-70}
+              style={{ cursor: "pointer" }}
+            >
+              <Nav.Link as="span">About</Nav.Link>
+            </ScrollLink>
             <NavDropdown
               title={<FaUserCircle size={24} />}
               id="basic-nav-dropdown"
