@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8080/api/v1/auth";
+const API_BASE_URL = "http://34.245.187.188:8080/api/v1/auth";
 
 // Define the request types
 interface UserRegisterRequest {
