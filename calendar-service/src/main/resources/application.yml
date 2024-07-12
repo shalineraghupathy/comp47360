@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/parkfinder
-    username: root
-#    replace password with local MySql password
-    password: yanwen
+    url: jdbc:mysql://findmypark.cfwsayiqmgbz.eu-west-1.rds.amazonaws.com:3306/findmyparkdb
+    username: admin
+    password: gS175WKh
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
@@ -18,5 +17,5 @@ logging:
     com.calendar.service.calendarservice: DEBUG
 
 api:
-  key: replace with true api key
+  key: 6diW47J5IrXlZ-Aid4dx75fH3HuzjJcC7H8h61rr
   url: https://api.predicthq.com/v1/events
