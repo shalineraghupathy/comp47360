@@ -10,18 +10,38 @@ interface ParkModalProps {
   parkName: string;
   distance: number;
   busyness: number;
-  isCoffeeShop: number;
+  isCafe: number;
   isToilet: number;
+  isToiletHandicapAccess: number;
+  isPlayground: number;
+  isRestaurant: number;
+  isShelter: number;
+  isDrinkingWater: number;
+  isBar: number;
+  isBench: number;
+  isGarden: number;
+  isFountain: number;
+  isMonument: number;
 }
 
 function ParkModal({
   show,
   handleClose,
   parkName,
-  distance,
+  // distance,
   busyness,
-  isCoffeeShop,
+  isCafe,
   isToilet,
+  isPlayground,
+  isToiletHandicapAccess,
+  isRestaurant,
+  isShelter,
+  isDrinkingWater,
+  isBar,
+  isBench,
+  isGarden,
+  isFountain,
+  isMonument,
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
@@ -119,8 +139,18 @@ function ParkModal({
   const whatsappShareUrl = `https://wa.me/?text=${shareText}`;
 
   const amenities = [
-    { name: "Toilets", value: isToilet },
-    { name: "Cafe", value: isCoffeeShop },
+    { name: "Toilet", value: isToilet },
+    { name: "Accessible Toilet", value: isToiletHandicapAccess },
+    { name: "Playground", value: isPlayground },
+    { name: "Benches", value: isBench },
+    { name: "Shelter", value: isShelter },
+    { name: "Drinking Fountain", value: isDrinkingWater },
+    { name: "Cafe", value: isCafe },
+    { name: "Restaurant", value: isRestaurant },
+    { name: "Bar", value: isBar },
+    { name: "Garden", value: isGarden },
+    { name: "Fountain", value: isFountain },
+    { name: "Monument", value: isMonument },
   ];
 
   return (
@@ -151,19 +181,21 @@ function ParkModal({
         <div className="modal-content-wrapper">
           <div className="amenities-section">
             <h5 className="amenities-heading">Amenities</h5>
-            {amenities.map(
-              (amenity) =>
-                amenity.value === 1 && (
-                  <div key={amenity.name} className="amenity-item">
-                    <img
-                      src={amenityIcons[amenity.name] || amenityIcons.default}
-                      alt={amenity.name}
-                      className="amenity-icon"
-                    />
-                    {amenity.name}
-                  </div>
-                )
-            )}
+            <div className="amenities-grid">
+              {amenities.map(
+                (amenity) =>
+                  amenity.value === 1 && (
+                    <div key={amenity.name} className="amenity-item">
+                      <img
+                        src={amenityIcons[amenity.name] || amenityIcons.default}
+                        alt={amenity.name}
+                        className="amenity-icon"
+                      />
+                      {amenity.name}
+                    </div>
+                  )
+              )}
+            </div>
           </div>
         </div>
         <div className="busyness-section">

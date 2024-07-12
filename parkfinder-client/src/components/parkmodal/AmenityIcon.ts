@@ -9,7 +9,7 @@ const amenityIcons: { [key: string]: string } = {
 "Benches": "/icons/icon-bench.svg",
 "Drinking Fountain": "/icons/icon-drinkingfountain.svg",
 "Shelter": "/icons/icon-shelter.svg",
-"Garden": "/icons/icon-bench.svg",
+"Garden": "/icons/icon-garden.svg",
 "Fountain": "/icons/icon-decofountain.svg",
 "Accessible Toilet": "/icons/icon-wheelchair.svg",
 "Monument": "/icons/icon-monument.svg",

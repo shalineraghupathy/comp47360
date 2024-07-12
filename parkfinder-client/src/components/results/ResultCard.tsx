@@ -15,8 +15,18 @@ interface ResultCardProps {
   parkName: string;
   distance: number;
   busyness: number;
-  isCoffeeShop: number;
+  isCafe: number;
   isToilet: number;
+  isToiletHandicapAccess: number;
+  isPlayground: number;
+  isRestaurant: number;
+  isShelter: number;
+  isDrinkingWater: number;
+  isBar: number;
+  isBench: number;
+  isGarden: number;
+  isFountain: number;
+  isMonument: number;
 }
 
 function ResultCard({
@@ -24,8 +34,18 @@ function ResultCard({
   distance,
   busyness,
   //   entrances,
-  isCoffeeShop,
+  isCafe,
   isToilet,
+  isPlayground,
+  isToiletHandicapAccess,
+  isRestaurant,
+  isShelter,
+  isDrinkingWater,
+  isBar,
+  isBench,
+  isGarden,
+  isFountain,
+  isMonument,
 }: //   parkEntrance,
 
 ResultCardProps) {
@@ -64,8 +84,18 @@ ResultCardProps) {
   }
 
   const amenities = [
-    { name: "Toilets", value: isToilet },
-    { name: "Cafe", value: isCoffeeShop },
+    { name: "Toilet", value: isToilet },
+    { name: "Accessible Toilet", value: isToiletHandicapAccess },
+    { name: "Playground", value: isPlayground },
+    { name: "Benches", value: isBench },
+    { name: "Shelter", value: isShelter },
+    { name: "Drinking Fountain", value: isDrinkingWater },
+    { name: "Cafe", value: isCafe },
+    { name: "Restaurant", value: isRestaurant },
+    { name: "Bar", value: isBar },
+    { name: "Garden", value: isGarden },
+    { name: "Fountain", value: isFountain },
+    { name: "Monument", value: isMonument },
   ];
 
   return (
@@ -146,8 +176,18 @@ ResultCardProps) {
         parkName={parkName}
         distance={distance.toString()}
         busyness={busyness}
-        isCoffeeShop={isCoffeeShop}
+        isCafe={isCafe}
         isToilet={isToilet}
+        isPlayground={isPlayground}
+        isToiletHandicapAccess={isToiletHandicapAccess}
+        isRestaurant={isRestaurant}
+        isShelter={isShelter}
+        isDrinkingWater={isDrinkingWater}
+        isBar={isBar}
+        isBench={isBench}
+        isGarden={isGarden}
+        isFountain={isFountain}
+        isMonument={isMonument}
       />
     </>
   );

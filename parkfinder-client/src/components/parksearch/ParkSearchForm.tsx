@@ -7,8 +7,18 @@ import Multiselect from "multiselect-react-dropdown";
 
 export interface Filters {
   isToilet?: boolean;
-  isCoffeeShop?: boolean;
+  isCafe?: boolean;
   busyness?: string;
+  isToiletHandicapAccess?: boolean;
+  isPlayground?: boolean;
+  isRestaurant?: boolean;
+  isShelter?: boolean;
+  isDrinkingWater?: boolean;
+  isBar?: boolean;
+  isBench?: boolean;
+  isGarden?: boolean;
+  isFountain?: boolean;
+  isMonument?: boolean;
 }
 
 export interface LocationData {
@@ -56,7 +66,14 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   function onFiltersSelect(selectedList: string[]) {
     setFilters({
       isToilet: selectedList.includes("Toilet") ? true : undefined,
-      isCoffeeShop: selectedList.includes("Cafe") ? true : undefined,
+      isToiletHandicapAccess: selectedList.includes("Accessible Toilet")
+        ? true
+        : undefined,
+      isCafe: selectedList.includes("Cafe") ? true : undefined,
+      isRestaurant: selectedList.includes("Restaurant") ? true : undefined,
+      isPlayground: selectedList.includes("Playground") ? true : undefined,
+      isBench: selectedList.includes("Benches") ? true : undefined,
+      isShelter: selectedList.includes("Shelter") ? true : undefined,
     });
   }
 
@@ -138,7 +155,15 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
                 isObject={false}
                 onRemove={onFiltersSelect}
                 onSelect={onFiltersSelect}
-                options={["Toilet", "Cafe"]}
+                options={[
+                  "Toilet",
+                  "Accessible Toilet",
+                  "Cafe",
+                  "Restaurant",
+                  "Playground",
+                  "Benches",
+                  "Shelter",
+                ]}
                 style={customStyles}
               />
             </Form.Group>

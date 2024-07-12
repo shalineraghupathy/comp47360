@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+// had to add this crossorigin header in conjunction with adding cors settings
+// in application.yml + disabling spring security in dependencies in order to
+// reach the backend with fetch. - LB
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/events")
 public class EventController {
 

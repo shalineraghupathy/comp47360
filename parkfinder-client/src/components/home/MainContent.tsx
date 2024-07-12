@@ -5,6 +5,7 @@ import ParkSearchForm from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
+import { Element } from "react-scroll";
 import "./MainContent.css";
 
 function MainContent() {
@@ -106,7 +107,7 @@ function MainContent() {
         <Row className="justify-content-start align-items-start heading-row">
           <Col xs={12} md={12} lg={12}>
             <h1 className="main-heading">Find Your Perfect Park.</h1>
-            <span id="tagline">
+            <span className="tagline">
               Nature is just a click away. <br />
               Find events, check busyness, explore amenities.
             </span>
@@ -171,26 +172,29 @@ function MainContent() {
       </div>
       <div className="nat-parks-section">
         <Col xs={12}>
-          <div className="nat-parks-content">
-            <h2 className="nat-parks-heading">
-              Explore the National Parks of NYC.
-            </h2>
-            <span className="nat-parks-link">
-              <p>
-                New York State is home to 24 National Park Sites. 10 are in New
-                York City. <br /> Click the button to learn more.
-              </p>
-              <button
-                className="nat-park-button"
-                type="submit"
-                onClick={navigateToNationalParks}
-              >
-                Find out more
-              </button>
-            </span>
-          </div>
+          <Element name="natParks">
+            <div className="nat-parks-content">
+              <h2 className="nat-parks-heading">
+                Explore the National Parks of NYC.
+              </h2>
+              <span className="nat-parks-link">
+                <p>
+                  New York State is home to 24 National Park Sites. 10 are in
+                  New York City. <br /> Click the button to learn more.
+                </p>
+                <button
+                  className="nat-park-button"
+                  type="submit"
+                  onClick={navigateToNationalParks}
+                >
+                  Find out more
+                </button>
+              </span>
+            </div>
+          </Element>
         </Col>
       </div>
+      <Element name="aboutSection">{/* to do: <div>about</div> */}</Element>
       <CustomFooter />
     </>
   );

@@ -13,8 +13,37 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
   const [isToilet, setIsToilet] = useState<boolean | undefined>(
     filters.isToilet
   );
-  const [isCoffeeShop, setIsCoffeeShop] = useState<boolean | undefined>(
-    filters.isCoffeeShop
+  const [isToiletHandicapAccess, setIsToiletHandicapAccess] = useState<
+    boolean | undefined
+  >(filters.isToiletHandicapAccess);
+
+  const [isPlayground, setIsPlayground] = useState<boolean | undefined>(
+    filters.isPlayground
+  );
+
+  const [isRestaurant, setIsRestaurant] = useState<boolean | undefined>(
+    filters.isRestaurant
+  );
+  const [isShelter, setIsShelter] = useState<boolean | undefined>(
+    filters.isShelter
+  );
+  const [isCafe, setIsCafe] = useState<boolean | undefined>(filters.isCafe);
+
+  const [isDrinkingWater, setIsDrinkingWater] = useState<boolean | undefined>(
+    filters.isDrinkingWater
+  );
+  const [isBar, setIsBar] = useState<boolean | undefined>(filters.isBar);
+
+  const [isBench, setIsBench] = useState<boolean | undefined>(filters.isBench);
+
+  const [isGarden, setIsGarden] = useState<boolean | undefined>(
+    filters.isGarden
+  );
+  const [isFountain, setIsFountain] = useState<boolean | undefined>(
+    filters.isFountain
+  );
+  const [isMonument, setIsMonument] = useState<boolean | undefined>(
+    filters.isMonument
   );
   const [busyness, setBusyness] = useState<string | undefined>(
     filters.busyness
@@ -22,11 +51,36 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
 
   useEffect(() => {
     onApply();
-  }, [isToilet, isCoffeeShop, busyness, filters]);
+  }, [
+    isToilet,
+    isCafe,
+    isToiletHandicapAccess,
+    isPlayground,
+    isRestaurant,
+    isShelter,
+    isDrinkingWater,
+    isBar,
+    isBench,
+    isGarden,
+    isFountain,
+    isMonument,
+    busyness,
+    filters,
+  ]);
 
   const handleReset = () => {
     setIsToilet(undefined);
-    setIsCoffeeShop(undefined);
+    setIsCafe(undefined);
+    setIsToiletHandicapAccess(undefined);
+    setIsPlayground(undefined);
+    setIsRestaurant(undefined);
+    setIsShelter(undefined);
+    setIsDrinkingWater(undefined);
+    setIsBar(undefined);
+    setIsBench(undefined);
+    setIsGarden(undefined);
+    setIsFountain(undefined);
+    setIsMonument(undefined);
     setBusyness("");
     onReset();
   };
@@ -41,7 +95,37 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
         filters.isToilet = checked;
       }
       if (event.target.id == "coffeeShopSelect") {
-        filters.isCoffeeShop = checked;
+        filters.isCafe = checked;
+      }
+      if (event.target.id == "accessibleToiletSelect") {
+        filters.isToiletHandicapAccess = checked;
+      }
+      if (event.target.id == "playgroundSelect") {
+        filters.isPlayground = checked;
+      }
+      if (event.target.id == "restaurantSelect") {
+        filters.isRestaurant = checked;
+      }
+      if (event.target.id == "shelterSelect") {
+        filters.isShelter = checked;
+      }
+      if (event.target.id == "drinkingWaterSelect") {
+        filters.isDrinkingWater = checked;
+      }
+      if (event.target.id == "barSelect") {
+        filters.isBar = checked;
+      }
+      if (event.target.id == "benchSelect") {
+        filters.isBench = checked;
+      }
+      if (event.target.id == "gardenSelect") {
+        filters.isGarden = checked;
+      }
+      if (event.target.id == "fountainSelect") {
+        filters.isFountain = checked;
+      }
+      if (event.target.id == "monumentSelect") {
+        filters.isMonument = checked;
       }
     };
 
@@ -94,9 +178,10 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
         </Row>
         <Row className="mb-3">
           <Col>
-            <Form.Group controlId="toiletSelect">
+            <Form.Group>
               <Form.Label className="form-label">Amenities</Form.Label>
               <Form.Check
+                id="toiletSelect"
                 type="checkbox"
                 label="Toilet"
                 checked={isToilet === true}
@@ -104,23 +189,43 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="accessibleToiletSelect"
+                type="checkbox"
+                label="Accessible Toilet"
+                checked={isToiletHandicapAccess === true}
+                onChange={handleCheckboxChange(setIsToiletHandicapAccess)}
+                style={{ borderRadius: "20px" }}
+              />
+              <Form.Check
+                id="playgroundSelect"
                 type="checkbox"
                 label="Playground"
+                checked={isPlayground === true}
+                onChange={handleCheckboxChange(setIsPlayground)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="benchSelect"
                 type="checkbox"
                 label="Benches"
+                checked={isBench === true}
+                onChange={handleCheckboxChange(setIsBench)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="shelterSelect"
                 type="checkbox"
                 label="Shelter"
+                checked={isShelter === true}
+                onChange={handleCheckboxChange(setIsShelter)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="drinkingWaterSelect"
                 type="checkbox"
                 label="Water Fountain"
+                checked={isDrinkingWater === true}
+                onChange={handleCheckboxChange(setIsDrinkingWater)}
                 style={{ borderRadius: "20px" }}
               />
             </Form.Group>
@@ -128,23 +233,30 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
         </Row>
         <Row className="mb-3">
           <Col>
-            <Form.Group controlId="coffeeShopSelect">
+            <Form.Group>
               <Form.Label className="form-label">Food & Drink</Form.Label>
               <Form.Check
+                id="coffeeShopSelect"
                 type="checkbox"
-                label="Coffee Shop"
-                checked={isCoffeeShop === true}
-                onChange={handleCheckboxChange(setIsCoffeeShop)}
+                label=" Cafe"
+                checked={isCafe === true}
+                onChange={handleCheckboxChange(setIsCafe)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="restaurantSelect"
                 type="checkbox"
                 label="Restaurant"
+                checked={isRestaurant === true}
+                onChange={handleCheckboxChange(setIsRestaurant)}
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="barSelect"
                 type="checkbox"
                 label="Bar"
+                checked={isBar === true}
+                onChange={handleCheckboxChange(setIsBar)}
                 style={{ borderRadius: "20px" }}
               />
             </Form.Group>
@@ -152,16 +264,26 @@ const ResultFilters = ({ onApply, onReset, filters }: ResultFiltersProps) => {
         </Row>
         <Row className="mb-3">
           <Col>
-            <Form.Group controlId="coffeeShopSelect">
+            <Form.Group>
               <Form.Label className="form-label">Features</Form.Label>
               <Form.Check
+                id="gardenSelect"
                 type="checkbox"
                 label="Garden"
                 style={{ borderRadius: "20px" }}
               />
               <Form.Check
+                id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
+                style={{ borderRadius: "20px" }}
+              />
+              <Form.Check
+                id="monumentSelect"
+                type="checkbox"
+                label="Monument"
+                checked={isMonument === true}
+                onChange={handleCheckboxChange(setIsMonument)}
                 style={{ borderRadius: "20px" }}
               />
             </Form.Group>
