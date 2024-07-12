@@ -3391,3 +3391,4 @@ data-service/bin/src/main/java/com/data/service/dataservice/entity/ParkOfUser.cl
 data-service/bin/src/main/java/com/data/service/dataservice/repository/ParkMapper.class
 data-service/bin/src/main/java/com/data/service/dataservice/service/ParkService.class
 data-service/bin/src/main/java/com/data/service/dataservice/service/impl/ParkServiceImpl.class
+data-service/bin/src/main/java/com/data/service/dataservice/modelcaller/FlaskClient.class
