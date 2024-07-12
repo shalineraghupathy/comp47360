@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ResultCard from "./ResultCard";
 import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import ParkSearchForm from "../parksearch/ParkSearchForm";
+import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
@@ -16,9 +16,9 @@ function MainContent() {
     location: { lat: number; lng: number },
     date: string,
     time: string,
-    preference: string
+    filters: Filters
   ) => {
-    console.log({ location, date, time, preference });
+    console.log({ location, date, time, filters });
   };
 
   const popularParks = [

@@ -88,27 +88,6 @@ function ParkModal({
     }
   };
 
-  // const formatTime = (timestamp: number) => {
-  //   const date = new Date(timestamp * 1000);
-  //   return date.toLocaleTimeString("en-US", {
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //     timeZone: "America/New_York",
-  //   });
-  // };
-
-  // const formatYesNo = (value: number): string => (value === 1 ? "Yes" : "No");
-
-  // const busynessScore = (value: number): string => {
-  //   if (value >= 66) {
-  //     return "High";
-  //   } else if (value >= 33) {
-  //     return "Medium";
-  //   } else {
-  //     return "Low";
-  //   }
-  // };
-
   const getVariant = (busyness: number) => {
     if (busyness <= 33) return "success";
     if (busyness <= 66) return "warning";
@@ -120,7 +99,7 @@ function ParkModal({
     return "High";
   };
 
-  function transformAQI(aqi) {
+  function transformAQI(aqi: number) {
     if (aqi === 1) return "good";
     if (aqi === 2) return "fair";
     if (aqi === 3) return "moderate";

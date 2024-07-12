@@ -82,7 +82,7 @@ function ParkModal({
     }
   };
 
-  function transformAQI(aqi) {
+  function transformAQI(aqi: number) {
     if (aqi === 1) return "good";
     if (aqi === 2) return "fair";
     if (aqi === 3) return "moderate";

@@ -174,7 +174,7 @@ ResultCardProps) {
         show={showModal}
         handleClose={handleClose}
         parkName={parkName}
-        distance={distance.toString()}
+        distance={distance}
         busyness={busyness}
         isCafe={isCafe}
         isToilet={isToilet}

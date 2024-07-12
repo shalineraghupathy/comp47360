@@ -44,7 +44,6 @@ const EventCalendar = () => {
   };
 
   const formatDateForDisplay = (date: Date) => {
-    const year = date.getFullYear();
     const month = date.toLocaleString("default", { month: "long" });
     const day = String(date.getDate()).padStart(2, "0");
     return `${day} ${month}`;
@@ -112,7 +111,7 @@ const EventCalendar = () => {
   };
 
   const weeksFromToday = Math.floor(
-    (currentDate - today) / (7 * 24 * 60 * 60 * 1000)
+    (currentDate.getTime() - today.getTime()) / (7 * 24 * 60 * 60 * 1000)
   );
   const prevWeekDisabled = weeksFromToday <= -maxWeeksBackward;
   const nextWeekDisabled = weeksFromToday >= maxWeeksForward;

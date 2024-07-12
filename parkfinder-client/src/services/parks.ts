@@ -92,5 +92,6 @@ function busynessRange(category: string): [number, number] {
     } else if (category === "low") {
       return [0, 32];
     } else {
+      return [50,60];
     }
   }
