@@ -33,6 +33,11 @@ jobs:
         run: docker build -t shalineraghupathy/profile-service .
       - name: Publish image to docker hub
         run: docker push shalineraghupathy/profile-service:latest
+      - name: Build docker image
+        working-directory: ./calendar-service
+        run: docker build -t shalineraghupathy/calendar-service .
+      - name: Publish image to docker hub
+        run: docker push shalineraghupathy/calendar-service:latest
       - name: Build Docker Image
         working-directory: ./parkfinder-client
         run: docker build -t shalineraghupathy/parkfinder-client .
@@ -58,6 +63,14 @@ jobs:
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
       - name: Wait for Service 2 to start
+        run: sleep 30
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/calendar-service:latest
+      - name: Delete old container
+        run: docker rm -f calendar-service-container
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+      - name: Wait for Service 3 to start
         run: sleep 30
       - name: Pull image from docker hub
         run: docker pull shalineraghupathy/parkfinder-client:latest
