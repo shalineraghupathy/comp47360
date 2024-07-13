@@ -7,7 +7,7 @@ export async function getParks(
 ) {
   try {
     const response = await axios.get(
-      `http://34.245.187.188:8080/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+      `http://34.245.187.188:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
     );
 
     console.log("Parks fetched successfully:", response.data);

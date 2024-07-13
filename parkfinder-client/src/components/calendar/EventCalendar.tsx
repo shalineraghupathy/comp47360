@@ -78,7 +78,7 @@ const EventCalendar = () => {
       for (const date of dates) {
         const formattedDate = formatDate(date);
         const response = await axios.get(
-          `http://localhost:8080/events?dates=${formattedDate}`,
+          `http://34.245.187.188:8084/events?dates=${formattedDate}`,
           { withCredentials: true }
         );
         eventsData[formattedDate] = response.data[formattedDate] || [];
