@@ -72,7 +72,7 @@ jobs:
       - name: Delete old container
         run: docker rm -f calendar-service-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+        run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
       - name: Wait for Service 3 to start
         run: sleep 30
       - name: Pull image from docker hub
