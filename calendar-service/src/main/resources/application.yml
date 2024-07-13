@@ -16,14 +16,13 @@ cloud:
   globalcors:
     corsConfigurations:
     "[/**]":
-      allowedOrigins: "http://localhost:3000"
+      allowedOrigins: "http://34.245.187.188:3000"
       allowedMethods: "*"
       allowedCredentials: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.calendar.service.calendarservice.entity
-
 
 logging:
   level:
