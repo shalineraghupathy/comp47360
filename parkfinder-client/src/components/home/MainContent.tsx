@@ -108,8 +108,9 @@ function MainContent() {
           <Col xs={12} md={12} lg={12}>
             <h1 className="main-heading">Find Your Perfect Park.</h1>
             <span className="tagline">
-              Nature is just a click away. <br />
-              Find events, check busyness, explore amenities.
+              In Manhattan, nature is just a click away. <br />
+              Discover local parks, explore amenities, and plan your perfect
+              visit with real-time crowd info.
             </span>
           </Col>
         </Row>
@@ -133,6 +134,9 @@ function MainContent() {
             <h1 className="search-heading">Search for a Park</h1>
             <span key={typingKey} className="search-description">
               Simply enter your location to get started.
+              {/* Add a date and time to
+              see predicted busyness, and filter by amenities to discover your
+              perfect park. */}
             </span>
             <div className="search-component">
               <ParkSearchForm onSubmit={handleSearchSubmit} withShadow={true} />
@@ -143,7 +147,9 @@ function MainContent() {
       </div>
       <div className="card-section">
         <Col xs={12}>
-          <h2 className="section-heading">Popular Parks</h2>
+          <h2 className="section-heading">
+            In the Spotlight: Manhattan's Top Parks
+          </h2>
           <Container>
             <Row className="card-row">
               {popularParks.map((park, index) => (
