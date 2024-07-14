@@ -44,14 +44,14 @@ const NavBar: React.FC = () => {
     >
       <Container fluid>
         <LinkContainer to="/">
-          <Navbar.Brand href="#">ParkFinder</Navbar.Brand>
+          <Navbar.Brand href="#">NYC ParkFinder</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <LinkContainer to="/">
+            {/* <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
-            </LinkContainer>
+            </LinkContainer> */}
             <LinkContainer to="/parkmap">
               <Nav.Link>Park Map</Nav.Link>
             </LinkContainer>
