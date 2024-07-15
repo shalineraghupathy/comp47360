@@ -13,8 +13,14 @@ RUN npm ci
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the React app
-RUN npm run build
+# Install AWS CLI
+RUN apk add --no-cache python3 py3-pip && pip3 install awscli
+
+# Copy the script to fetch secrets
+COPY fetch-secrets.sh .
+
+# Fetch secrets and build the React app
+RUN ./fetch-secrets.sh && npm run build
 
 # Step 2: Server with Nginx
 # Use an official Nginx runtime as a parent image
@@ -27,8 +33,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy the built React app from the build stage to the Nginx HTML directory
-COPY --from=build /app/dist .  
-# Ensure the correct path to the build directory
+COPY --from=build /app/dist .
 
 # Expose port 80
 EXPOSE 80
