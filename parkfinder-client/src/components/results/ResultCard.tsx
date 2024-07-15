@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import ParkModal from "../parkmodal/ParkModal";
 import amenityIcons from "../parkmodal/AmenityIcon";
+import parkImages from "./ParkImages";
 import "./ResultCard.css";
 
 interface ResultCardProps {
@@ -110,7 +111,7 @@ ResultCardProps) {
             <Col xs={4}>
               <Card.Img
                 className="card-img-left"
-                src="./1.jpg"
+                src={parkImages[parkName] || "./staticparkimages/default.jpg"}
                 alt={parkName}
               />
             </Col>

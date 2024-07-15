@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { MouseEvent } from "react";
 import { Modal, ProgressBar } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "./AmenityIcon";
@@ -130,7 +131,7 @@ function ParkModal({
     { name: "Monument", value: isMonument },
   ];
 
-  const handleLinkClick = (e) => {
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsClicked(!isClicked);
   };

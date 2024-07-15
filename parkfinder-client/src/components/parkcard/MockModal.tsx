@@ -163,6 +163,7 @@ function ParkModal({
             target="_blank"
             rel="noopener noreferrer"
             className="share-icons"
+            style={{ color: "black" }}
           >
             <i className="fa fa-whatsapp"></i>
           </a>
@@ -171,10 +172,16 @@ function ParkModal({
             target="_blank"
             rel="noopener noreferrer"
             className="share-icons"
+            style={{ color: "black" }}
           >
             <i className="fa fa-twitter"></i>
           </a>
-          <a href="#" target="_blank" className="share-icons">
+          <a
+            href="#"
+            target="_blank"
+            className="share-icons"
+            style={{ color: "black" }}
+          >
             <i className="fa fa-heart-o"></i>
           </a>
         </div>
