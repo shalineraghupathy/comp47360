@@ -45,6 +45,7 @@ function ParkModal({
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (show) {
@@ -107,9 +108,6 @@ function ParkModal({
     if (aqi === 5) return "very poor";
     return "unknown";
   }
-  // function resolveDistance(distance: number) {
-  //   return `${distance.toFixed(2)} km`;
-  // }
 
   const shareText = encodeURIComponent(
     `Heading to ${parkName}! Check it out on ParkFinder.`
@@ -131,6 +129,11 @@ function ParkModal({
     { name: "Fountain", value: isFountain },
     { name: "Monument", value: isMonument },
   ];
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    setIsClicked(!isClicked);
+  };
 
   return (
     <Modal show={show} onHide={handleClose} centered size="lg">
@@ -193,6 +196,7 @@ function ParkModal({
             target="_blank"
             rel="noopener noreferrer"
             className="share-icons"
+            style={{ color: "black" }}
           >
             <i className="fa fa-whatsapp"></i>
           </a>
@@ -201,11 +205,22 @@ function ParkModal({
             target="_blank"
             rel="noopener noreferrer"
             className="share-icons"
+            style={{ color: "black" }}
           >
             <i className="fa fa-twitter"></i>
           </a>
-          <a href="#" target="_blank" className="share-icons">
-            <i className="fa fa-heart-o"></i>
+          <a
+            href="#"
+            target="_blank"
+            className={`share-icons ${isClicked ? "clicked" : ""}`}
+            onClick={handleLinkClick}
+            style={{
+              color: isClicked ? "red" : "seagreen",
+              transition: "color 0.3s",
+              display: "inline-block",
+            }}
+          >
+            <i className={`fa ${isClicked ? "fa-heart" : "fa-heart-o"}`}></i>
           </a>
         </div>
       </Modal.Body>

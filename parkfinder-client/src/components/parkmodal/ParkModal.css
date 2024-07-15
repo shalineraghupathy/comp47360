@@ -101,14 +101,12 @@
   margin-bottom: 1rem;
 }
 .share-icons .fa {
-  color: black;
+  /* color: black; */
   font-size: 1.75rem; 
 }
 .share-icons .fa:hover {
-  transform: scale(1.2); /* Scale up the icon on hover */
-  color: rgba(46, 139, 87); /* Change color on hover */
+  transform: scale(1.2); /
 }
-
 
 /* hero img css... */
 .hero-image {
