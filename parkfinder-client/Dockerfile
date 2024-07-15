@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # Install AWS CLI
-RUN apk add --no-cache python3 py3-pip && pip3 install awscli
+# RUN apk add --no-cache python3 py3-pip && pip3 install awscli
 
 # Copy the script to fetch secrets
 COPY fetch-secrets.sh .
