@@ -6,6 +6,7 @@ import {
   Button,
   OverlayTrigger,
   Tooltip,
+  Form,
 } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import axios from "axios";
@@ -32,6 +33,8 @@ type EventsByDate = {
 const EventCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [events, setEvents] = useState<EventsByDate>({});
+  const [filteredEvents, setFilteredEvents] = useState<EventsByDate>({});
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const today = new Date();
   const maxWeeksForward = 4;
   const maxWeeksBackward = 1;
@@ -84,6 +87,7 @@ const EventCalendar = () => {
         eventsData[formattedDate] = response.data[formattedDate] || [];
       }
       setEvents(eventsData);
+      setFilteredEvents(eventsData);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -156,11 +160,25 @@ const EventCalendar = () => {
     }
   };
 
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredEvents(events);
+    } else {
+      const filtered: EventsByDate = {};
+      Object.keys(events).forEach((date) => {
+        filtered[date] = events[date].filter(
+          (event) => event.category === selectedCategory
+        );
+      });
+      setFilteredEvents(filtered);
+    }
+  }, [selectedCategory, events]);
+
   return (
     <div className="cal-page">
       <Container className="text-center my-4">
         <Row className="align-items-center">
-          <Col xs={6} className="text-start">
+          <Col xs={4} className="text-start">
             <span className="event-heading">
               <i
                 className="fa fa-calendar-o"
@@ -170,7 +188,31 @@ const EventCalendar = () => {
               Events at Central Park
             </span>
           </Col>
-          <Col xs={6} className="text-end">
+          <Col xs={8} className="text-end">
+            <span
+              style={{
+                display: "inline-block",
+                marginRight: "2rem",
+              }}
+            >
+              <Form.Group controlId="categorySelect">
+                <Form.Control
+                  as="select"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  style={{ borderRadius: "20px", padding: "0.4rem 1.5rem" }}
+                >
+                  <option value="All">Filter by Category</option>
+                  <option value="concerts">Concerts</option>
+                  <option value="community">Community</option>
+                  <option value="conferences">Conferences</option>
+                  <option value="expos">Expos</option>
+                  <option value="performing-arts">Performing Arts</option>
+                  <option value="festivals">Festivals</option>
+                  <option value="sports">Sports</option>
+                </Form.Control>
+              </Form.Group>
+            </span>
             <Button
               variant="success"
               onClick={handlePrevWeek}
@@ -206,7 +248,7 @@ const EventCalendar = () => {
           >
             <p className="day-name">{getDayName(date)}</p>
             <p className="date-per-day">{formatDateForDisplay(date)}</p>
-            {events[formatDate(date)]?.map((event) => (
+            {filteredEvents[formatDate(date)]?.map((event) => (
               <OverlayTrigger
                 key={event.id}
                 placement="bottom"

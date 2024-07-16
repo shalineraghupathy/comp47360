@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
 import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
@@ -10,7 +10,10 @@ import "./MainContent.css";
 
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   const handleSearchSubmit = (
     location: { lat: number; lng: number },
@@ -105,11 +108,12 @@ function MainContent() {
       <Container className="main-content">
         <HeroImage />
         <Row className="justify-content-start align-items-start heading-row">
-          <Col xs={12} md={12} lg={12}>
+          <Col xs={12} sm={12} md={12} lg={12}>
             <h1 className="main-heading">Find Your Perfect Park.</h1>
             <span className="tagline">
-              Nature is just a click away. <br />
-              Find events, check busyness, explore amenities.
+              In Manhattan, nature is just a click away. <br />
+              Discover local parks, explore amenities, and plan your perfect
+              visit with real-time crowd info.
             </span>
           </Col>
         </Row>
@@ -122,7 +126,6 @@ function MainContent() {
             >
               Get started
             </button>
-            {/* <ParkSearchForm onSubmit={handleSearchSubmit} /> */}
           </Col>
         </Row>
       </Container>
@@ -132,10 +135,27 @@ function MainContent() {
           <Col xs={12} md={12} lg={10}>
             <h1 className="search-heading">Search for a Park</h1>
             <span key={typingKey} className="search-description">
-              Simply enter your location to get started.
+              Simply enter your location to see parks near you.
+              {/* Add a date and time to
+              see predicted busyness, and filter by amenities to discover your
+              perfect park. */}
             </span>
             <div className="search-component">
-              <ParkSearchForm onSubmit={handleSearchSubmit} withShadow={true} />
+              <OverlayTrigger
+                placement="bottom"
+                overlay={
+                  <Tooltip>
+                    Enter a date and time to see predicted busyness.
+                  </Tooltip>
+                }
+              >
+                <div className="search-component">
+                  <ParkSearchForm
+                    onSubmit={handleSearchSubmit}
+                    withShadow={true}
+                  />
+                </div>
+              </OverlayTrigger>
             </div>
           </Col>
         </Row>
@@ -143,7 +163,41 @@ function MainContent() {
       </div>
       <div className="card-section">
         <Col xs={12}>
-          <h2 className="section-heading">Popular Parks</h2>
+          <div className="section-heading">
+            <span
+              className="popular-heading"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                backgroundColor: isHovered ? "whitesmoke" : "seagreen",
+                padding: "1rem 1.5rem",
+                borderRadius: "30px",
+                color: isHovered ? "seagreen" : "whitesmoke",
+                fontSize: "1.5rem",
+                fontWeight: "550",
+                letterSpacing: "1px",
+                transition: "all 0.3s ease-in-out",
+                marginRight: "1rem",
+              }}
+            >
+              In the Spotlight
+            </span>
+            <span
+              className="section-subtext"
+              style={{
+                fontSize: "1.5rem",
+                backgroundColor: isHovered ? "seagreen" : "whitesmoke",
+                padding: "1rem 1.5rem",
+                borderRadius: "30px",
+                fontWeight: "550",
+                letterSpacing: "1px",
+                color: isHovered ? "whitesmoke" : "seagreen",
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              Manhattan's Most Popular Parks
+            </span>
+          </div>
           <Container>
             <Row className="card-row">
               {popularParks.map((park, index) => (
