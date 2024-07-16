@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import MockModal from "./MockModal";
+import "./ParkCard.css";
 interface ParkCardProps {
   parkName: string;
   image: string;
@@ -40,7 +41,10 @@ function ParkCard({
 
   return (
     <>
-      <Card style={{ minWidth: "200px", borderRadius: "20px" }}>
+      <Card
+        className="park-card"
+        style={{ minWidth: "200px", borderRadius: "20px" }}
+      >
         <Card.Img
           variant="top"
           src={image}
@@ -48,7 +52,17 @@ function ParkCard({
           style={{ borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
         />
         <Card.Body>
-          <h5 style={{ paddingBottom: "0.75rem" }}>{parkName}</h5>
+          <h5
+            style={{
+              padding: "0.5rem 0rem 0.5rem 0.75rem",
+              fontSize: "1.25rem",
+              fontWeight: "550",
+              color: "dimgray",
+              borderBottom: "1px inset whitesmoke",
+            }}
+          >
+            {parkName}
+          </h5>
           <Button
             variant="link"
             onClick={handleShow}
@@ -59,6 +73,7 @@ function ParkCard({
               color: "grey",
               textDecoration: "none",
               border: "1px solid lightgrey",
+              margin: "0rem 0.5rem 0.5rem 0rem",
             }}
           >
             Details
