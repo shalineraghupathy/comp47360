@@ -101,6 +101,7 @@ jobs:
 
       - name: Set up SSH key
         run: |
+          mkdir -p ~/.ssh
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
@@ -126,9 +127,9 @@ jobs:
             docker stop parkfinder-client-container || true
             docker rm parkfinder-client-container || true
             docker run -d -p 3000:80 \
-              --env VITE_GOOGLEMAP_KEY=${VITE_GOOGLEMAP_KEY} \
-              --env VITE_NPS_API_KEY=${VITE_NPS_API_KEY} \
-              --env VITE_GOOGLE_API_KEY=${VITE_GOOGLE_API_KEY} \
-              --env VITE_OPENWEATHER_API_KEY=${VITE_OPENWEATHER_API_KEY} \
+              --env VITE_GOOGLEMAP_KEY=${{ secrets.VITE_GOOGLEMAP_KEY }} \
+              --env VITE_NPS_API_KEY=${{ secrets.VITE_NPS_API_KEY }} \
+              --env VITE_GOOGLE_API_KEY=${{ secrets.VITE_GOOGLE_API_KEY }} \
+              --env VITE_OPENWEATHER_API_KEY=${{ secrets.VITE_OPENWEATHER_API_KEY }} \
               --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
           EOF
