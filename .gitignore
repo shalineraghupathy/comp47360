@@ -3368,3 +3368,13 @@ parkfinder-app/node_modules/yocto-queue/readme.md
 .idea/compiler.xml
 .idea/encodings.xml
 .idea/jarRepositories.xml
+data-service/bin/src/main/java/com/data/service/dataservice/DataServiceApplication.class
+data-service/bin/src/main/java/com/data/service/dataservice/config/SecurityConfiguration.class
+data-service/bin/src/main/java/com/data/service/dataservice/controller/ParkController.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/Entrance.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/Park.class
+data-service/bin/src/main/java/com/data/service/dataservice/entity/ParkOfUser.class
+data-service/bin/src/main/java/com/data/service/dataservice/modelcaller/FlaskClient.class
+data-service/bin/src/main/java/com/data/service/dataservice/repository/ParkMapper.class
+data-service/bin/src/main/java/com/data/service/dataservice/service/ParkService.class
+data-service/bin/src/main/java/com/data/service/dataservice/service/impl/ParkServiceImpl.class

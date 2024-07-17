@@ -1,0 +1,69 @@
+.cal-page {
+    margin-top: 2rem;
+}
+#day-container {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Inter", sans-serif;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    font-weight: 500;
+  }
+  
+  .day {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 15px;
+    margin: 0 0.3rem;
+    background-color: whitesmoke;
+  }
+  
+  .day.today {
+    background-color: rgb(213, 237, 224);
+  }
+ 
+  .event {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-top: 5px solid seagreen;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 0.75rem;
+  }
+  
+  .event h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+  }
+  
+  .event p {
+    margin: 0.3rem 0rem;
+    font-size: 0.75rem;
+  }
+  
+  .date-per-day {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .day-name {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .week-of {
+    border: 1px solid lightgrey;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+
+.event-heading {
+  font-size: 2rem;
+  font-weight:500;
+}

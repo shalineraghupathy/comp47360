@@ -1,0 +1,27 @@
+.filter-section {
+    margin-top: 2rem;
+    font-family: "Open Sans", sans-serif;
+
+}
+
+.results-heading {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  /* background-color: rgb(50, 104, 191); */
+  background-color: rgba(46, 139, 87);
+  color: white;
+  margin-bottom: 1rem;
+  border-radius: 20px;
+  text-align: left;
+  padding: 1rem 1rem;
+
+}
+
+.result-card {
+    margin: 1rem 0;
+}
+
+.results-container {
+  margin-bottom: 3rem;
+}

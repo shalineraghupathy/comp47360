@@ -15,7 +15,7 @@ const mapStyles = [
     elementType: "all",
     stylers: [
       {
-        visibility: "simplified",
+        visibility: "off",
       },
     ],
   },
@@ -57,10 +57,19 @@ const mapStyles = [
   },
   {
     featureType: "poi.park",
-    elementType: "all",
+    elementType: "geometry",
     stylers: [
       {
         visibility: "on",
+      },
+    ],
+  },
+  {
+    featureType: "poi.park",
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "off",
       },
     ],
   },

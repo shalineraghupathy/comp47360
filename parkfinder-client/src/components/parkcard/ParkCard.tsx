@@ -1,53 +1,101 @@
 import { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import ParkModal from "../parkmodal/ParkModal";
-
+import MockModal from "./MockModal";
+import "./ParkCard.css";
 interface ParkCardProps {
-  name: string;
+  parkName: string;
   image: string;
-  link: string;
-  distance: string;
-  busyness: number;
-  isCoffeeShop: number;
-  isToilet: number;
-  activities: { id: string; name: string }[];
+  hasToilet: number;
+  hasCafe: number;
+  hasPlayground: number;
+  hasToiletHandicapAccess: number;
+  hasRestaurant: number;
+  hasShelter: number;
+  hasDrinkingWater: number;
+  hasBar: number;
+  hasBench: number;
+  hasGarden: number;
+  hasFountain: number;
+  hasMonument: number;
 }
 
 function ParkCard({
-  name,
+  parkName,
   image,
-  link,
-  distance,
-  busyness,
-  isCoffeeShop,
-  isToilet,
-  activities,
+  hasCafe,
+  hasToilet,
+  hasPlayground,
+  hasToiletHandicapAccess,
+  hasRestaurant,
+  hasShelter,
+  hasDrinkingWater,
+  hasBar,
+  hasBench,
+  hasGarden,
+  hasFountain,
+  hasMonument,
 }: ParkCardProps) {
   const [showModal, setShowModal] = useState(false);
-
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   return (
     <>
-      <Card style={{ minWidth: "200px" }}>
-        <Card.Img variant="top" src={image} alt={name} />
+      <Card
+        className="park-card"
+        style={{ minWidth: "200px", borderRadius: "20px" }}
+      >
+        <Card.Img
+          variant="top"
+          src={image}
+          alt={parkName}
+          style={{ borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
+        />
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Button variant="link" onClick={handleShow}>
-            {link}
+          <h5
+            style={{
+              padding: "0.5rem 0rem 0.5rem 0.75rem",
+              fontSize: "1.25rem",
+              fontWeight: "550",
+              color: "dimgray",
+              borderBottom: "1px inset whitesmoke",
+            }}
+          >
+            {parkName}
+          </h5>
+          <Button
+            variant="link"
+            onClick={handleShow}
+            style={{
+              float: "right",
+              borderRadius: "20px",
+              padding: "0.3rem 1rem",
+              color: "grey",
+              textDecoration: "none",
+              border: "1px solid lightgrey",
+              margin: "0rem 0.5rem 0.5rem 0rem",
+            }}
+          >
+            Details
           </Button>
         </Card.Body>
       </Card>
-      <ParkModal
+      <MockModal
         show={showModal}
         handleClose={handleClose}
-        parkName={name}
-        distance={distance}
-        busyness={busyness}
-        isCoffeeShop={isCoffeeShop}
-        isToilet={isToilet}
-        activities={activities}
+        parkName={parkName}
+        hasCafe={hasCafe}
+        hasToilet={hasToilet}
+        hasPlayground={hasPlayground}
+        hasToiletHandicapAccess={hasToiletHandicapAccess}
+        hasRestaurant={hasRestaurant}
+        hasShelter={hasShelter}
+        hasDrinkingWater={hasDrinkingWater}
+        hasBar={hasBar}
+        hasBench={hasBench}
+        hasGarden={hasGarden}
+        hasFountain={hasFountain}
+        hasMonument={hasMonument}
       />
     </>
   );
