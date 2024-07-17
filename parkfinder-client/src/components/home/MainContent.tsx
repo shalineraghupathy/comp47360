@@ -109,7 +109,7 @@ function MainContent() {
         <HeroImage />
         <Row className="justify-content-start align-items-start heading-row">
           <Col xs={12} sm={12} md={12} lg={12}>
-            <h1 className="main-heading">Find Your Perfect Park.</h1>
+            <h1 className="main-heading">NYC PARK FINDER</h1>
             <span className="tagline">
               In Manhattan, nature is just a click away. <br />
               Discover local parks, explore amenities, and plan your perfect

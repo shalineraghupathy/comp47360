@@ -49,9 +49,9 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {/* <LinkContainer to="/">
+            <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
-            </LinkContainer> */}
+            </LinkContainer>
             <LinkContainer to="/parkmap">
               <Nav.Link>Park Map</Nav.Link>
             </LinkContainer>
