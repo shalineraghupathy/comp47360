@@ -1,35 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import {
   GoogleMapProvider,
   useGoogleMap,
 } from "../../contexts/googleMapContext";
-import { getParks, convertToTimestamp } from "../../services/parks";
 import ResultCard from "../results/ResultCard";
 
-const defaultLocation = { lat: 40.7831, lng: -73.9712 };
-const defaultTimestamp = convertToTimestamp("2024-07-01", "12:00");
-
-const MapContent: React.FC = () => {
+const MapContent: React.FC<{ parks: any[] }> = ({ parks }) => {
   const { addMarker, fitBoundsToMarkers, selectedPark } = useGoogleMap();
-  const [parks, setParks] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchParks = async () => {
-      try {
-        const parksData = await getParks(
-          defaultLocation.lat,
-          defaultLocation.lng,
-          defaultTimestamp
-        );
-        setParks(parksData);
-      } catch (error) {
-        console.error("Error fetching parks:", error);
-      }
-    };
-
-    fetchParks();
-  }, []);
 
   useEffect(() => {
     parks.forEach((park) => {
@@ -95,10 +74,10 @@ const MapContent: React.FC = () => {
   );
 };
 
-const GoogleMapComponent: React.FC = () => {
+const GoogleMapComponent: React.FC<{ parks: any[] }> = ({ parks }) => {
   return (
     <GoogleMapProvider>
-      <MapContent />
+      <MapContent parks={parks} />
     </GoogleMapProvider>
   );
 };

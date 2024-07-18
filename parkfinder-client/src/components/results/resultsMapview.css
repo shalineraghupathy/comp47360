@@ -1,0 +1,29 @@
+.results-map-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.map-section {
+  flex: 1;
+  position: relative;
+}
+
+.filter-button {
+  display: inline-block;
+}
+
+.filter-container {
+  padding: 1rem;
+}
+.form-label {
+  font-weight: bold;
+}
