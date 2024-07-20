@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
-import { useNavigate } from "react-router-dom";
-import { getParks, convertToTimestamp } from "../../services/parks";
 import Multiselect from "multiselect-react-dropdown";
 
 export interface Filters {
@@ -43,7 +40,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [time, setTime] = useState("");
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -79,29 +75,9 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
-      const timestamp = convertToTimestamp(date, time);
-      console.log("Location: ", location);
-      console.log("Date: ", date);
-      console.log("Time: ", time);
-      console.log("Filters: ", filters);
-
-      try {
-        const parksResult = await getParks(
-          location.lat,
-          location.lng,
-          timestamp
-        );
-        onSubmit(location, date, time, filters);
-        navigate("/results", {
-          state: { parks: parksResult, filters: filters },
-        });
-      } catch (error) {
-        setShowToast(true);
-        console.error("Error fetching parks: ", error);
-      }
+      onSubmit(location, date, time, filters);
     } else {
       setShowToast(true);
-      console.warn("No location selected");
     }
   }
 

@@ -6,6 +6,7 @@ import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
 import { Element } from "react-scroll";
+import { getParks, convertToTimestamp } from "../../services/parks";
 import "./MainContent.css";
 
 function MainContent() {
@@ -15,13 +16,25 @@ function MainContent() {
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
-  const handleSearchSubmit = (
+  const handleSearchSubmit = async (
     location: { lat: number; lng: number },
     date: string,
     time: string,
     filters: Filters
   ) => {
-    console.log({ location, date, time, filters });
+    const timestamp = convertToTimestamp(date, time);
+    try {
+      const parksResult = await getParks(location.lat, location.lng, timestamp);
+      navigate("/results", {
+        state: {
+          fullParksList: parksResult,
+          filteredParks: parksResult,
+          filters,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching parks: ", error);
+    }
   };
 
   const popularParks = [

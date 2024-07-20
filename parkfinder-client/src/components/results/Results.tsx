@@ -35,9 +35,9 @@ interface Park {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const initialParks = location.state?.parks || [];
-  const initialFilteredParks = location.state?.filteredParks || initialParks;
+  const initialParks = location.state?.fullParksList || [];
   const initialFilters = location.state?.filters || {};
+  const initialFilteredParks = location.state?.filteredParks || initialParks;
 
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [fullParksList, setFullParksList] = useState<Park[]>(initialParks);
@@ -83,7 +83,9 @@ const Results = () => {
     setSearchKey(searchKey + 1);
   };
 
-  const sortedParks = filteredParks.sort((a, b) => a.distance - b.distance);
+  const sortedParks = filteredParks
+    ? filteredParks.sort((a, b) => a.distance - b.distance)
+    : [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
