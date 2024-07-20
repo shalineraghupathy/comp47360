@@ -89,7 +89,6 @@ function MainContent() {
       hasFountain: 1,
       hasMonument: 1,
     },
-    //etc.
   ];
 
   const scrollToSearchForm = () => {
@@ -130,15 +129,11 @@ function MainContent() {
         </Row>
       </Container>
       <div className="search-form-div" id="search-form-div">
-        {/* <Container > */}
         <Row className="justify-content-center align-items-center search-row">
           <Col xs={12} md={12} lg={10}>
             <h1 className="search-heading">Search for a Park</h1>
             <span key={typingKey} className="search-description">
               Simply enter your location to see parks near you.
-              {/* Add a date and time to
-              see predicted busyness, and filter by amenities to discover your
-              perfect park. */}
             </span>
             <div className="search-component">
               <OverlayTrigger
@@ -159,7 +154,6 @@ function MainContent() {
             </div>
           </Col>
         </Row>
-        {/* </Container> */}
       </div>
       <div className="card-section">
         <Col xs={12}>

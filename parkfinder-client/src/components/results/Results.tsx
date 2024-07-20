@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
@@ -36,7 +35,7 @@ interface Park {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const initialParks = location.state?.fullParksList || [];
+  const initialParks = location.state?.parks || [];
   const initialFilteredParks = location.state?.filteredParks || initialParks;
   const initialFilters = location.state?.filters || {};
 

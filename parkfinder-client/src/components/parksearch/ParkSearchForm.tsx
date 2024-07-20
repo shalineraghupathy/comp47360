@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
@@ -44,7 +45,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
-  //Time & Date Management
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
@@ -58,7 +58,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     setTime(currentTime);
   }, []);
 
-  //state handlers
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
   }
@@ -77,27 +76,32 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     });
   }
 
-  //form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
       const timestamp = convertToTimestamp(date, time);
+      console.log("Location: ", location);
+      console.log("Date: ", date);
+      console.log("Time: ", time);
+      console.log("Filters: ", filters);
+
       try {
         const parksResult = await getParks(
           location.lat,
           location.lng,
           timestamp
         );
-
         onSubmit(location, date, time, filters);
         navigate("/results", {
           state: { parks: parksResult, filters: filters },
         });
       } catch (error) {
         setShowToast(true);
+        console.error("Error fetching parks: ", error);
       }
     } else {
       setShowToast(true);
+      console.warn("No location selected");
     }
   }
 
@@ -178,12 +182,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
       <ToastContainer
         position="top-center"
         className="p-3"
-        style={{
-          position: "fixed",
-          top: "20px",
-          right: "20px",
-          zIndex: 1050,
-        }}
+        style={{ position: "fixed", top: "20px", right: "20px", zIndex: 1050 }}
       >
         <Toast
           show={showToast}
