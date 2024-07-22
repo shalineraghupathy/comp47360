@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import ResultCard from "./ResultCard";
 import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
 import ResultFilters from "./ResultFilters";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { getParks, convertToTimestamp } from "../../services/parks";
+import {
+  getParks,
+  convertToTimestamp,
+  filterParks,
+} from "../../services/parks";
 import { LocationData } from "../parksearch/ParkSearchForm";
-import { filterParks } from "../../services/parks";
 import CustomFooter from "../home/CustomFooter";
 import "./Results.css";
 
@@ -32,11 +34,16 @@ interface Park {
 
 const Results = () => {
   const location = useLocation();
-  const parksResult = location.state?.parks || [];
-  const [filters, setFilters] = useState(location.state?.filters || {});
-  const [filteredParks, setFilteredParks] = useState(parksResult);
-  const [searchKey, setSearchKey] = useState(0);
+  const navigate = useNavigate();
+  const initialParks = location.state?.fullParksList || [];
+  const initialFilters = location.state?.filters || {};
+  const initialFilteredParks = location.state?.filteredParks || initialParks;
 
+  const [filters, setFilters] = useState<Filters>(initialFilters);
+  const [fullParksList, setFullParksList] = useState<Park[]>(initialParks);
+  const [filteredParks, setFilteredParks] =
+    useState<Park[]>(initialFilteredParks);
+  const [searchKey, setSearchKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -44,15 +51,22 @@ const Results = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  function handleApplyFilters() {
-    const filtered = filterParks(filters, parksResult);
-    setFilteredParks(filtered);
-  }
+  useEffect(() => {
+    if (fullParksList.length > 0) {
+      handleApplyFilters();
+    }
+  }, [filters]);
 
-  function handleResetFilters() {
+  const handleApplyFilters = () => {
+    const filtered = filterParks(filters, fullParksList);
+    setFilteredParks(filtered);
+    setCurrentPage(1); // Reset to first page when filters are applied
+  };
+
+  const handleResetFilters = () => {
     setFilters({});
-    setFilteredParks(parksResult);
-  }
+    setFilteredParks(fullParksList);
+  };
 
   const handleSearchSubmit = async (
     location: LocationData,
@@ -64,15 +78,14 @@ const Results = () => {
     setFilters(filters);
 
     const parks = await getParks(location.lat, location.lng, timestamp);
+    setFullParksList(parks);
     setFilteredParks(parks);
-
-    handleApplyFilters();
     setSearchKey(searchKey + 1);
   };
 
-  const sortedParks = filteredParks.sort(
-    (a: Park, b: Park) => a.distance - b.distance
-  );
+  const sortedParks = filteredParks
+    ? filteredParks.sort((a, b) => a.distance - b.distance)
+    : [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -93,13 +106,19 @@ const Results = () => {
     }
   };
 
+  const handleViewMap = () => {
+    navigate("/resultsmap", {
+      state: { fullParksList, filteredParks, filters },
+    });
+  };
+
   return (
     <>
       <Container className="results-container" key={searchKey}>
         <div>
           <ParkSearchForm onSubmit={handleSearchSubmit} />
           <Row>
-            <Col xs={12} s={12} md={12} lg={3}>
+            <Col xs={12} sm={12} md={12} lg={3}>
               <div className="left-column">
                 <div className="map-link-container">
                   <Card style={{ width: "16rem", borderRadius: "20px" }}>
@@ -109,8 +128,8 @@ const Results = () => {
                       src="./staticparkimages/mapview.png"
                       alt="Card image cap"
                     />
-                    <a
-                      href="/parkmap"
+                    <Button
+                      onClick={handleViewMap}
                       className="card-body"
                       style={{
                         textAlign: "center",
@@ -119,7 +138,7 @@ const Results = () => {
                       }}
                     >
                       View map
-                    </a>{" "}
+                    </Button>
                   </Card>
                 </div>
                 <div className="filter-section">
@@ -128,11 +147,12 @@ const Results = () => {
                     onApply={handleApplyFilters}
                     onReset={handleResetFilters}
                     filters={filters}
+                    setFilters={setFilters}
                   />
                 </div>
               </div>
             </Col>
-            <Col xs={12} s={12} md={12} lg={9}>
+            <Col xs={12} sm={12} md={12} lg={9}>
               <p className="results-heading">
                 <i
                   className="fa fa-search"
@@ -150,26 +170,24 @@ const Results = () => {
                 filters using the sidebar
               </p>
               <div className="cards-container">
-                {currentParks.map((parkResult: any, index: number) => (
+                {currentParks.map((parkResult: Park, index: number) => (
                   <ResultCard
                     key={index}
-                    parkName={parkResult.park.parkName}
+                    parkName={parkResult.parkName}
                     distance={parkResult.distance}
                     busyness={parkResult.busyness}
-                    isCafe={parkResult.park.isCafe}
-                    isToilet={parkResult.park.isToilet}
-                    isPlayground={parkResult.park.isPlayground}
-                    isToiletHandicapAccess={
-                      parkResult.park.isToiletHandicapAccess
-                    }
-                    isRestaurant={parkResult.park.isRestaurant}
-                    isShelter={parkResult.park.isShelter}
-                    isDrinkingWater={parkResult.park.isDrinkingWater}
-                    isBar={parkResult.park.isBar}
-                    isBench={parkResult.park.isBench}
-                    isGarden={parkResult.park.isGarden}
-                    isFountain={parkResult.park.isFountain}
-                    isMonument={parkResult.park.isMonument}
+                    isCafe={parkResult.isCafe}
+                    isToilet={parkResult.isToilet}
+                    isPlayground={parkResult.isPlayground}
+                    isToiletHandicapAccess={parkResult.isToiletHandicapAccess}
+                    isRestaurant={parkResult.isRestaurant}
+                    isShelter={parkResult.isShelter}
+                    isDrinkingWater={parkResult.isDrinkingWater}
+                    isBar={parkResult.isBar}
+                    isBench={parkResult.isBench}
+                    isGarden={parkResult.isGarden}
+                    isFountain={parkResult.isFountain}
+                    isMonument={parkResult.isMonument}
                   />
                 ))}
               </div>
