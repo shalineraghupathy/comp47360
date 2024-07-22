@@ -46,7 +46,7 @@ const NavBar: React.FC = () => {
       <Container fluid>
         <LinkContainer to="/">
           <Navbar.Brand href="#">
-            <img src={logo} alt="NYC ParkFinder" style={{ height: "40px" }} />
+            <img src={logo} alt="NYC ParkFinder" style={{ height: "65px" }} />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
