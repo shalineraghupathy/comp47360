@@ -5,6 +5,7 @@ import { Link as ScrollLink } from "react-scroll";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import logo from "../../assets/NYC PARK FINDER LOGO.svg";
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
