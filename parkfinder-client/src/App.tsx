@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { UserProvider } from "./contexts/userContext";
 import NationalParks from "./components/nationalparks/nationalparks";
 import EventCalendar from "./components/calendar/EventCalendar";
+import Heatmap from "./components/maps/heatmap";
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <Route path="/results" element={<Results />} />
           <Route path="/NationalParks" element={<NationalParks />} />
           <Route path="/EventCalendar" element={<EventCalendar />} />
+          <Route path="/Heatmap" element={<Heatmap />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
