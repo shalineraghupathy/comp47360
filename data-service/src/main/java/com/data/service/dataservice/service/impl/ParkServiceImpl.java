@@ -69,6 +69,35 @@ public class ParkServiceImpl implements ParkService {
     }
 
     @Override
+    public List<ParkOfUser> findNearbyParks2(double userLat, double userLon, int playTime, String userEmail) {
+
+        Optional<UserEntity> userEntityOpt =  userRepository.findByUserEmail(userEmail);
+        Long userId = userEntityOpt.get().getUserId();
+
+        List<ParkOfUser> nearbyParks = new ArrayList<>();
+
+        for (Park park : parkList) {
+            double minDistance = Double.MAX_VALUE;
+            for (Entrance entrance : park.getEntrances()) {
+                double distance = calculateDistance(userLat, userLon, entrance.getLat(), entrance.getLon());
+                if (distance < minDistance) {
+                    minDistance = distance;
+                }
+            }
+
+//            Unit: km, can be changed as needed
+
+            UserFavouritesKey key = new UserFavouritesKey(userId, park.getParkId());
+
+            if (minDistance < 4.0) {
+                nearbyParks.add(new ParkOfUser(park, minDistance, predictBusyness(park.getParkId(), playTime), userFavouritesRepository.existsById(key)));
+            }
+        }
+
+        return nearbyParks;
+    }
+
+    @Override
     public double predictBusyness(String parkId, int playTime) {
         // Fake Impl!
         Random random = new Random();

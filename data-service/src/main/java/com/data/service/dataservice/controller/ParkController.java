@@ -32,6 +32,20 @@ public class ParkController {
     public List<ParkOfUser> findNearbyParks(@RequestParam double userLat, @RequestParam double userLon, @RequestParam int playTime) {
         return parkService.findNearbyParks(userLat, userLon, playTime);
     }
+
+    @GetMapping("/findNearby2")
+    public ResponseEntity<List<ParkOfUser>> findNearbyParks2(HttpServletRequest request, @RequestParam double userLat, @RequestParam double userLon, @RequestParam int playTime) {
+
+        String token = request.getHeader("Authorization");
+//        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // Remove "Bearer " prefix
+            jwtUtil.validateToken(token);
+            String userEmail = jwtUtil.extractUsername(token);
+            return ResponseEntity.status(200).body(parkService.findNearbyParks2(userLat, userLon, playTime, userEmail));
+//        } else {
+//            return ResponseEntity.status(401).body("Invalid token.");
+//        }
+    }
     @PostMapping("/addFavourites")
     public ResponseEntity<String> addUserFavourite(HttpServletRequest request, @RequestParam String parkID) {
         String token = request.getHeader("Authorization");

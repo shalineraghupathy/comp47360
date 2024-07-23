@@ -11,5 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface UserFavouritesRepository extends JpaRepository<UserFavourites, UserFavouritesKey> {
+
+    boolean existsById(UserFavouritesKey id);
 }
 

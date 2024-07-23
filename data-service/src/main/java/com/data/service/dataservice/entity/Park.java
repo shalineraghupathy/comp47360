@@ -23,7 +23,7 @@ public class Park {
     private int isGarden;
     private int isFountain;
     private int isMonument;
-    private boolean isfavourite;
+
 
     // Getters and Setters
 
@@ -159,13 +159,5 @@ public class Park {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Entrance>>() {}.getType();
         return gson.fromJson(entranceJson, listType);
-    }
-
-    public boolean isIsfavourite() {
-        return isfavourite;
-    }
-
-    public void setIsfavourite(boolean isfavourite) {
-        this.isfavourite = isfavourite;
     }
 }
