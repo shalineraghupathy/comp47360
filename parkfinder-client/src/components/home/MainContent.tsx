@@ -7,6 +7,7 @@ import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
 import { Element } from "react-scroll";
 import { getParks, convertToTimestamp } from "../../services/parks";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import "./MainContent.css";
 
 function MainContent() {
@@ -15,6 +16,7 @@ function MainContent() {
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
+  const [token] = useLocalStorage("token");
 
   const handleSearchSubmit = async (
     location: { lat: number; lng: number },
@@ -24,7 +26,12 @@ function MainContent() {
   ) => {
     const timestamp = convertToTimestamp(date, time);
     try {
-      const parksResult = await getParks(location.lat, location.lng, timestamp);
+      const parksResult = await getParks(
+        location.lat,
+        location.lng,
+        timestamp,
+        token
+      );
       navigate("/results", {
         state: {
           fullParksList: parksResult,

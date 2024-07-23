@@ -4,12 +4,14 @@ import { Modal, ProgressBar } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "./AmenityIcon";
 import "./ParkModal.css";
+import useUser from "../../contexts/userContext";
+import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
 
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
-  distance: number;
+  parkId: string;
   busyness: number;
   isCafe: number;
   isToilet: number;
@@ -29,7 +31,7 @@ function ParkModal({
   show,
   handleClose,
   parkName,
-  // distance,
+  parkId,
   busyness,
   isCafe,
   isToilet,
@@ -47,6 +49,7 @@ function ParkModal({
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
   const [isClicked, setIsClicked] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     if (show) {
@@ -61,7 +64,6 @@ function ParkModal({
     try {
       const response = await fetch(url);
       const data = await response.json();
-
       setWeather({
         ...data,
         sunrise: data.sys.sunrise,
@@ -79,7 +81,6 @@ function ParkModal({
     const lat = "40.7834";
     const lon = "-73.9662";
     const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
     try {
       const airQualityResponse = await fetch(airQualityUrl);
       const airQualityData = await airQualityResponse.json();
@@ -95,6 +96,7 @@ function ParkModal({
     if (busyness <= 66) return "warning";
     return "danger";
   };
+
   const getLabel = (busyness: number) => {
     if (busyness <= 33) return "Low";
     if (busyness <= 66) return "Medium";
@@ -131,9 +133,24 @@ function ParkModal({
     { name: "Monument", value: isMonument },
   ];
 
-  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleLinkClick = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    if (!user) {
+      alert("You must be logged in to add or remove favorites.");
+      return;
+    }
+
     setIsClicked(!isClicked);
+
+    try {
+      if (isClicked) {
+        await removeFavorite(parkId);
+      } else {
+        await addFavorite(parkId);
+      }
+    } catch (error) {
+      console.error("Failed to update favorites", error);
+    }
   };
 
   return (
@@ -187,7 +204,7 @@ function ParkModal({
             <ProgressBar
               now={busyness}
               label={getLabel(busyness)}
-              variant={getVariant(busyness)} // Color variant of the progress bar
+              variant={getVariant(busyness)}
             />
           </span>
         </div>

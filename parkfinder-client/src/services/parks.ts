@@ -4,13 +4,24 @@ import axios from "axios";
 export async function getParks(
   userLat: number,
   userLon: number,
-  playTime: number
+  playTime: number,
+  token?: string | null
 ) {
-  try {
-    const response = await axios.get(
-      `http://localhost:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
-    );
+  const url = token
+    ? `http://localhost:8082/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+    : `http://localhost:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
 
+  const config = token
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    : {};
+
+  try {
+    console.log(url);
+    const response = await axios.get(url, config);
     console.log("Parks fetched successfully:", response.data);
     return response.data;
   } catch (error) {
