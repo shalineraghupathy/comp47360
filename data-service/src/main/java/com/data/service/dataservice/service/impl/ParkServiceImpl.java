@@ -1,18 +1,20 @@
 package com.data.service.dataservice.service.impl;
 
-import com.data.service.dataservice.entity.Entrance;
-import com.data.service.dataservice.entity.Park;
-import com.data.service.dataservice.entity.ParkOfUser;
+import com.data.service.dataservice.entity.*;
 import com.data.service.dataservice.modelcaller.FlaskClient;
 import com.data.service.dataservice.repository.ParkMapper;
+import com.data.service.dataservice.repository.UserFavouritesRepository;
+import com.data.service.dataservice.repository.UserRepository;
 import com.data.service.dataservice.service.ParkService;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -21,9 +23,15 @@ public class ParkServiceImpl implements ParkService {
     @Autowired
     private ParkMapper parkMapper;
 
+    @Autowired
+    private UserFavouritesRepository userFavouritesRepository;
+
     private List<Park> parkList = new ArrayList<>();
 
     private static final double EARTH_RADIUS_KM = 6371.0;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostConstruct
     public void initializeParkData() {
@@ -87,5 +95,21 @@ public class ParkServiceImpl implements ParkService {
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return EARTH_RADIUS_KM * c;
+    }
+
+    @Transactional
+    public void addUserFavourite(String userEmail, String parkID ){
+        Optional<UserEntity> userEntityOpt =  userRepository.findByUserEmail(userEmail);
+        UserFavouritesKey key = new UserFavouritesKey(userEntityOpt.get().getUserId(), parkID);
+        UserFavourites userFavourites = new UserFavourites(key);
+        userFavouritesRepository.save(userFavourites);
+    }
+
+    @Transactional
+    public void removeUserFavourite(String userEmail, String parkID ){
+        Optional<UserEntity> userEntityOpt =  userRepository.findByUserEmail(userEmail);
+        UserFavouritesKey key = new UserFavouritesKey(userEntityOpt.get().getUserId(), parkID);
+        UserFavourites userFavourites = new UserFavourites(key);
+        userFavouritesRepository.delete(userFavourites);
     }
 }

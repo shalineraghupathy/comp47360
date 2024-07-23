@@ -11,4 +11,6 @@ public interface ParkService {
     List<Park> findAll();
     List<ParkOfUser> findNearbyParks(double userLat, double userLon, int playTime);
     double predictBusyness(String parkId, int playTime);
+    void addUserFavourite(String userEmail, String parkID );
+    void removeUserFavourite(String userEmail, String parkID);
 }
