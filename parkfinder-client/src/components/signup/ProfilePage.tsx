@@ -127,7 +127,12 @@ const ProfilePage: React.FC = () => {
               }}
             >
               <Card.Body>
-                <h4 className="right-heading">Account Information</h4>
+                <h4 className="right-heading">
+                  Account Information{" "}
+                  {/* <span style={{ fontSize: "1rem", marginLeft: "0.3rem" }}>
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </span> */}
+                </h4>
                 <ListGroup className="details" variant="flush">
                   <ListGroup.Item className="d-flex justify-content-between">
                     <span className="label">First Name</span>
