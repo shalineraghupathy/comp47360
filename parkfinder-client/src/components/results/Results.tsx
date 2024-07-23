@@ -1,6 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import ResultCard from "./ResultCard";
 import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
 import ResultFilters from "./ResultFilters";
@@ -15,21 +23,26 @@ import CustomFooter from "../home/CustomFooter";
 import "./Results.css";
 
 interface Park {
+  park: {
+    parkId: string;
+    parkName: string;
+    parkEntrance: string;
+    entrances: Array<{ lat: number; lon: number }>;
+    isCafe: number;
+    isPlayground: number;
+    isToilet: number;
+    isToiletHandicapAccess: number;
+    isRestaurant: number;
+    isShelter: number;
+    isDrinkingWater: number;
+    isBar: number;
+    isBench: number;
+    isGarden: number;
+    isFountain: number;
+    isMonument: number;
+  };
   distance: number;
-  parkName: string;
   busyness: number;
-  isCafe: number;
-  isToilet: number;
-  isPlayground: number;
-  isToiletHandicapAccess: number;
-  isRestaurant: number;
-  isShelter: number;
-  isDrinkingWater: number;
-  isBar: number;
-  isBench: number;
-  isGarden: number;
-  isFountain: number;
-  isMonument: number;
 }
 
 const Results = () => {
@@ -45,11 +58,13 @@ const Results = () => {
     useState<Park[]>(initialFilteredParks);
   const [searchKey, setSearchKey] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const itemsPerPage = 10;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     if (fullParksList.length > 0) {
@@ -57,11 +72,11 @@ const Results = () => {
     }
   }, [filters]);
 
-  const handleApplyFilters = () => {
+  const handleApplyFilters = useCallback(() => {
     const filtered = filterParks(filters, fullParksList);
     setFilteredParks(filtered);
     setCurrentPage(1); // Reset to first page when filters are applied
-  };
+  }, [filters, fullParksList]);
 
   const handleResetFilters = () => {
     setFilters({});
@@ -76,16 +91,25 @@ const Results = () => {
   ) => {
     const timestamp = convertToTimestamp(date, time);
     setFilters(filters);
+    setLoading(true);
+    setError(null);
 
-    const parks = await getParks(location.lat, location.lng, timestamp);
-    setFullParksList(parks);
-    setFilteredParks(parks);
-    setSearchKey(searchKey + 1);
+    try {
+      const parks = await getParks(location.lat, location.lng, timestamp);
+      setFullParksList(parks);
+      setFilteredParks(parks);
+      setSearchKey(searchKey + 1);
+    } catch (err) {
+      setError("Failed to fetch parks. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const sortedParks = filteredParks
-    ? filteredParks.sort((a, b) => a.distance - b.distance)
-    : [];
+  const sortedParks = useMemo(
+    () => filteredParks.sort((a, b) => a.distance - b.distance),
+    [filteredParks]
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -169,28 +193,38 @@ const Results = () => {
                 See the results of your search below and apply additional
                 filters using the sidebar
               </p>
-              <div className="cards-container">
-                {currentParks.map((parkResult: Park, index: number) => (
-                  <ResultCard
-                    key={index}
-                    parkName={parkResult.parkName}
-                    distance={parkResult.distance}
-                    busyness={parkResult.busyness}
-                    isCafe={parkResult.isCafe}
-                    isToilet={parkResult.isToilet}
-                    isPlayground={parkResult.isPlayground}
-                    isToiletHandicapAccess={parkResult.isToiletHandicapAccess}
-                    isRestaurant={parkResult.isRestaurant}
-                    isShelter={parkResult.isShelter}
-                    isDrinkingWater={parkResult.isDrinkingWater}
-                    isBar={parkResult.isBar}
-                    isBench={parkResult.isBench}
-                    isGarden={parkResult.isGarden}
-                    isFountain={parkResult.isFountain}
-                    isMonument={parkResult.isMonument}
-                  />
-                ))}
-              </div>
+              {loading && (
+                <Spinner animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              )}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {!loading && !error && (
+                <div className="cards-container">
+                  {currentParks.map((parkResult: Park, index: number) => (
+                    <ResultCard
+                      key={index}
+                      parkName={parkResult.park.parkName}
+                      distance={parkResult.distance}
+                      busyness={parkResult.busyness}
+                      isCafe={parkResult.park.isCafe}
+                      isToilet={parkResult.park.isToilet}
+                      isPlayground={parkResult.park.isPlayground}
+                      isToiletHandicapAccess={
+                        parkResult.park.isToiletHandicapAccess
+                      }
+                      isRestaurant={parkResult.park.isRestaurant}
+                      isShelter={parkResult.park.isShelter}
+                      isDrinkingWater={parkResult.park.isDrinkingWater}
+                      isBar={parkResult.park.isBar}
+                      isBench={parkResult.park.isBench}
+                      isGarden={parkResult.park.isGarden}
+                      isFountain={parkResult.park.isFountain}
+                      isMonument={parkResult.park.isMonument}
+                    />
+                  ))}
+                </div>
+              )}
               <div className="pagination" style={{ float: "right" }}>
                 <Button
                   variant="link"
