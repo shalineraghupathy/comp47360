@@ -34,7 +34,6 @@ function ResultCard({
   parkName,
   distance,
   busyness,
-  //   entrances,
   isCafe,
   isToilet,
   isPlayground,
@@ -47,9 +46,7 @@ function ResultCard({
   isGarden,
   isFountain,
   isMonument,
-}: //   parkEntrance,
-
-ResultCardProps) {
+}: ResultCardProps) {
   const [showModal, setShowModal] = useState(false);
 
   const handleShow = () => setShowModal(true);
@@ -65,20 +62,6 @@ ResultCardProps) {
     if (busyness <= 66) return "Medium Busyness";
     return "High Busyness";
   };
-
-  // function formatYesNo(value: number): string {
-  //   return value === 1 ? "Yes" : "No";
-  // }
-
-  // function busynessScore(value: number): string {
-  //   if (value >= 66) {
-  //     return "High";
-  //   } else if (value >= 33) {
-  //     return "Medium";
-  //   } else {
-  //     return "Low";
-  //   }
-  // }
 
   function resolveDistance(distance: number): string {
     return `${distance.toFixed(2)} km`;

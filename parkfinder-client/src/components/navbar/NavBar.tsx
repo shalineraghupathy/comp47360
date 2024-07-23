@@ -44,7 +44,18 @@ const NavBar: React.FC = () => {
     >
       <Container fluid>
         <LinkContainer to="/">
-          <Navbar.Brand href="#">NYC ParkFinder</Navbar.Brand>
+          <Navbar.Brand href="#">
+            <img
+              src="/nycpf.png"
+              alt="ParkFinder logo"
+              style={{
+                height: "4rem",
+                marginBottom: "-1rem",
+                marginTop: "-1rem",
+                padding: "0",
+              }}
+            ></img>
+          </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -86,6 +97,9 @@ const NavBar: React.FC = () => {
                   <NavDropdown.Header>
                     Welcome, {userFirstName}
                   </NavDropdown.Header>
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
                   <NavDropdown.Item onClick={handleSignOut}>
                     Sign Out
                   </NavDropdown.Item>

@@ -1,0 +1,53 @@
+html, body {margin: 0; height: 90%;}
+
+.left-card {
+    background: linear-gradient(to left, #2E8B57, #38A869);
+    font-family: "Inter", sans-serif;
+}
+
+.left-heading {
+    margin: 6.5rem 2rem 0 2rem;
+    text-align: center;
+    font-size: 4.25rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: white;
+    
+}
+.left-heading, .left-text {
+    transition: transform 0.3s ease-in-out;
+  }  
+
+.left-heading:hover, .left-text:hover {
+    transform: scale(1.05);
+  }
+
+.left-text {
+    margin: 3rem 4rem 6rem 4rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 1.2px;
+    
+}
+
+.right-heading {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+    
+}
+.details {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    font-size:0.9rem;
+    font-family: "Inter", sans-serif;
+    
+}
+
+.content {
+    flex: 0 0 50%;
+}
