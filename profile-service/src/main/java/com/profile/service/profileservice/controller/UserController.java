@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000") // Add this line
 public class UserController {
 
-	@Autowired 
+	@Autowired
 	private UserService userService;
 
 	@PostMapping("/registerUser")
@@ -23,8 +23,8 @@ public class UserController {
 		UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
 		userRegisterResponse = userService.registerUser(userRegisterRequest);
 		return ResponseEntity.ok(userRegisterResponse);
-
 	}
+
 	@GetMapping("/confirm")
 	public ResponseEntity<?> confirm(@RequestParam("token") String token) {
 		return ResponseEntity.ok(userService.confirmToken(token));

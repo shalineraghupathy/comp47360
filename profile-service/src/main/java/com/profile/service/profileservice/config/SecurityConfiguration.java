@@ -15,15 +15,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-	
-	
+
 	@Autowired
 	private JwtAuthenticationFilter authenticationJwtTokenFilter;
 	
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
-	
-	
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
