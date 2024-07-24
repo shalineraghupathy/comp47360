@@ -8,6 +8,8 @@ import "./ParkModal.css";
 import useUser from "../../contexts/userContext";
 import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
 
+import { showToastError, showToastSuccess } from "../toast/toast";
+
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
@@ -144,7 +146,8 @@ function ParkModal({
     // Check if user is logged in by checking token in local storage
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must be logged in to add or remove favorites.");
+      showToastError("You must be logged in to add or remove favorites.");
+      // alert("You must be logged in to add or remove favorites.");
       return;
     }
 
