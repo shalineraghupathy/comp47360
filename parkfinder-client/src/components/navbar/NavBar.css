@@ -10,3 +10,8 @@
     font-size: 24px;
 }
 
+.nav-link-active {
+    color: #2E8B57 !important;
+    font-weight: bold !important;
+}
+
