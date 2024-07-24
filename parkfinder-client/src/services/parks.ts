@@ -20,9 +20,9 @@ export async function getParks(
     : {};
 
   try {
-    console.log(url);
+    // console.log(url);
     const response = await axios.get(url, config);
-    console.log("Parks fetched successfully:", response.data);
+    // console.log("Parks fetched successfully:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching parks:", error);
@@ -36,7 +36,7 @@ export function convertToTimestamp(date: string, time: string) {
 }
 
 export function filterParks(filters: any, parks: any) {
-  console.log(parks);
+  // console.log(parks);
   const filtered = parks.filter((park: any) => {
     let match = true;
 

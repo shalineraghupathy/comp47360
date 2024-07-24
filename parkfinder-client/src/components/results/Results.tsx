@@ -21,6 +21,7 @@ import {
 import { LocationData } from "../parksearch/ParkSearchForm";
 import CustomFooter from "../home/CustomFooter";
 import "./Results.css";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 interface Park {
   park: {
@@ -43,11 +44,14 @@ interface Park {
   };
   distance: number;
   busyness: number;
+  isfavourite: boolean;
 }
 
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [token] = useLocalStorage("token");
+
   const initialParks = location.state?.fullParksList || [];
   const initialFilters = location.state?.filters || {};
   const initialFilteredParks = location.state?.filteredParks || initialParks;
@@ -95,10 +99,16 @@ const Results = () => {
     setError(null);
 
     try {
-      const parks = await getParks(location.lat, location.lng, timestamp);
+      const parks = await getParks(
+        location.lat,
+        location.lng,
+        timestamp,
+        token
+      );
       setFullParksList(parks);
       setFilteredParks(parks);
       setSearchKey(searchKey + 1);
+      console.log("Fetched parks details:", parks); // Log all the parks details here
     } catch (err) {
       setError("Failed to fetch parks. Please try again later.");
     } finally {
@@ -204,6 +214,7 @@ const Results = () => {
                   {currentParks.map((parkResult: Park, index: number) => (
                     <ResultCard
                       key={index}
+                      parkID={parkResult.park.parkId}
                       parkName={parkResult.park.parkName}
                       distance={parkResult.distance}
                       busyness={parkResult.busyness}
@@ -221,6 +232,7 @@ const Results = () => {
                       isGarden={parkResult.park.isGarden}
                       isFountain={parkResult.park.isFountain}
                       isMonument={parkResult.park.isMonument}
+                      isFavourite={parkResult.isfavourite} // Ensure isFavourite is passed and defaulted
                     />
                   ))}
                 </div>
