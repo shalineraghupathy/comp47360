@@ -6,6 +6,8 @@ import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
 import { Element } from "react-scroll";
+import { getParks, convertToTimestamp } from "../../services/parks";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import "./MainContent.css";
 
 function MainContent() {
@@ -14,14 +16,32 @@ function MainContent() {
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
+  const [token] = useLocalStorage("token");
 
-  const handleSearchSubmit = (
+  const handleSearchSubmit = async (
     location: { lat: number; lng: number },
     date: string,
     time: string,
     filters: Filters
   ) => {
-    console.log({ location, date, time, filters });
+    const timestamp = convertToTimestamp(date, time);
+    try {
+      const parksResult = await getParks(
+        location.lat,
+        location.lng,
+        timestamp,
+        token
+      );
+      navigate("/results", {
+        state: {
+          fullParksList: parksResult,
+          filteredParks: parksResult,
+          filters,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching parks: ", error);
+    }
   };
 
   const popularParks = [
@@ -89,7 +109,6 @@ function MainContent() {
       hasFountain: 1,
       hasMonument: 1,
     },
-    //etc.
   ];
 
   const scrollToSearchForm = () => {
@@ -130,15 +149,11 @@ function MainContent() {
         </Row>
       </Container>
       <div className="search-form-div" id="search-form-div">
-        {/* <Container > */}
         <Row className="justify-content-center align-items-center search-row">
           <Col xs={12} md={12} lg={10}>
             <h1 className="search-heading">Search for a Park</h1>
             <span key={typingKey} className="search-description">
               Simply enter your location to see parks near you.
-              {/* Add a date and time to
-              see predicted busyness, and filter by amenities to discover your
-              perfect park. */}
             </span>
             <div className="search-component">
               <OverlayTrigger
@@ -159,7 +174,6 @@ function MainContent() {
             </div>
           </Col>
         </Row>
-        {/* </Container> */}
       </div>
       <div className="card-section">
         <Col xs={12}>

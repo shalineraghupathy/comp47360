@@ -8,8 +8,6 @@ import {
   Spinner,
 } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
-import { useNavigate } from "react-router-dom";
-import { getParks, convertToTimestamp } from "../../services/parks";
 import Multiselect from "multiselect-react-dropdown";
 
 export interface Filters {
@@ -52,7 +50,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  //Time & Date Management
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
@@ -66,7 +63,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     setTime(currentTime);
   }, []);
 
-  //state handlers
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
   }
@@ -85,7 +81,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     });
   }
 
-  //form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
@@ -199,12 +194,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
       <ToastContainer
         position="top-center"
         className="p-3"
-        style={{
-          position: "fixed",
-          top: "20px",
-          right: "20px",
-          zIndex: 1050,
-        }}
+        style={{ position: "fixed", top: "20px", right: "20px", zIndex: 1050 }}
       >
         <Toast
           show={showToast}

@@ -14,6 +14,7 @@ import "./ResultCard.css";
 
 interface ResultCardProps {
   parkName: string;
+  parkID: string;
   distance: number;
   busyness: number;
   isCafe: number;
@@ -28,10 +29,12 @@ interface ResultCardProps {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  isFavourite: boolean;
 }
 
 function ResultCard({
   parkName,
+  parkID,
   distance,
   busyness,
   isCafe,
@@ -46,10 +49,34 @@ function ResultCard({
   isGarden,
   isFountain,
   isMonument,
+  isFavourite,
 }: ResultCardProps) {
   const [showModal, setShowModal] = useState(false);
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    // Log all values being passed to the modal
+    console.log({
+      parkName,
+      parkID,
+      distance,
+      busyness,
+      isCafe,
+      isToilet,
+      isPlayground,
+      isToiletHandicapAccess,
+      isRestaurant,
+      isShelter,
+      isDrinkingWater,
+      isBar,
+      isBench,
+      isGarden,
+      isFountain,
+      isMonument,
+      isFavourite,
+    });
+
+    setShowModal(true);
+  };
   const handleClose = () => setShowModal(false);
 
   const getVariant = (busyness: number) => {
@@ -158,6 +185,7 @@ function ResultCard({
         show={showModal}
         handleClose={handleClose}
         parkName={parkName}
+        parkId={parkID}
         distance={distance}
         busyness={busyness}
         isCafe={isCafe}
@@ -172,6 +200,7 @@ function ResultCard({
         isGarden={isGarden}
         isFountain={isFountain}
         isMonument={isMonument}
+        isFavourite={isFavourite}
       />
     </>
   );

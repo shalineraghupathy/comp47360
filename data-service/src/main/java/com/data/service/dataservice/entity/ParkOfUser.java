@@ -8,10 +8,19 @@ public class ParkOfUser {
 
     private double busyness;
 
+    private boolean isfavourite = Boolean.FALSE;
+
     public ParkOfUser(Park park, double distance, double busyness) {
         this.park = park;
         this.distance = distance;
         this.busyness = busyness;
+    }
+
+    public ParkOfUser(Park park, double distance, double busyness, boolean isfavourite) {
+        this.park = park;
+        this.distance = distance;
+        this.busyness = busyness;
+        this.isfavourite = isfavourite;
     }
 
     public Park getPark() {
@@ -36,5 +45,13 @@ public class ParkOfUser {
 
     public void setBusyness(double busyness) {
         this.busyness = busyness;
+    }
+
+    public boolean isIsfavourite() {
+        return isfavourite;
+    }
+
+    public void setIsfavourite(boolean isfavourite) {
+        this.isfavourite = isfavourite;
     }
 }

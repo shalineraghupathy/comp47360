@@ -1,14 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MouseEvent } from "react";
 import { Modal, ProgressBar } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "./AmenityIcon";
 import "./ParkModal.css";
+import useUser from "../../contexts/userContext";
+import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
+
+import { showToastError, showToastSuccess } from "../toast/toast";
 
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
+  parkId: string;
   distance: number;
   busyness: number;
   isCafe: number;
@@ -23,13 +29,15 @@ interface ParkModalProps {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  isFavourite: boolean; // Corrected spelling to match component logic
 }
 
 function ParkModal({
   show,
   handleClose,
   parkName,
-  // distance,
+  parkId,
+  distance,
   busyness,
   isCafe,
   isToilet,
@@ -43,10 +51,12 @@ function ParkModal({
   isGarden,
   isFountain,
   isMonument,
+  isFavourite, // Corrected spelling to match component logic
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(isFavourite); // Initialize state with prop
+  const { user } = useUser();
 
   useEffect(() => {
     if (show) {
@@ -61,7 +71,6 @@ function ParkModal({
     try {
       const response = await fetch(url);
       const data = await response.json();
-
       setWeather({
         ...data,
         sunrise: data.sys.sunrise,
@@ -79,11 +88,10 @@ function ParkModal({
     const lat = "40.7834";
     const lon = "-73.9662";
     const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
     try {
       const airQualityResponse = await fetch(airQualityUrl);
       const airQualityData = await airQualityResponse.json();
-      console.log("Air quality data", airQuality);
+      console.log("Air quality data", airQualityData);
       setAirQuality(airQualityData);
     } catch (error) {
       console.error("Failed to fetch air quality data...", error);
@@ -95,6 +103,7 @@ function ParkModal({
     if (busyness <= 66) return "warning";
     return "danger";
   };
+
   const getLabel = (busyness: number) => {
     if (busyness <= 33) return "Low";
     if (busyness <= 66) return "Medium";
@@ -131,9 +140,32 @@ function ParkModal({
     { name: "Monument", value: isMonument },
   ];
 
-  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleFavoriteClick = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setIsClicked(!isClicked);
+
+    // Check if user is logged in by checking token in local storage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showToastError("You must be logged in to add or remove favorites.");
+      // alert("You must be logged in to add or remove favorites.");
+      return;
+    }
+
+    try {
+      if (isFavorite) {
+        await removeFavorite(parkId, token);
+        setIsFavorite(false);
+      } else {
+        await addFavorite(parkId, token);
+        setIsFavorite(true);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Failed to update favorites", error.message);
+      } else {
+        console.error("Failed to update favorites", error);
+      }
+    }
   };
 
   return (
@@ -187,7 +219,7 @@ function ParkModal({
             <ProgressBar
               now={busyness}
               label={getLabel(busyness)}
-              variant={getVariant(busyness)} // Color variant of the progress bar
+              variant={getVariant(busyness)}
             />
           </span>
         </div>
@@ -212,16 +244,15 @@ function ParkModal({
           </a>
           <a
             href="#"
-            target="_blank"
-            className={`share-icons ${isClicked ? "clicked" : ""}`}
-            onClick={handleLinkClick}
+            className="share-icons"
+            onClick={handleFavoriteClick}
             style={{
-              color: isClicked ? "red" : "seagreen",
+              color: isFavorite ? "red" : "seagreen",
               transition: "color 0.3s",
               display: "inline-block",
             }}
           >
-            <i className={`fa ${isClicked ? "fa-heart" : "fa-heart-o"}`}></i>
+            <i className={`fa ${isFavorite ? "fa-heart" : "fa-heart-o"}`}></i>
           </a>
         </div>
       </Modal.Body>

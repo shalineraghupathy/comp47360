@@ -12,7 +12,7 @@ cloud:
   globalcors:
     corsConfigurations:
     "[/**]":
-      allowedOrigins: "http://localhost:3000"
+      allowedOrigins: "*"
       allowedMethods: "*"
       allowedCredentials: true
 
@@ -21,7 +21,7 @@ mybatis:
   type-aliases-package: com.calendar.service.calendarservice.entity
 
 server:
-  port: 8080
+  port: 8084
 
 logging:
   level:
