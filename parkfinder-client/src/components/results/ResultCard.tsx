@@ -14,6 +14,7 @@ import "./ResultCard.css";
 
 interface ResultCardProps {
   parkName: string;
+  parkID: string;
   distance: number;
   busyness: number;
   isCafe: number;
@@ -28,13 +29,14 @@ interface ResultCardProps {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  isFavourite: boolean;
 }
 
 function ResultCard({
   parkName,
+  parkID,
   distance,
   busyness,
-  //   entrances,
   isCafe,
   isToilet,
   isPlayground,
@@ -47,12 +49,34 @@ function ResultCard({
   isGarden,
   isFountain,
   isMonument,
-}: //   parkEntrance,
-
-ResultCardProps) {
+  isFavourite,
+}: ResultCardProps) {
   const [showModal, setShowModal] = useState(false);
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    // Log all values being passed to the modal
+    console.log({
+      parkName,
+      parkID,
+      distance,
+      busyness,
+      isCafe,
+      isToilet,
+      isPlayground,
+      isToiletHandicapAccess,
+      isRestaurant,
+      isShelter,
+      isDrinkingWater,
+      isBar,
+      isBench,
+      isGarden,
+      isFountain,
+      isMonument,
+      isFavourite,
+    });
+
+    setShowModal(true);
+  };
   const handleClose = () => setShowModal(false);
 
   const getVariant = (busyness: number) => {
@@ -65,20 +89,6 @@ ResultCardProps) {
     if (busyness <= 66) return "Medium Busyness";
     return "High Busyness";
   };
-
-  // function formatYesNo(value: number): string {
-  //   return value === 1 ? "Yes" : "No";
-  // }
-
-  // function busynessScore(value: number): string {
-  //   if (value >= 66) {
-  //     return "High";
-  //   } else if (value >= 33) {
-  //     return "Medium";
-  //   } else {
-  //     return "Low";
-  //   }
-  // }
 
   function resolveDistance(distance: number): string {
     return `${distance.toFixed(2)} km`;
@@ -175,6 +185,7 @@ ResultCardProps) {
         show={showModal}
         handleClose={handleClose}
         parkName={parkName}
+        parkId={parkID}
         distance={distance}
         busyness={busyness}
         isCafe={isCafe}
@@ -189,6 +200,7 @@ ResultCardProps) {
         isGarden={isGarden}
         isFountain={isFountain}
         isMonument={isMonument}
+        isFavourite={isFavourite}
       />
     </>
   );

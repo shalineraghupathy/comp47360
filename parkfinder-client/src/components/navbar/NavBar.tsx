@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link as ScrollLink } from "react-scroll";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import ProfileCard from "./ProfileCard";
 import logo from "../../assets/NYC PARK FINDER LOGO.svg";
 import './NavBar.css';
 
@@ -12,6 +14,7 @@ const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
   const [userFirstName, setUserFirstName] = useLocalStorage("userFirstName");
   const navigate = useNavigate();
+  const [showProfileCard, setShowProfileCard] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -35,7 +38,6 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    // <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-2">
     <Navbar
       className="Navbar"
       expand="lg"
@@ -63,10 +65,10 @@ const NavBar: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <LinkContainer to="/">
-              <Nav.Link className={isActive("/")}>Home</Nav.Link>
+              <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/parkmap">
-              <Nav.Link className={isActive("/parkmap")}>Park Map</Nav.Link>
+            <LinkContainer to="/heatmap">
+              <Nav.Link>Maps</Nav.Link>
             </LinkContainer>
             <ScrollLink
               to="natParks"
@@ -93,15 +95,12 @@ const NavBar: React.FC = () => {
               title={<FaUserCircle size={24} />}
               id="basic-nav-dropdown"
               align="end"
+              onMouseEnter={() => setShowProfileCard(true)}
+              onMouseLeave={() => setShowProfileCard(false)}
             >
               {isLoggedIn ? (
                 <>
-                  <NavDropdown.Header>
-                    Welcome, {userFirstName}
-                  </NavDropdown.Header>
-                  <NavDropdown.Item onClick={handleSignOut}>
-                    Sign Out
-                  </NavDropdown.Item>
+                  <ProfileCard />
                 </>
               ) : (
                 <>
@@ -115,7 +114,6 @@ const NavBar: React.FC = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    // </div>
   );
 };
 

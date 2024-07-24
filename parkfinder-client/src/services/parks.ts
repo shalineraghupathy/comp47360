@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { DATA_URL } from "../constants";
 
 export async function getParks(
   userLat: number,
@@ -8,8 +9,8 @@ export async function getParks(
   token?: string | null
 ) {
   const url = token
-    ? `http://localhost:8082/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
-    : `http://localhost:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
+    ? `${DATA_URL}/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+    : `${DATA_URL}/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
 
   const config = token
     ? {
@@ -20,9 +21,9 @@ export async function getParks(
     : {};
 
   try {
-    console.log(url);
+    // console.log(url);
     const response = await axios.get(url, config);
-    console.log("Parks fetched successfully:", response.data);
+    // console.log("Parks fetched successfully:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching parks:", error);
@@ -36,7 +37,7 @@ export function convertToTimestamp(date: string, time: string) {
 }
 
 export function filterParks(filters: any, parks: any) {
-  console.log(parks);
+  // console.log(parks);
   const filtered = parks.filter((park: any) => {
     let match = true;
 

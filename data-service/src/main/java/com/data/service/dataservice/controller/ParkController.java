@@ -60,7 +60,7 @@ public class ParkController {
         }
     }
 
-    @PostMapping("/removeFavourites")
+    @DeleteMapping("/removeFavourites")
     public ResponseEntity<String> removeFavourites(HttpServletRequest request, @RequestParam String parkID) {
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
