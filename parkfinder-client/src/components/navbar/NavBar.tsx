@@ -51,11 +51,11 @@ const NavBar: React.FC = () => {
     >
       <Container fluid>
         <LinkContainer to="/">
-          <Navbar.Brand href="#">
+          <Navbar.Brand style={{ cursor: "pointer" }}>
             <img
               src={logo}
               alt="NYC ParkFinder"
-              style={{ height: "60px", width: "250px" }}
+              style={{ height: "60px", width: "250px", cursor: "pointer" }}
             />
           </Navbar.Brand>
         </LinkContainer>
