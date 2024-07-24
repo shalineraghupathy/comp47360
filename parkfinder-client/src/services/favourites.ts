@@ -1,9 +1,10 @@
 import axios from "axios";
+import { DATA_URL } from "../constants";
 
 export const addFavorite = async (parkId: string, token: string) => {
   try {
     const response = await axios.post(
-      `http://localhost:8082/parks/addFavourites?parkID=${parkId}`,
+      `${DATA_URL}/parks/addFavourites?parkID=${parkId}`,
       {},
       {
         headers: {
@@ -21,7 +22,7 @@ export const addFavorite = async (parkId: string, token: string) => {
 export const removeFavorite = async (parkId: string, token: string) => {
   try {
     const response = await axios.delete(
-      `http://localhost:8082/parks/removeFavourites?parkID=${parkId}`,
+      `${DATA_URL}parks/removeFavourites?parkID=${parkId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

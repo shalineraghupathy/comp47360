@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { DATA_URL } from "../constants";
 
 export async function getParks(
   userLat: number,
@@ -8,8 +9,8 @@ export async function getParks(
   token?: string | null
 ) {
   const url = token
-    ? `http://localhost:8082/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
-    : `http://localhost:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
+    ? `${DATA_URL}/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+    : `${DATA_URL}/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
 
   const config = token
     ? {
