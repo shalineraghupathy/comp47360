@@ -117,6 +117,7 @@ const ProfilePage: React.FC = () => {
           </Col>
           <Col md={4} xs={6}>
             <Card
+              className="right-card"
               style={{
                 height: "70vh",
                 borderTopLeftRadius: "0",
@@ -168,6 +169,7 @@ const ProfilePage: React.FC = () => {
                     ))}
                   <ListGroup.Item className="d-flex justify-content-between">
                     <Button
+                      className="button"
                       style={{
                         paddingLeft: "0",
                         textDecoration: "none",
