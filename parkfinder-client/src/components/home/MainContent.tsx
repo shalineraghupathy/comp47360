@@ -262,7 +262,50 @@ function MainContent() {
           </Element>
         </Col>
       </div>
-      <Element name="aboutSection">{/* to do: <div>about</div> */}</Element>
+      <Element name="aboutSection">
+        <div className="faq-section">
+          <h2 className="faq-heading">FAQ</h2>
+          <span key={typingKey} className="search-description">
+            Learn more about NYC Park Finder here
+          </span>
+          <div className="faq">
+            <div className="faq-question">
+              <h4>What is NYC Park Finder?</h4>
+              <p>
+                NYC Park Finder is a tool to help you discover and explore parks
+                in New York City.
+              </p>
+            </div>
+            <div className="faq-question">
+              <h4>How do I use the park search feature?</h4>
+              <p>
+                Simply enter your location, date, and time to find parks near
+                you with real-time crowd info.
+              </p>
+            </div>
+            <div className="faq-question">
+              <h4>Can I see which amenities are available in the parks?</h4>
+              <p>
+                Yes, you can view various amenities such as toilets, cafes,
+                playgrounds, and more for each park.
+              </p>
+            </div>
+            <div className="faq-question">
+              <h4>Is NYC Park Finder free to use?</h4>
+              <p>
+                Yes, NYC Park Finder is completely free to use for everyone.
+              </p>
+            </div>
+            <div className="faq-question">
+              <h4>Is there an NYC Park Finder mobile app I can use?</h4>
+              <p>
+                No, however a mobile app is a feature that we plan to develop in
+                the near future
+              </p>
+            </div>
+          </div>
+        </div>
+      </Element>
       <CustomFooter />
     </>
   );
