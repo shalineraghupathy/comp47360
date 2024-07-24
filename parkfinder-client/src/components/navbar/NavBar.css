@@ -6,12 +6,18 @@
     font-size: 1rem;
 }
 
-#logo {
-    font-size: 24px;
-}
-
 .nav-link-active {
     color: #2E8B57 !important;
     font-weight: bold !important;
 }
 
+/* Addition of a hover effect to magnify text slightly */
+.Navbar .nav-link {
+    transition: transform 0.3s ease;
+    font-size: 18px;
+    margin-right: 1.5rem; /* extra space is added between nav links */
+}
+
+.Navbar .nav-link:hover {
+    transform: scale(1.2);
+}
