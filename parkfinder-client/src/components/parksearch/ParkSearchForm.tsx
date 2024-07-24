@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  Toast,
+  ToastContainer,
+  Spinner,
+} from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import { useNavigate } from "react-router-dom";
 import { getParks, convertToTimestamp } from "../../services/parks";
@@ -42,6 +49,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [time, setTime] = useState("");
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   //Time & Date Management
@@ -81,6 +89,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
+      setIsLoading(true);
       const timestamp = convertToTimestamp(date, time);
       try {
         const parksResult = await getParks(
@@ -95,7 +104,9 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
         });
       } catch (error) {
         setShowToast(true);
+      } finally {
       }
+      setIsLoading(false);
     } else {
       setShowToast(true);
     }
@@ -170,7 +181,17 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
             <button type="submit" className="search-button">
-              Search
+              {isLoading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                "Search"
+              )}
             </button>
           </Col>
         </Row>
