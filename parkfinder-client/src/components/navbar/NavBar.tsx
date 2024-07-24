@@ -65,10 +65,10 @@ const NavBar: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link className={isActive("/")}>Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/heatmap">
-              <Nav.Link>Maps</Nav.Link>
+              <Nav.Link className={isActive("/heatmap")}>Maps</Nav.Link>
             </LinkContainer>
             <ScrollLink
               to="natParks"
