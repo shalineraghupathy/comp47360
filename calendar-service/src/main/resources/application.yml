@@ -12,7 +12,7 @@ cloud:
   globalcors:
     corsConfigurations:
     "[/**]":
-      allowedOrigins: "http://localhost:3001"
+      allowedOrigins: "*"
       allowedMethods: "*"
       allowedCredentials: true
 
