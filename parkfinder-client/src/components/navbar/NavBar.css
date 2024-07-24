@@ -14,7 +14,7 @@
 /* Addition of a hover effect to magnify text slightly */
 .Navbar .nav-link {
     transition: transform 0.3s ease;
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 1.5rem; /* extra space is added between nav links */
 }
 
