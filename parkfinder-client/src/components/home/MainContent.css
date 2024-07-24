@@ -235,7 +235,7 @@
 }
 
 .faq-question.open {
-  background-color: #2f735493; /* Slightly darker background for open question */
+  background-color: #2f735493; /* Giving a slightly darker background for an open question */
 }
 
 .faq-arrow {

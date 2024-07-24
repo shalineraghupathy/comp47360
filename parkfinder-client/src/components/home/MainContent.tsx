@@ -145,8 +145,8 @@ function MainContent() {
       answer: "Yes, NYC Park Finder is completely free to use for everyone."
     },
     {
-      question: "Is there an NYC Park Finder mobile app I can use?",
-      answer: "Yes, however the NYC Park Finder app is still currently in development."
+      question: "Is there a mobile app version of NYC Park Finder?",
+      answer: "No, however there are plans to develop a mobile app in the near future."
     }
   ];
 
