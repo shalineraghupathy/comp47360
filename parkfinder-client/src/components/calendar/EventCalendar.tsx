@@ -12,6 +12,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import axios from "axios";
 import "./EventCalendar.css";
 import CustomFooter from "../home/CustomFooter";
+import { CALENDAR_URL } from "../../constants";
 
 type Event = {
   id: string;
@@ -81,7 +82,7 @@ const EventCalendar = () => {
       for (const date of dates) {
         const formattedDate = formatDate(date);
         const response = await axios.get(
-          `http://localhost:8080/events?dates=${formattedDate}`,
+          `${CALENDAR_URL}/events?dates=${formattedDate}`,
           { withCredentials: true }
         );
         eventsData[formattedDate] = response.data[formattedDate] || [];

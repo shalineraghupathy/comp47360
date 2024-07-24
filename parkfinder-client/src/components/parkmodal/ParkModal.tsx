@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MouseEvent } from "react";
 import { Modal, ProgressBar } from "react-bootstrap";
@@ -7,11 +8,14 @@ import "./ParkModal.css";
 import useUser from "../../contexts/userContext";
 import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
 
+import { showToastError, showToastSuccess } from "../toast/toast";
+
 interface ParkModalProps {
   show: boolean;
   handleClose: () => void;
   parkName: string;
   parkId: string;
+  distance: number;
   busyness: number;
   isCafe: number;
   isToilet: number;
@@ -25,6 +29,7 @@ interface ParkModalProps {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  isFavourite: boolean; // Corrected spelling to match component logic
 }
 
 function ParkModal({
@@ -32,6 +37,7 @@ function ParkModal({
   handleClose,
   parkName,
   parkId,
+  distance,
   busyness,
   isCafe,
   isToilet,
@@ -45,10 +51,11 @@ function ParkModal({
   isGarden,
   isFountain,
   isMonument,
+  isFavourite, // Corrected spelling to match component logic
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(isFavourite); // Initialize state with prop
   const { user } = useUser();
 
   useEffect(() => {
@@ -84,7 +91,7 @@ function ParkModal({
     try {
       const airQualityResponse = await fetch(airQualityUrl);
       const airQualityData = await airQualityResponse.json();
-      console.log("Air quality data", airQuality);
+      console.log("Air quality data", airQualityData);
       setAirQuality(airQualityData);
     } catch (error) {
       console.error("Failed to fetch air quality data...", error);
@@ -133,23 +140,31 @@ function ParkModal({
     { name: "Monument", value: isMonument },
   ];
 
-  const handleLinkClick = async (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleFavoriteClick = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (!user) {
-      alert("You must be logged in to add or remove favorites.");
+
+    // Check if user is logged in by checking token in local storage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showToastError("You must be logged in to add or remove favorites.");
+      // alert("You must be logged in to add or remove favorites.");
       return;
     }
 
-    setIsClicked(!isClicked);
-
     try {
-      if (isClicked) {
-        await removeFavorite(parkId);
+      if (isFavorite) {
+        await removeFavorite(parkId, token);
+        setIsFavorite(false);
       } else {
-        await addFavorite(parkId);
+        await addFavorite(parkId, token);
+        setIsFavorite(true);
       }
     } catch (error) {
-      console.error("Failed to update favorites", error);
+      if (error instanceof Error) {
+        console.error("Failed to update favorites", error.message);
+      } else {
+        console.error("Failed to update favorites", error);
+      }
     }
   };
 
@@ -229,16 +244,15 @@ function ParkModal({
           </a>
           <a
             href="#"
-            target="_blank"
-            className={`share-icons ${isClicked ? "clicked" : ""}`}
-            onClick={handleLinkClick}
+            className="share-icons"
+            onClick={handleFavoriteClick}
             style={{
-              color: isClicked ? "red" : "seagreen",
+              color: isFavorite ? "red" : "seagreen",
               transition: "color 0.3s",
               display: "inline-block",
             }}
           >
-            <i className={`fa ${isClicked ? "fa-heart" : "fa-heart-o"}`}></i>
+            <i className={`fa ${isFavorite ? "fa-heart" : "fa-heart-o"}`}></i>
           </a>
         </div>
       </Modal.Body>

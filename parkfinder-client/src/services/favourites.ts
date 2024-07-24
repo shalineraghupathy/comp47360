@@ -1,31 +1,37 @@
 import axios from "axios";
+import { DATA_URL } from "../constants";
 
-const API_URL = "http://localhost:8080/api/v1/auth";
-
-export const addFavorite = async (parkId: string) => {
+export const addFavorite = async (parkId: string, token: string) => {
   try {
-    const token = localStorage.getItem("token");
     const response = await axios.post(
-      `${API_URL}/add`,
-      { parkId },
-      { headers: { Authorization: `Bearer ${token}` } }
+      `${DATA_URL}/parks/addFavourites?parkID=${parkId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
-    throw new Error("Failed to add favorite");
+    console.error("Error adding favorite:", error);
+    throw error;
   }
 };
 
-export const removeFavorite = async (parkId: string) => {
+export const removeFavorite = async (parkId: string, token: string) => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.post(
-      `${API_URL}/remove`,
-      { parkId },
-      { headers: { Authorization: `Bearer ${token}` } }
+    const response = await axios.delete(
+      `${DATA_URL}parks/removeFavourites?parkID=${parkId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
-    throw new Error("Failed to remove favorite");
+    console.error("Error removing favorite:", error);
+    throw error;
   }
 };
