@@ -65,10 +65,12 @@ const ProfilePage: React.FC = () => {
           isMonument: 1,
         },
       ];
-      setFavouriteParks(parks);
+      return parks;
     };
 
-    fetchFavouriteParks();
+    fetchFavouriteParks().then((result) => {
+      setFavouriteParks(result);
+    });
   }, []);
 
   if (!userFirstName || !userEmail) {

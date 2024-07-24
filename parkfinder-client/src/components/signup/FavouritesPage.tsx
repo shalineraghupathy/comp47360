@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { Park } from "../../services/parks";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import FavouritesCard from "../signup/FavouritesCard";
 
 function FavouritesPage() {

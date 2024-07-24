@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./ResultFilters.css";
 import { Filters } from "../parksearch/ParkSearchForm";
@@ -50,6 +50,25 @@ const ResultFilters = ({
   const [busyness, setBusyness] = useState<string | undefined>(
     filters.busyness
   );
+
+  useEffect(() => {
+    onApply();
+  }, [
+    isToilet,
+    isCafe,
+    isToiletHandicapAccess,
+    isPlayground,
+    isRestaurant,
+    isShelter,
+    isDrinkingWater,
+    isBar,
+    isBench,
+    isGarden,
+    isFountain,
+    isMonument,
+    busyness,
+    filters,
+  ]);
 
   const handleReset = () => {
     setIsToilet(undefined);
@@ -222,6 +241,7 @@ const ResultFilters = ({
                 id="gardenSelect"
                 type="checkbox"
                 label="Garden"
+                checked={isGarden === true}
                 onChange={handleCheckboxChange(setIsGarden, "isGarden")}
                 style={{ borderRadius: "20px" }}
               />
@@ -229,6 +249,7 @@ const ResultFilters = ({
                 id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
+                checked={isFountain === true}
                 onChange={handleCheckboxChange(setIsFountain, "isFountain")}
                 style={{ borderRadius: "20px" }}
               />
