@@ -13,6 +13,7 @@ import "./MainContent.css";
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [openQuestionIndex, setOpenQuestionIndex] = useState<number | null>(null); 
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
@@ -121,6 +122,33 @@ function MainContent() {
   const navigateToNationalParks = () => {
     navigate("/nationalparks");
   };
+
+  const toggleQuestion = (index: number) => { // Added function to toggle question visibility
+    setOpenQuestionIndex(openQuestionIndex === index ? null : index);
+  };
+
+  const faqItems = [ // Added FAQ items array
+    {
+      question: "What is NYC Park Finder?",
+      answer: "NYC Park Finder is a tool to help you discover and explore parks in New York City."
+    },
+    {
+      question: "How do I use the park search feature?",
+      answer: "Simply enter your location, date, time, and select your preferred amenities to find parks near you n/ with real-time crowd info."
+    },
+    {
+      question: "Can I see amenities available in the parks?",
+      answer: "Yes, you can view various amenities such as toilets, cafes, playgrounds, and more for each park."
+    },
+    {
+      question: "Is NYC Park Finder free to use?",
+      answer: "Yes, NYC Park Finder is completely free to use for everyone."
+    },
+    {
+      question: "Is there an NYC Park Finder mobile app I can use?",
+      answer: "Yes, however the NYC Park Finder app is still currently in development."
+    }
+  ];
 
   return (
     <>
@@ -265,47 +293,20 @@ function MainContent() {
       <Element name="aboutSection">
         <div className="faq-section">
           <h2 className="faq-heading">FAQ</h2>
-          <span key={typingKey} className="search-description">
-            Learn more about NYC Park Finder here
-          </span>
           <div className="faq">
-            <div className="faq-question">
-              <h4>What is NYC Park Finder?</h4>
-              <p>
-                NYC Park Finder is a tool to help you discover and explore parks
-                in New York City.
-              </p>
-            </div>
-            <div className="faq-question">
-              <h4>How do I use the park search feature?</h4>
-              <p>
-                Simply enter your location, date, and time to find parks near
-                you with real-time crowd info.
-              </p>
-            </div>
-            <div className="faq-question">
-              <h4>Can I see which amenities are available in the parks?</h4>
-              <p>
-                Yes, you can view various amenities such as toilets, cafes,
-                playgrounds, and more for each park.
-              </p>
-            </div>
-            <div className="faq-question">
-              <h4>Is NYC Park Finder free to use?</h4>
-              <p>
-                Yes, NYC Park Finder is completely free to use for everyone.
-              </p>
-            </div>
-            <div className="faq-question">
-              <h4>Is there an NYC Park Finder mobile app I can use?</h4>
-              <p>
-                No, however a mobile app is a feature that we plan to develop in
-                the near future
-              </p>
-            </div>
+            {faqItems.map((item, index) => ( // Added map function to render FAQ items
+              <div
+                key={index}
+                className={`faq-question ${openQuestionIndex === index ? 'open' : ''}`}
+                onClick={() => toggleQuestion(index)}
+              >
+                <h4>{item.question} <span className="faq-arrow">{openQuestionIndex === index ? '▲' : '▼'}</span></h4>
+                {openQuestionIndex === index && <p>{item.answer}</p>}
+              </div>
+            ))}
           </div>
         </div>
-      </Element>
+      </Element>     
       <CustomFooter />
     </>
   );
