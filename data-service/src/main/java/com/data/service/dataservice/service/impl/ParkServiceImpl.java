@@ -89,7 +89,7 @@ public class ParkServiceImpl implements ParkService {
 
             UserFavouritesKey key = new UserFavouritesKey(userId, park.getParkId());
 
-            if (minDistance < 4.0) {
+            if (minDistance < 1.0) {
                 nearbyParks.add(new ParkOfUser(park, minDistance, predictBusyness(park.getParkId(), playTime), userFavouritesRepository.existsById(key)));
             }
         }
@@ -99,21 +99,21 @@ public class ParkServiceImpl implements ParkService {
 
     @Override
     public double predictBusyness(String parkId, int playTime) {
-        // Fake Impl!
-        Random random = new Random();
-        return random.nextDouble() * 100;
+//        // Fake Impl!
+//        Random random = new Random();
+//        return random.nextDouble() * 100;
         // Calling the ML model
-//        try {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("timestamp", playTime); // Use playTime as the timestamp
-//            jsonObject.put("park_id", parkId);
-//
-//            JSONObject response = FlaskClient.sendPostRequest(jsonObject);
-//            return response.getJSONArray("prediction").getDouble(0);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1; // Return -1 or any other appropriate error value
-//        }
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("timestamp", playTime); // Use playTime as the timestamp
+            jsonObject.put("park_id", parkId);
+
+            JSONObject response = FlaskClient.sendPostRequest(jsonObject);
+            return response.getJSONArray("prediction").getDouble(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Return -1 or any other appropriate error value
+        }
     }
 
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
