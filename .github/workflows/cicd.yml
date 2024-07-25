@@ -6,130 +6,83 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "17"
-
-      - name: Build Project - Data Service
+      - name: Build Project
         working-directory: ./data-service
         run: mvn clean install -DskipTests
-
-      - name: Build Project - Profile Service
+      - name: Build Project
         working-directory: ./profile-service
         run: mvn clean install -DskipTests
-
-      - name: Build Project - Calendar Service
+      - name: Build Project
         working-directory: ./calendar-service
         run: mvn clean install -DskipTests
-
-      - name: Login to Docker Hub
+      - name: Login to docker hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: Build Docker Image - Data Service
+      - name: Build docker image
         working-directory: ./data-service
         run: docker build -t shalineraghupathy/data-service .
-
-      - name: Publish Docker Image - Data Service
+      - name: Publish image to docker hub
         run: docker push shalineraghupathy/data-service:latest
-
-      - name: Build Docker Image - Profile Service
+      - name: Build docker image
         working-directory: ./profile-service
         run: docker build -t shalineraghupathy/profile-service .
-
-      - name: Publish Docker Image - Profile Service
+      - name: Publish image to docker hub
         run: docker push shalineraghupathy/profile-service:latest
-
-      - name: Build Docker Image - Calendar Service
+      - name: Build docker image
         working-directory: ./calendar-service
         run: docker build -t shalineraghupathy/calendar-service .
-
-      - name: Publish Docker Image - Calendar Service
+      - name: Publish image to docker hub
         run: docker push shalineraghupathy/calendar-service:latest
-
-      - name: Build Docker Image - Parkfinder Client
+      - name: Build Docker Image
         working-directory: ./parkfinder-client
         run: docker build -t shalineraghupathy/parkfinder-client .
-
-      - name: Publish Docker Image - Parkfinder Client
+      - name: Publish image to docker hub
         run: docker push shalineraghupathy/parkfinder-client:latest
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2]
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
-
-      - name: Configure AWS CLI
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region us-east-1
-
-      - name: Fetch Secrets from SSM
-        id: fetch-secrets
-        run: |
-          echo "Fetching secrets from AWS SSM Parameter Store..."
-          export VITE_GOOGLEMAP_KEY=$(aws ssm get-parameter --name "VITE_GOOGLEMAP_KEY" --with-decryption --query "Parameter.Value" --output text)
-          export VITE_NPS_API_KEY=$(aws ssm get-parameter --name "VITE_NPS_API_KEY" --with-decryption --query "Parameter.Value" --output text)
-          export VITE_GOOGLE_API_KEY=$(aws ssm get-parameter --name "VITE_GOOGLE_API_KEY" --with-decryption --query "Parameter.Value" --output text)
-          export VITE_OPENWEATHER_API_KEY=$(aws ssm get-parameter --name "VITE_OPENWEATHER_API_KEY" --with-decryption --query "Parameter.Value" --output text)
-          
-          echo "Creating .env file..."
-          echo "VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY" > .env
-          echo "VITE_NPS_API_KEY=$VITE_NPS_API_KEY" >> .env
-          echo "VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY" >> .env
-          echo "VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY" >> .env
-
-          echo "Exporting secrets to GitHub environment variables..."
-          echo "VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY" >> $GITHUB_ENV
-          echo "VITE_NPS_API_KEY=$VITE_NPS_API_KEY" >> $GITHUB_ENV
-          echo "VITE_GOOGLE_API_KEY=$VITE_GOOGLE_API_KEY" >> $GITHUB_ENV
-          echo "VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY" >> $GITHUB_ENV
-
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: SSH to EC2 and Deploy
-        run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            docker pull shalineraghupathy/data-service:latest
-            docker stop data-service-container || true
-            docker rm data-service-container || true
-            docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
-
-            docker pull shalineraghupathy/profile-service:latest
-            docker stop profile-service-container || true
-            docker rm profile-service-container || true
-            docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
-
-            docker pull shalineraghupathy/calendar-service:latest
-            docker stop calendar-service-container || true
-            docker rm calendar-service-container || true
-            docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
-
-            docker pull shalineraghupathy/parkfinder-client:latest
-            docker stop parkfinder-client-container || true
-            docker rm parkfinder-client-container || true
-            docker run -d -p 3000:80 \
-              --env VITE_GOOGLEMAP_KEY=${{ secrets.VITE_GOOGLEMAP_KEY }} \
-              --env VITE_NPS_API_KEY=${{ secrets.VITE_NPS_API_KEY }} \
-              --env VITE_GOOGLE_API_KEY=${{ secrets.VITE_GOOGLE_API_KEY }} \
-              --env VITE_OPENWEATHER_API_KEY=${{ secrets.VITE_OPENWEATHER_API_KEY }} \
-              --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
-          EOF
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/data-service:latest
+      - name: Delete old container
+        run: docker rm -f data-service-container
+      - name: Run docker container
+        run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
+      - name: Wait for Service 1 to start
+        run: sleep 30
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/profile-service:latest
+      - name: Delete old container
+        run: docker rm -f profile-service-container
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
+      - name: Wait for Service 2 to start
+        run: sleep 30
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/calendar-service:latest
+      - name: Delete old container
+        run: docker rm -f calendar-service-container
+      - name: Run docker container
+        run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+      - name: Wait for Service 3 to start
+        run: sleep 30
+      - name: Pull image from docker hub
+        run: docker pull shalineraghupathy/parkfinder-client:latest
+      - name: Delete Old Container
+        run: docker rm -f parkfinder-client-container
+      #   - name: Run docker container
+      #     run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
+      - name: Run docker container
+        env:
+          VITE_GOOGLEMAP_KEY: ${{secrets.VITE_GOOGLEMAP_KEY}}
+          VITE_NPS_API_KEY: ${{secrets.VITE_NPS_API_KEY}}
+        run: docker run -d -p 3000:80 --env VITE_GOOGLEMAP_KEY=$VITE_GOOGLEMAP_KEY --env VITE_NPS_API_KEY=$VITE_NPS_API_KEY --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
