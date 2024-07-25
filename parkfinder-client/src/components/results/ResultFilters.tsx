@@ -222,6 +222,7 @@ const ResultFilters = ({
                 id="gardenSelect"
                 type="checkbox"
                 label="Garden"
+                checked={isGarden === true}
                 onChange={handleCheckboxChange(setIsGarden, "isGarden")}
                 style={{ borderRadius: "20px" }}
               />
@@ -229,6 +230,7 @@ const ResultFilters = ({
                 id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
+                checked={isFountain === true}
                 onChange={handleCheckboxChange(setIsFountain, "isFountain")}
                 style={{ borderRadius: "20px" }}
               />
@@ -253,7 +255,19 @@ const ResultFilters = ({
                 fontSize: "14px",
               }}
             >
-              Reset All Filters
+              Reset
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              variant="primary"
+              onClick={onApply}
+              style={{
+                borderRadius: "20px",
+                fontSize: "14px",
+              }}
+            >
+              Apply
             </Button>
           </Col>
         </Row>

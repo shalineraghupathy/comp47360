@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link as ScrollLink } from "react-scroll";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { scroller } from "react-scroll";
@@ -13,26 +12,15 @@ import "./NavBar.css";
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
-  const [userFirstName, setUserFirstName] = useLocalStorage("userFirstName");
   const navigate = useNavigate();
   const [showProfileCard, setShowProfileCard] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setToken(localStorage.getItem("token"));
-    setUserFirstName(localStorage.getItem("userFirstName"));
-  }, [setToken, setUserFirstName]);
+  }, [setToken]);
 
   const isLoggedIn = !!token;
-
-  const handleSignOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userFirstName");
-    setToken(null);
-    setUserFirstName(null);
-    navigate("/signin");
-  };
 
   const isActive = (path: string) => {
     return location.pathname === path ? "nav-link-active" : "";
@@ -125,9 +113,7 @@ const NavBar: React.FC = () => {
               onMouseLeave={() => setShowProfileCard(false)}
             >
               {isLoggedIn ? (
-                <>
-                  <ProfileCard />
-                </>
+                <>{showProfileCard && <ProfileCard />}</>
               ) : (
                 <>
                   <LinkContainer to="/signin">

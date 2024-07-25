@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   GoogleMapProvider,
   useGoogleMap,
@@ -66,6 +66,8 @@ const MapContent: React.FC<{ parks: any[] }> = ({ parks }) => {
               isGarden={selectedPark.isGarden}
               isFountain={selectedPark.isFountain}
               isMonument={selectedPark.isMonument}
+              parkID={selectedPark.parkid}
+              isFavourite={selectedPark.isFavourite}
             />
           </div>
         </div>

@@ -9,7 +9,7 @@ import "./ProfileCard.css"; // Add a CSS file for styling
 const ProfileCard: React.FC = () => {
   const [userFirstName, setUserFirstName] = useLocalStorage("userFirstName");
   const [userEmail, setUserEmail] = useLocalStorage("userEmail");
-  const [token, setToken] = useLocalStorage("token");
+  const [, setToken] = useLocalStorage("token");
   const navigate = useNavigate();
 
   const handleViewProfile = () => {

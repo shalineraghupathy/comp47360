@@ -5,10 +5,9 @@ import { Modal, ProgressBar } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "./AmenityIcon";
 import "./ParkModal.css";
-import useUser from "../../contexts/userContext";
 import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
 
-import { showToastError, showToastSuccess } from "../toast/toast";
+import { showToastError } from "../toast/toast";
 
 interface ParkModalProps {
   show: boolean;
@@ -37,7 +36,6 @@ function ParkModal({
   handleClose,
   parkName,
   parkId,
-  distance,
   busyness,
   isCafe,
   isToilet,
@@ -56,7 +54,6 @@ function ParkModal({
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
   const [isFavorite, setIsFavorite] = useState(isFavourite); // Initialize state with prop
-  const { user } = useUser();
 
   useEffect(() => {
     if (show) {

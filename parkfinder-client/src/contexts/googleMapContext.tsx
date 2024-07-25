@@ -16,6 +16,7 @@ interface Location {
 
 interface Park {
   parkName: string;
+  parkid: string;
   distance: number;
   busyness: number;
   isCafe: number;
@@ -30,6 +31,7 @@ interface Park {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  isFavourite: boolean;
 }
 
 interface GoogleMapContextProps {
