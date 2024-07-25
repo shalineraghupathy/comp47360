@@ -13,6 +13,7 @@ import "./MainContent.css";
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [openQuestionIndex, setOpenQuestionIndex] = useState<number | null>(null); 
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
@@ -122,13 +123,40 @@ function MainContent() {
     navigate("/nationalparks");
   };
 
+  const toggleQuestion = (index: number) => { // Added function to toggle question visibility
+    setOpenQuestionIndex(openQuestionIndex === index ? null : index);
+  };
+
+  const faqItems = [ // Added FAQ items array
+    {
+      question: "What is NYC Park Finder?",
+      answer: "NYC Park Finder is a tool to help you discover and explore parks in New York City."
+    },
+    {
+      question: "How do I use the park search feature?",
+      answer: "Simply enter your location, date, time, and select your preferred amenities to find parks near you n/ with real-time crowd info."
+    },
+    {
+      question: "Can I see amenities available in the parks?",
+      answer: "Yes, you can view various amenities such as toilets, cafes, playgrounds, and more for each park."
+    },
+    {
+      question: "Is NYC Park Finder free to use?",
+      answer: "Yes, NYC Park Finder is completely free to use for everyone."
+    },
+    {
+      question: "Is there a mobile app version of NYC Park Finder?",
+      answer: "No, however there are plans to develop a mobile app in the near future."
+    }
+  ];
+
   return (
     <>
       <Container className="main-content">
         <HeroImage />
         <Row className="justify-content-start align-items-start heading-row">
           <Col xs={12} sm={12} md={12} lg={12}>
-            <h1 className="main-heading">Find Your Perfect Park.</h1>
+            <h1 className="main-heading">NYC PARK FINDER</h1>
             <span className="tagline">
               In Manhattan, nature is just a click away. <br />
               Discover local parks, explore amenities, and plan your perfect
@@ -262,7 +290,23 @@ function MainContent() {
           </Element>
         </Col>
       </div>
-      <Element name="aboutSection">{/* to do: <div>about</div> */}</Element>
+      <Element name="aboutSection">
+        <div className="faq-section">
+          <h2 className="faq-heading">FAQ</h2>
+          <div className="faq">
+            {faqItems.map((item, index) => ( // Added map function to render FAQ items
+              <div
+                key={index}
+                className={`faq-question ${openQuestionIndex === index ? 'open' : ''}`}
+                onClick={() => toggleQuestion(index)}
+              >
+                <h4>{item.question} <span className="faq-arrow">{openQuestionIndex === index ? '▲' : '▼'}</span></h4>
+                {openQuestionIndex === index && <p>{item.answer}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Element>     
       <CustomFooter />
     </>
   );

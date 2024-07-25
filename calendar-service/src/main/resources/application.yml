@@ -30,5 +30,5 @@ logging:
     com.calendar.service.calendarservice: DEBUG
 
 api:
-  key: 6diW47J5IrXlZ-Aid4dx75fH3HuzjJcC7H8h61rr
+  key: c0RgtRWBSvE8YWBxDwawirsg-MXXeIFyCnIC21AB
   url: https://api.predicthq.com/v1/events
