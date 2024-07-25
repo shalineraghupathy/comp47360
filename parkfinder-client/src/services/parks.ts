@@ -2,17 +2,12 @@
 import axios from "axios";
 import { DATA_URL } from "../constants";
 
-
 export async function getParks(
   userLat: number,
   userLon: number,
   playTime: number,
   token?: string | null
 ) {
-  
-  // const token = localStorage.getItem('token');
-
-  console.log(token);
   const url = token
     ? `${DATA_URL}/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
     : `${DATA_URL}/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
@@ -26,6 +21,7 @@ export async function getParks(
     : {};
 
   try {
+    // console.log(url);
     const response = await axios.get(url, config);
     // console.log("Parks fetched successfully:", response.data);
     return response.data;
@@ -107,21 +103,5 @@ function busynessRange(category: string): [number, number] {
     return [0, 32];
   } else {
     return [50, 60];
-  }}
-
-  export interface Park {
-    id: number;
-    parkName: string;
-    isToilet: number;
-    isCafe: number;
-    isPlayground: number;
-    isToiletHandicapAccess: number;
-    isRestaurant: number;
-    isShelter: number;
-    isDrinkingWater: number;
-    isBar: number;
-    isBench: number;
-    isGarden: number;
-    isFountain: number;
-    isMonument: number;
   }
+}
