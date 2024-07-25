@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  Toast,
+  ToastContainer,
+  Spinner,
+} from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import Multiselect from "multiselect-react-dropdown";
 
@@ -40,6 +47,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [time, setTime] = useState("");
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -72,10 +80,29 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     });
   }
 
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   if (location) {
+  //     setIsLoading(true);
+  //     onSubmit(location, date, time, filters);
+  //   } else {
+  //     setShowToast(true);
+  //   }
+  // }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     if (location) {
-      onSubmit(location, date, time, filters);
+      setIsLoading(true);
+
+      try {
+        await onSubmit(location, date, time, filters);
+      } catch (error) {
+        console.error("Error during submission:", error);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       setShowToast(true);
     }
@@ -150,7 +177,17 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
             <button type="submit" className="search-button">
-              Search
+              {isLoading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                "Search"
+              )}
             </button>
           </Col>
         </Row>

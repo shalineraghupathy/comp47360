@@ -164,11 +164,14 @@ const Results = () => {
                     />
                     <Button
                       onClick={handleViewMap}
+                      variant="light"
                       className="card-body"
                       style={{
                         textAlign: "center",
                         textDecoration: "none",
                         padding: "0.5rem",
+                        borderBottomLeftRadius: "20px",
+                        borderBottomRightRadius: "20px",
                       }}
                     >
                       View map
