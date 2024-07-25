@@ -8,7 +8,7 @@ import { FaUserCircle } from "react-icons/fa";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import ProfileCard from "./ProfileCard";
 import logo from "../../assets/NYC PARK FINDER LOGO.svg";
-import './NavBar.css';
+import "./NavBar.css";
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
@@ -57,7 +57,11 @@ const NavBar: React.FC = () => {
             <img
               src={logo}
               alt="NYC ParkFinder"
-              style={{ height: "60px", width: "250px", cursor: "pointer" }}
+              style={{
+                height: "3rem",
+                cursor: "pointer",
+                marginTop: "-0.5rem",
+              }}
             />
           </Navbar.Brand>
         </LinkContainer>
@@ -77,10 +81,14 @@ const NavBar: React.FC = () => {
               offset={-70}
               style={{ cursor: "pointer" }}
             >
-              <Nav.Link as="span" className={isActive("/natParks")}>National Parks</Nav.Link>
+              <Nav.Link as="span" className={isActive("/natParks")}>
+                National Parks
+              </Nav.Link>
             </ScrollLink>
             <LinkContainer to="/eventcalendar">
-              <Nav.Link className={isActive("/eventcalendar")}>Event Calendar</Nav.Link>
+              <Nav.Link className={isActive("/eventcalendar")}>
+                Event Calendar
+              </Nav.Link>
             </LinkContainer>
             <ScrollLink
               to="aboutSection"
@@ -89,7 +97,9 @@ const NavBar: React.FC = () => {
               offset={-70}
               style={{ cursor: "pointer" }}
             >
-              <Nav.Link as="span" className={isActive("/aboutSection")}>About</Nav.Link>
+              <Nav.Link as="span" className={isActive("/aboutSection")}>
+                About
+              </Nav.Link>
             </ScrollLink>
             <NavDropdown
               title={<FaUserCircle size={24} />}

@@ -7,7 +7,6 @@ import amenityIcons from "./AmenityIcon";
 import "./ParkModal.css";
 import useUser from "../../contexts/userContext";
 import { addFavorite, removeFavorite } from "../../services/favourites"; // Adjust the path as needed
-
 import { showToastError, showToastSuccess } from "../toast/toast";
 
 interface ParkModalProps {
@@ -37,7 +36,6 @@ function ParkModal({
   handleClose,
   parkName,
   parkId,
-  distance,
   busyness,
   isCafe,
   isToilet,
@@ -51,11 +49,11 @@ function ParkModal({
   isGarden,
   isFountain,
   isMonument,
-  isFavourite, // Corrected spelling to match component logic
+  isFavourite,
 }: ParkModalProps) {
   const [weather, setWeather] = useState<any | null>(null);
   const [airQuality, setAirQuality] = useState<any | null>(null);
-  const [isFavorite, setIsFavorite] = useState(isFavourite); // Initialize state with prop
+  const [isFavorite, setIsFavorite] = useState(isFavourite);
   const { user } = useUser();
 
   useEffect(() => {
