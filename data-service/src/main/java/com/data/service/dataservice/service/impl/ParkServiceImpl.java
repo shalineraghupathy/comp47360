@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class ParkServiceImpl implements ParkService {
@@ -114,6 +113,11 @@ public class ParkServiceImpl implements ParkService {
             e.printStackTrace();
             return -1; // Return -1 or any other appropriate error value
         }
+    }
+
+    @Override
+    public List<ParkOfHeatMap> predictAll(int time) {
+        return parkList.stream().map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), time))).toList();
     }
 
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
