@@ -14,7 +14,7 @@ html, body {margin: 0; height: 90%;}
     letter-spacing: 2px;
     font-weight: bold;
     color: white;
-    
+
 }
 .left-heading, .left-text {
     transition: transform 0.3s ease-in-out;
@@ -31,7 +31,7 @@ html, body {margin: 0; height: 90%;}
     font-weight: 500;
     color: white;
     letter-spacing: 1.2px;
-    
+
 }
 
 .right-heading {
@@ -39,7 +39,7 @@ html, body {margin: 0; height: 90%;}
     margin-left: 1rem;
     margin-bottom: 1rem;
     font-family: "Inter", sans-serif;
-    
+
 }
 .details {
     margin-left: 1rem;
@@ -47,13 +47,12 @@ html, body {margin: 0; height: 90%;}
     margin-bottom: 2rem;
     font-size:0.9rem;
     font-family: "Inter", sans-serif;
-    
+
 }
 
 .content {
     flex: 0 0 50%;
 }
-
 
 @media (max-width: 768px) {
     .left-card {

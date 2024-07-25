@@ -74,6 +74,7 @@ table {
   cursor: pointer;
 }
 
+
 @media (max-width: 768px) {
   .amenities-container {
     display: flex;
@@ -81,5 +82,4 @@ table {
   }
   .bottom-right-button {
     display:none;
-  }
-}
+  }}

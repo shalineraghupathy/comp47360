@@ -79,7 +79,7 @@ const Results = () => {
   const handleApplyFilters = useCallback(() => {
     const filtered = filterParks(filters, fullParksList);
     setFilteredParks(filtered);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page when filters are applied
   }, [filters, fullParksList]);
 
   const handleResetFilters = () => {
@@ -164,11 +164,14 @@ const Results = () => {
                     />
                     <Button
                       onClick={handleViewMap}
+                      variant="light"
                       className="card-body"
                       style={{
                         textAlign: "center",
                         textDecoration: "none",
                         padding: "0.5rem",
+                        borderBottomLeftRadius: "20px",
+                        borderBottomRightRadius: "20px",
                       }}
                     >
                       View map

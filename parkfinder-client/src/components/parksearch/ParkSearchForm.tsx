@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getParks, convertToTimestamp } from "../../services/parks";
-import { useNavigate } from "react-router-dom";
 import {
   Form,
   Row,
@@ -50,7 +48,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -83,27 +80,29 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     });
   }
 
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   if (location) {
+  //     setIsLoading(true);
+  //     onSubmit(location, date, time, filters);
+  //   } else {
+  //     setShowToast(true);
+  //   }
+  // }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     if (location) {
       setIsLoading(true);
-      const timestamp = convertToTimestamp(date, time);
-      try {
-        const parksResult = await getParks(
-          location.lat,
-          location.lng,
-          timestamp
-        );
 
-        onSubmit(location, date, time, filters);
-        navigate("/results", {
-          state: { parks: parksResult, filters: filters },
-        });
+      try {
+        await onSubmit(location, date, time, filters);
       } catch (error) {
-        setShowToast(true);
+        console.error("Error during submission:", error);
       } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     } else {
       setShowToast(true);
     }

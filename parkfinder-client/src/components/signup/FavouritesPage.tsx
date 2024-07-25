@@ -119,22 +119,3 @@ function FavouritesPage() {
 }
 
 export default FavouritesPage;
-
-{
-  /* 
-              //   isCafe={parks.park.isCafe}
-              //   isToilet={parks.park.isToilet}
-              //   isPlayground={parks.park.isPlayground}
-              //   isToiletHandicapAccess={
-              //     parks.park.isToiletHandicapAccess
-              //   }
-              //   isRestaurant={parks.park.isRestaurant}
-              //   isShelter={parks.park.isShelter}
-              //   isDrinkingWater={parks.park.isDrinkingWater}
-              //   isBar={parks.park.isBar}
-              //   isBench={parks.park.isBench}
-              //   isGarden={parks.park.isGarden}
-              //   isFountain={parks.park.isFountain}
-              //   isMonument={parks.park.isMonument} 
-            */
-}

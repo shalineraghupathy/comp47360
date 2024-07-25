@@ -126,16 +126,6 @@
     "Tecumseh Playground": "/staticparkimages/tecumsehplayground.jpg",
     "Theodore Roosevelt Park": "/staticparkimages/theodoreroosevelt.jpg",
     "Carl Schurz Park": "/staticparkimages/carlschurz.jpg",
-    // "": "/staticparkimages/.jpg",
-    // "": "/staticparkimages/.jpg",
-    // "": "/staticparkimages/.jpg",
-
-
-
-
-
-
-
   };
 
   export default parkImages;
