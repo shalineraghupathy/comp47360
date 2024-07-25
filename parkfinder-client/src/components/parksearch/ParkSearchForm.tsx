@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getParks, convertToTimestamp } from "../../services/parks";
-import { useNavigate } from "react-router-dom";
-import {
-  Form,
-  Row,
-  Col,
-  Toast,
-  ToastContainer,
-  Spinner,
-} from "react-bootstrap";
+import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import GoogleSearchBar from "./GoogleSearchBar";
 import Multiselect from "multiselect-react-dropdown";
 
@@ -49,8 +40,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [time, setTime] = useState("");
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -86,24 +75,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
-      setIsLoading(true);
-      const timestamp = convertToTimestamp(date, time);
-      try {
-        const parksResult = await getParks(
-          location.lat,
-          location.lng,
-          timestamp
-        );
-
-        onSubmit(location, date, time, filters);
-        navigate("/results", {
-          state: { parks: parksResult, filters: filters },
-        });
-      } catch (error) {
-        setShowToast(true);
-      } finally {
-      }
-      setIsLoading(false);
+      onSubmit(location, date, time, filters);
     } else {
       setShowToast(true);
     }
@@ -178,17 +150,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
             <button type="submit" className="search-button">
-              {isLoading ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : (
-                "Search"
-              )}
+              Search
             </button>
           </Col>
         </Row>
