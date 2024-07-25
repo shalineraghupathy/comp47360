@@ -23,8 +23,6 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.calendar.service.calendarservice.entity
 
-server:
-  port: 8084
 
 logging:
   level:
