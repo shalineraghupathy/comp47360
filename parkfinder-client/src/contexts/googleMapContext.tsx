@@ -4,8 +4,9 @@ import React, {
   useEffect,
   useRef,
   useState,
+  useCallback,
 } from "react";
-import { useLoadScript, Libraries } from "@react-google-maps/api";
+import useLoadGoogleMapsScript from "../hooks/useLoadGoogleMapsScript"; // Import your custom hook
 import mapStyles from "../components/maps/mapStyles"; // Import the map styles
 
 interface Location {
@@ -42,8 +43,6 @@ const GoogleMapContext = createContext<GoogleMapContextProps | undefined>(
   undefined
 );
 
-const libraries: Libraries = ["places", "drawing", "geometry"];
-
 const mapContainerStyle = {
   width: "100%",
   height: "100vh",
@@ -57,60 +56,60 @@ const center = {
 const GoogleMapProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const mapconfig = import.meta.env.VITE_GOOGLEMAP_KEY as string; // Get your API key from environment variables
+  const isLoaded = useLoadGoogleMapsScript(mapconfig); // Use the custom hook
+
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
   const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
-  const [boundsFitted, setBoundsFitted] = useState(false); // New state
+  const [boundsFitted, setBoundsFitted] = useState(false);
   const mapRef = useRef<HTMLDivElement | null>(null);
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLEMAP_KEY as string,
-    libraries,
-  });
 
   useEffect(() => {
     if (isLoaded && mapRef.current && !map) {
       const mapInstance = new google.maps.Map(mapRef.current, {
         center,
         zoom: 13,
-        styles: mapStyles, // Apply the styles here
+        styles: mapStyles,
       });
       setMap(mapInstance);
     }
   }, [isLoaded, map]);
 
-  const addMarker = (location: Location, park: Park) => {
-    if (map) {
-      const marker = new google.maps.Marker({
-        position: location,
-        map,
-        title: park.parkName,
-        icon: {
-          url: "public/trees.svg",
-          scaledSize: new google.maps.Size(40, 40),
-        },
-      });
+  const addMarker = useCallback(
+    (location: Location, park: Park) => {
+      if (map) {
+        const marker = new google.maps.Marker({
+          position: location,
+          map,
+          title: park.parkName,
+          icon: {
+            url: "public/trees.svg",
+            scaledSize: new google.maps.Size(40, 40),
+          },
+        });
 
-      marker.addListener("click", () => {
-        setSelectedPark(park);
-      });
+        marker.addListener("click", () => {
+          setSelectedPark(park);
+        });
 
-      setMarkers((prevMarkers) => [...prevMarkers, marker]);
-    }
-  };
+        setMarkers((prevMarkers) => [...prevMarkers, marker]);
+      }
+    },
+    [map]
+  );
 
-  const fitBoundsToMarkers = () => {
+  const fitBoundsToMarkers = useCallback(() => {
     if (map && markers.length > 0 && !boundsFitted) {
       const bounds = new google.maps.LatLngBounds();
       markers.forEach((marker) => {
         bounds.extend(marker.getPosition() as google.maps.LatLng);
       });
       map.fitBounds(bounds);
-      setBoundsFitted(true); // Ensure this only runs once
+      setBoundsFitted(true);
     }
-  };
+  }, [map, markers, boundsFitted]);
 
-  if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div>Loading Maps</div>;
 
   return (

@@ -1,16 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { DATA_URL } from "../constants";
 
 export async function getParks(
   userLat: number,
   userLon: number,
-  playTime: number
+  playTime: number,
+  token?: string | null
 ) {
-  try {
-    const response = await axios.get(
-      `http://34.245.187.188:8082/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
-    );
+  // const token = localStorage.getItem('token');
 
-    console.log("Parks fetched successfully:", response.data);
+  console.log(token);
+  const url = token
+    ? `${DATA_URL}/parks/findNearby2?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`
+    : `${DATA_URL}/parks/findNearby?userLat=${userLat}&userLon=${userLon}&playTime=${playTime}`;
+
+  const config = token
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    : {};
+
+  try {
+    const response = await axios.get(url, config);
+    // console.log("Parks fetched successfully:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching parks:", error);
@@ -24,7 +39,7 @@ export function convertToTimestamp(date: string, time: string) {
 }
 
 export function filterParks(filters: any, parks: any) {
-  console.log(parks);
+  // console.log(parks);
   const filtered = parks.filter((park: any) => {
     let match = true;
 
@@ -91,4 +106,21 @@ function busynessRange(category: string): [number, number] {
   } else {
     return [50, 60];
   }
+}
+
+export interface Park {
+  id: number;
+  parkName: string;
+  isToilet: number;
+  isCafe: number;
+  isPlayground: number;
+  isToiletHandicapAccess: number;
+  isRestaurant: number;
+  isShelter: number;
+  isDrinkingWater: number;
+  isBar: number;
+  isBench: number;
+  isGarden: number;
+  isFountain: number;
+  isMonument: number;
 }

@@ -7,6 +7,13 @@ export default defineConfig({
   base: "/",
   server: {
     port: 3000,
+    proxy: {
+      "/mapbox": {
+        target: "https://api.mapbox.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/mapbox/, ""),
+      },
+    },
   },
   build: {
     outDir: "dist",

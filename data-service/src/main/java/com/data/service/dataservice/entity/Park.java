@@ -24,6 +24,7 @@ public class Park {
     private int isFountain;
     private int isMonument;
 
+
     // Getters and Setters
 
     public String getParkId() {

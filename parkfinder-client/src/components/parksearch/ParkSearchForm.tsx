@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Form, Row, Col, Toast, ToastContainer } from "react-bootstrap";
-import GoogleSearchBar from "./GoogleSearchBar";
-import { useNavigate } from "react-router-dom";
 import { getParks, convertToTimestamp } from "../../services/parks";
+import { useNavigate } from "react-router-dom";
+import {
+  Form,
+  Row,
+  Col,
+  Toast,
+  ToastContainer,
+  Spinner,
+} from "react-bootstrap";
+import GoogleSearchBar from "./GoogleSearchBar";
 import Multiselect from "multiselect-react-dropdown";
 
 export interface Filters {
@@ -42,9 +49,9 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
   const [time, setTime] = useState("");
   const [filters, setFilters] = useState<Filters>({});
   const [showToast, setShowToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  //Time & Date Management
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
     setDate(today);
@@ -58,7 +65,6 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     setTime(currentTime);
   }, []);
 
-  //state handlers
   function handleSelectLocation(lat: number, lng: number) {
     setLocation({ lat, lng });
   }
@@ -77,10 +83,10 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
     });
   }
 
-  //form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (location) {
+      setIsLoading(true);
       const timestamp = convertToTimestamp(date, time);
       try {
         const parksResult = await getParks(
@@ -95,7 +101,9 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
         });
       } catch (error) {
         setShowToast(true);
+      } finally {
       }
+      setIsLoading(false);
     } else {
       setShowToast(true);
     }
@@ -170,7 +178,17 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
           </Col>
           <Col xs={12} sm={12} md={12} lg={2}>
             <button type="submit" className="search-button">
-              Search
+              {isLoading ? (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              ) : (
+                "Search"
+              )}
             </button>
           </Col>
         </Row>
@@ -178,12 +196,7 @@ function ParkSearchForm({ onSubmit, withShadow = false }: ParkSearchFormProps) {
       <ToastContainer
         position="top-center"
         className="p-3"
-        style={{
-          position: "fixed",
-          top: "20px",
-          right: "20px",
-          zIndex: 1050,
-        }}
+        style={{ position: "fixed", top: "20px", right: "20px", zIndex: 1050 }}
       >
         <Toast
           show={showToast}

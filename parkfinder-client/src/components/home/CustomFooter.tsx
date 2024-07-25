@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "./CustomFooter.css";
+import logo from "../../assets/NYC PARK FINDER LOGO.svg";
 
 function CustomFooter() {
   return (
@@ -7,8 +8,8 @@ function CustomFooter() {
       <Container>
         <Row className="align-items-center">
           <Col md={6} className="text-center text-md-start mb-3 mb-md-0">
-            <img src="/leaf.svg" alt="Logo" className="footer-logo" />
-            <span className="ms-2">&copy; 2024 ParkFinder</span>
+            <img src={logo} alt="Logo" className="footer-logo" />
+            <span className="ms-2">&copy; 2024 NYC Park Finder</span>
           </Col>{" "}
           <Col md={6} className="text-center text-md-end">
             <a href="#" className="text-dark me-3">

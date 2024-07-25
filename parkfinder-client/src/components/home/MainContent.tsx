@@ -6,22 +6,45 @@ import ParkCard from "../parkcard/ParkCard";
 import HeroImage from "./HeroImage";
 import CustomFooter from "./CustomFooter";
 import { Element } from "react-scroll";
+import { getParks, convertToTimestamp } from "../../services/parks";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import "./MainContent.css";
 
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [openQuestionIndex, setOpenQuestionIndex] = useState<number | null>(
+    null
+  );
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
+  const [token] = useLocalStorage("token");
 
-  const handleSearchSubmit = (
+  const handleSearchSubmit = async (
     location: { lat: number; lng: number },
     date: string,
     time: string,
     filters: Filters
   ) => {
-    console.log({ location, date, time, filters });
+    const timestamp = convertToTimestamp(date, time);
+    try {
+      const parksResult = await getParks(
+        location.lat,
+        location.lng,
+        timestamp,
+        token
+      );
+      navigate("/results", {
+        state: {
+          fullParksList: parksResult,
+          filteredParks: parksResult,
+          filters,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching parks: ", error);
+    }
   };
 
   const popularParks = [
@@ -89,7 +112,6 @@ function MainContent() {
       hasFountain: 1,
       hasMonument: 1,
     },
-    //etc.
   ];
 
   const scrollToSearchForm = () => {
@@ -102,6 +124,39 @@ function MainContent() {
   const navigateToNationalParks = () => {
     navigate("/nationalparks");
   };
+
+  const toggleQuestion = (index: number) => {
+    // Added function to toggle question visibility
+    setOpenQuestionIndex(openQuestionIndex === index ? null : index);
+  };
+
+  const faqItems = [
+    // Added FAQ items array
+    {
+      question: "What is NYC Park Finder?",
+      answer:
+        "NYC Park Finder is a tool to help you discover and explore parks in New York City.",
+    },
+    {
+      question: "How do I use the park search feature?",
+      answer:
+        "Simply enter your location, date, time, and select your preferred amenities to find parks near you n/ with real-time crowd info.",
+    },
+    {
+      question: "Can I see amenities available in the parks?",
+      answer:
+        "Yes, you can view various amenities such as toilets, cafes, playgrounds, and more for each park.",
+    },
+    {
+      question: "Is NYC Park Finder free to use?",
+      answer: "Yes, NYC Park Finder is completely free to use for everyone.",
+    },
+    {
+      question: "Is there a mobile app version of NYC Park Finder?",
+      answer:
+        "No, however there are plans to develop a mobile app in the near future.",
+    },
+  ];
 
   return (
     <>
@@ -130,15 +185,11 @@ function MainContent() {
         </Row>
       </Container>
       <div className="search-form-div" id="search-form-div">
-        {/* <Container > */}
         <Row className="justify-content-center align-items-center search-row">
           <Col xs={12} md={12} lg={10}>
             <h1 className="search-heading">Search for a Park</h1>
             <span key={typingKey} className="search-description">
               Simply enter your location to see parks near you.
-              {/* Add a date and time to
-              see predicted busyness, and filter by amenities to discover your
-              perfect park. */}
             </span>
             <div className="search-component">
               <OverlayTrigger
@@ -159,7 +210,6 @@ function MainContent() {
             </div>
           </Col>
         </Row>
-        {/* </Container> */}
       </div>
       <div className="card-section">
         <Col xs={12}>
@@ -248,7 +298,35 @@ function MainContent() {
           </Element>
         </Col>
       </div>
-      <Element name="aboutSection">{/* to do: <div>about</div> */}</Element>
+      <Element name="aboutSection">
+        <div className="faq-section">
+          <h2 className="faq-heading">FAQ</h2>
+          <div className="faq">
+            {faqItems.map(
+              (
+                item,
+                index // Added map function to render FAQ items
+              ) => (
+                <div
+                  key={index}
+                  className={`faq-question ${
+                    openQuestionIndex === index ? "open" : ""
+                  }`}
+                  onClick={() => toggleQuestion(index)}
+                >
+                  <h4>
+                    {item.question}{" "}
+                    <span className="faq-arrow">
+                      {openQuestionIndex === index ? "▲" : "▼"}
+                    </span>
+                  </h4>
+                  {openQuestionIndex === index && <p>{item.answer}</p>}
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      </Element>
       <CustomFooter />
     </>
   );
