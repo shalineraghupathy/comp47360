@@ -57,7 +57,11 @@ const NavBar: React.FC = () => {
             <img
               src={logo}
               alt="NYC ParkFinder"
-              style={{ height: "60px", width: "250px", cursor: "pointer" }}
+              style={{
+                height: "3rem",
+                cursor: "pointer",
+                marginTop: "-0.5rem",
+              }}
             />
           </Navbar.Brand>
         </LinkContainer>

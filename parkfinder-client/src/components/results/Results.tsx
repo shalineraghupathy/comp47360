@@ -79,7 +79,7 @@ const Results = () => {
   const handleApplyFilters = useCallback(() => {
     const filtered = filterParks(filters, fullParksList);
     setFilteredParks(filtered);
-    setCurrentPage(1); // Reset to first page when filters are applied
+    setCurrentPage(1);
   }, [filters, fullParksList]);
 
   const handleResetFilters = () => {
