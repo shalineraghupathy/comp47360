@@ -25,3 +25,9 @@
 .results-container {
   margin-bottom: 3rem;
 }
+
+@media (max-width: 768px) {
+  .results-heading {
+    margin-top: 1rem;
+  }
+}
