@@ -1,29 +1,37 @@
-# Step 1: Build React App
-FROM node:alpine3.18 as build
-WORKDIR /app 
-COPY package.json .
-RUN npm install
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine as build
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the package.json and package-lock.json to the working directory
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the application
+# Build the React app
 RUN npm run build
 
-# Debugging step: list the contents of /app to ensure build directory is created
-RUN ls -la /app
-RUN ls -la /app/build
-
-# Step 2: Serve with Nginx
+# Step 2: Server with Nginx
+# Use an official Nginx runtime as a parent image
 FROM nginx:1.23-alpine
+
+# Set the working directory to the Nginx HTML directory
 WORKDIR /usr/share/nginx/html
 
-# Remove default nginx static assets
-RUN rm -rf *
+# Remove the default Nginx static assets
+RUN rm -rf ./*
 
-# Copy the build output from the previous stage
-COPY --from=build /app/build .
+# Copy the built React app from the build stage to the Nginx HTML directory
+COPY --from=build /app/dist .  
+# Ensure the correct path to the build directory
 
 # Expose port 80
 EXPOSE 80
 
-# Start nginx
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+# Run Nginx in the foreground
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
