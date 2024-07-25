@@ -2,6 +2,7 @@ package com.data.service.dataservice.controller;
 
 
 import com.data.service.dataservice.entity.Park;
+import com.data.service.dataservice.entity.ParkOfHeatMap;
 import com.data.service.dataservice.entity.ParkOfUser;
 import com.data.service.dataservice.service.ParkService;
 import com.data.service.dataservice.util.JwtUtil;
@@ -31,6 +32,11 @@ public class ParkController {
     @GetMapping("/findNearby")
     public List<ParkOfUser> findNearbyParks(@RequestParam double userLat, @RequestParam double userLon, @RequestParam int playTime) {
         return parkService.findNearbyParks(userLat, userLon, playTime);
+    }
+
+    @GetMapping("/predictAll")
+    public List<ParkOfHeatMap> predictAll(@RequestParam int time) {
+        return parkService.predictAll(time);
     }
 
     @GetMapping("/findNearby2")
