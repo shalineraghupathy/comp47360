@@ -5,10 +5,11 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link as ScrollLink } from "react-scroll";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import { scroller } from "react-scroll";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import ProfileCard from "./ProfileCard";
 import logo from "../../assets/NYC PARK FINDER LOGO.svg";
-import './NavBar.css';
+import "./NavBar.css";
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
@@ -37,6 +38,29 @@ const NavBar: React.FC = () => {
     return location.pathname === path ? "nav-link-active" : "";
   };
 
+  const handleNavLinkClick = (hash: string) => {
+    if (location.pathname === "/") {
+      scroller.scrollTo(hash, {
+        smooth: true,
+        duration: 200,
+        offset: -70,
+      });
+    } else {
+      navigate(`/#${hash}`);
+    }
+  };
+
+  useEffect(() => {
+    if (location.hash) {
+      const hash = location.hash.replace("#", "");
+      scroller.scrollTo(hash, {
+        smooth: true,
+        duration: 200,
+        offset: -70,
+      });
+    }
+  }, [location]);
+
   return (
     <Navbar
       className="Navbar"
@@ -57,7 +81,11 @@ const NavBar: React.FC = () => {
             <img
               src={logo}
               alt="NYC ParkFinder"
-              style={{ height: "60px", width: "250px", cursor: "pointer" }}
+              style={{
+                height: "3.5rem",
+                marginTop: "-0.5rem",
+                cursor: "pointer",
+              }}
             />
           </Navbar.Brand>
         </LinkContainer>
@@ -70,27 +98,25 @@ const NavBar: React.FC = () => {
             <LinkContainer to="/heatmap">
               <Nav.Link className={isActive("/heatmap")}>Maps</Nav.Link>
             </LinkContainer>
-            <ScrollLink
-              to="natParks"
-              smooth={true}
-              duration={200}
-              offset={-70}
-              style={{ cursor: "pointer" }}
+            <Nav.Link
+              as="span"
+              className={isActive("/#natParks")}
+              onClick={() => handleNavLinkClick("natParks")}
             >
-              <Nav.Link as="span" className={isActive("/natParks")}>National Parks</Nav.Link>
-            </ScrollLink>
+              National Parks
+            </Nav.Link>
             <LinkContainer to="/eventcalendar">
-              <Nav.Link className={isActive("/eventcalendar")}>Event Calendar</Nav.Link>
+              <Nav.Link className={isActive("/eventcalendar")}>
+                Event Calendar
+              </Nav.Link>
             </LinkContainer>
-            <ScrollLink
-              to="aboutSection"
-              smooth={true}
-              duration={200}
-              offset={-70}
-              style={{ cursor: "pointer" }}
+            <Nav.Link
+              as="span"
+              className={isActive("/#aboutSection")}
+              onClick={() => handleNavLinkClick("aboutSection")}
             >
-              <Nav.Link as="span" className={isActive("/aboutSection")}>About</Nav.Link>
-            </ScrollLink>
+              About
+            </Nav.Link>
             <NavDropdown
               title={<FaUserCircle size={24} />}
               id="basic-nav-dropdown"

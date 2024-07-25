@@ -122,6 +122,10 @@
     "Nelson A. Rockefeller Park": "/staticparkimages/nelsona.jpg",
     "William E. Passannante Ballfield": "/staticparkimages/williame.jpg",
     "Corporal John A. Seravalli Playground": "/staticparkimages/corporaljohn.jpg",
+    "Ruppert Park": "/staticparkimages/ruppertpark.jpg",
+    "Tecumseh Playground": "/staticparkimages/tecumsehplayground.jpg",
+    "Theodore Roosevelt Park": "/staticparkimages/theodoreroosevelt.jpg",
+    "Carl Schurz Park": "/staticparkimages/carlschurz.jpg",
   };
 
   export default parkImages;
