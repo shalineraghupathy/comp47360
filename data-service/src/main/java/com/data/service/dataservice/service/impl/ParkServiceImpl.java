@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ParkServiceImpl implements ParkService {
@@ -145,4 +147,21 @@ public class ParkServiceImpl implements ParkService {
         UserFavourites userFavourites = new UserFavourites(key);
         userFavouritesRepository.delete(userFavourites);
     }
+
+    @Override
+    public List<Park> listAllUserFavourites(String userEmail) {
+        List<String> parkIds = userRepository.findByUserEmail(userEmail)
+                .map(user -> userFavouritesRepository.findByUserId(user.getUserId())
+                        .stream()
+                        .map(fav -> fav.getId().getParkID())
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+
+        return parkList.stream()
+                .filter(park -> parkIds.contains(park.getParkId()))
+                .collect(Collectors.toList());
+    }
+
+
+
 }
