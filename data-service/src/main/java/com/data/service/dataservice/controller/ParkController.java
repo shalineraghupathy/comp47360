@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/parks")
@@ -85,4 +86,26 @@ public class ParkController {
             return ResponseEntity.status(401).body("Invalid token.");
         }
     }
+    @GetMapping("/listAllFavorites")
+    public ResponseEntity<?> listAllFavorites(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // Remove "Bearer " prefix
+            try {
+                jwtUtil.validateToken(token);
+            } catch (Exception e) {
+                return ResponseEntity.status(401).body("Invalid token.");
+            }
+            String userEmail = jwtUtil.extractUsername(token);
+            List<Park> parks = parkService.listAllUserFavourites(userEmail);
+            if (parks.isEmpty()) {
+                return ResponseEntity.status(404).body("User not found or no favourites.");
+            }
+            return ResponseEntity.ok(parks);
+        } else {
+            return ResponseEntity.status(401).body("Invalid token.");
+        }
+    }
+
+
 }

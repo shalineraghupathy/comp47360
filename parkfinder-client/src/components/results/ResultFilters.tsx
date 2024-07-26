@@ -88,6 +88,10 @@ const ResultFilters = ({
     }));
   };
 
+  const handleApply = () => {
+    onApply();
+  };
+
   return (
     <div className="filter-container">
       <Form>
@@ -223,6 +227,7 @@ const ResultFilters = ({
                 type="checkbox"
                 label="Garden"
                 checked={isGarden === true}
+                checked={isGarden === true}
                 onChange={handleCheckboxChange(setIsGarden, "isGarden")}
                 style={{ borderRadius: "20px" }}
               />
@@ -230,6 +235,7 @@ const ResultFilters = ({
                 id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
+                checked={isFountain === true}
                 checked={isFountain === true}
                 onChange={handleCheckboxChange(setIsFountain, "isFountain")}
                 style={{ borderRadius: "20px" }}
@@ -257,11 +263,9 @@ const ResultFilters = ({
             >
               Reset
             </Button>
-          </Col>
-          <Col>
             <Button
-              variant="primary"
-              onClick={onApply}
+              variant="light"
+              onClick={handleApply}
               style={{
                 borderRadius: "20px",
                 fontSize: "14px",

@@ -19,4 +19,6 @@ public interface ParkService {
 
     void addUserFavourite(String userEmail, String parkID );
     void removeUserFavourite(String userEmail, String parkID);
+    List<Park> listAllUserFavourites(String userEmail);
+
 }

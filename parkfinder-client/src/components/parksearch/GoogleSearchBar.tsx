@@ -6,7 +6,9 @@ interface GoogleSearchBarProps {
 }
 
 function GoogleSearchBar({ onSelectLocation }: GoogleSearchBarProps) {
-  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  const apiKey =
+    (import.meta.env.VITE_GOOGLE_API_KEY as string) ||
+    "AIzaSyDtzE5ImdDBmxSZxz-6NFOCqRm2KYtzZm8";
   const scriptId = "script-id";
 
   useEffect(() => {
