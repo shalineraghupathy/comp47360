@@ -56,8 +56,10 @@ const center = {
 const GoogleMapProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const mapconfig = import.meta.env.VITE_GOOGLEMAP_KEY as string; // Get your API key from environment variables
-  const isLoaded = useLoadGoogleMapsScript(mapconfig); // Use the custom hook
+  const mapconfig =
+    (import.meta.env.VITE_GOOGLEMAP_KEY as string) ||
+    "AIzaSyCW27CLjsip3GXINZjzqXuUmTnjF4KZ3j8";
+  const isLoaded = useLoadGoogleMapsScript(mapconfig);
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);

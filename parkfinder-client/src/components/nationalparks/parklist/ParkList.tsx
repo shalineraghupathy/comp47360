@@ -3,7 +3,9 @@ import axios from "axios";
 import ParkCard from "../card/ParkCard";
 import PaginationComponent from "../pagination/Paginationcomponent";
 import "./ParkList.css";
-const { VITE_NPS_API_KEY: apiconfig } = import.meta.env;
+const apiconfig =
+  (import.meta.env.VITE_NPS_API_KEY as string) ||
+  "7y7rnQvgQeKdXIeeRNS7R4RRZUXC3UWHLhRTzCTl";
 
 interface Activity {
   id: string;
