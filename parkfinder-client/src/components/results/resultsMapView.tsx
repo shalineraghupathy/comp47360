@@ -17,8 +17,7 @@ const ResultsMapView: React.FC = () => {
   const initialFilteredParks =
     location.state?.filteredParks || initialFullParksList;
   const [filters, setFilters] = useState<Filters>(initialFilters);
-  const [fullParksList, setFullParksList] =
-    useState<any[]>(initialFullParksList);
+  const [fullParksList] = useState<any[]>(initialFullParksList);
   const [filteredParks, setFilteredParks] =
     useState<any[]>(initialFilteredParks);
   const [showFilterModal, setShowFilterModal] = useState(false);

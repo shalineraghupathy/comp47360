@@ -30,6 +30,8 @@ interface Park {
   isGarden: number;
   isFountain: number;
   isMonument: number;
+  parkID: string;
+  isFavourite: boolean;
 }
 
 interface GoogleMapContextProps {
