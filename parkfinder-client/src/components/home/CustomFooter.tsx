@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "./CustomFooter.css";
-import logo from "../../assets/NYC PARK FINDER LOGO.svg";
+import logo from "../../assets/NYC PARK FINDER LOGO.png";
 
 function CustomFooter() {
   return (

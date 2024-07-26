@@ -7,8 +7,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { scroller } from "react-scroll";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import ProfileCard from "./ProfileCard";
-import logo from "../../assets/NYC PARK FINDER LOGO.svg";
-import "./NavBar.css";
+import logo from "../../assets/NYC PARK FINDER LOGO.png";
+import './NavBar.css';
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
