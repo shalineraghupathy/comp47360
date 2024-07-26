@@ -1,7 +1,7 @@
 html, body {margin: 0; height: 90%;}
 
 .left-card {
-    background: linear-gradient(to left, #2E8B57, #38A869);
+    background: linear-gradient(to right, #339966, #66cc99);
     font-family: "Inter", sans-serif;
     box-sizing: border-box;
 

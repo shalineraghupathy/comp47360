@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Park } from "../../services/parks";
 import "./ProfilePage.css";
 import CustomFooter from "../home/CustomFooter";
+import { DATA_URL } from "../../constants";
 
 const ProfilePage: React.FC = () => {
   const [favouriteParks, setFavouriteParks] = useState<Park[]>([]);
@@ -12,64 +13,94 @@ const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //fetch!
     const fetchFavouriteParks = async () => {
-      // Mocked data
-      const parks = [
-        {
-          id: 1,
-          parkName: "Central Park",
-          isToilet: 1,
-          isCafe: 1,
-          isPlayground: 1,
-          isToiletHandicapAccess: 1,
-          isRestaurant: 1,
-          isShelter: 1,
-          isDrinkingWater: 1,
-          isBar: 1,
-          isBench: 1,
-          isGarden: 1,
-          isFountain: 1,
-          isMonument: 1,
-        },
-        {
-          id: 2,
-          parkName: "Bryant Park",
-          isToilet: 1,
-          isCafe: 1,
-          isPlayground: 1,
-          isToiletHandicapAccess: 1,
-          isRestaurant: 1,
-          isShelter: 1,
-          isDrinkingWater: 1,
-          isBar: 1,
-          isBench: 1,
-          isGarden: 1,
-          isFountain: 1,
-          isMonument: 1,
-        },
-        {
-          id: 3,
-          parkName: "The High Line",
-          isToilet: 1,
-          isCafe: 1,
-          isPlayground: 1,
-          isToiletHandicapAccess: 1,
-          isRestaurant: 1,
-          isShelter: 1,
-          isDrinkingWater: 1,
-          isBar: 1,
-          isBench: 1,
-          isGarden: 1,
-          isFountain: 1,
-          isMonument: 1,
-        },
-      ];
-      setFavouriteParks(parks);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${DATA_URL}/parks/listAllFavorites`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch favourite parks");
+        }
+
+        const parks: Park[] = await response.json();
+        setFavouriteParks(parks);
+        console.log("hi");
+      } catch (error) {
+        console.error("Error fetching favourite parks:", error);
+      }
     };
 
     fetchFavouriteParks();
   }, []);
+  //     //fetch!
+  //     const fetchFavouriteParks = async () => {
+  //       // Mocked data
+  //       const parks = [
+  //         {
+  //           id: 1,
+  //           parkName: "Central Park",
+  //           isToilet: 1,
+  //           isCafe: 1,
+  //           isPlayground: 1,
+  //           isToiletHandicapAccess: 1,
+  //           isRestaurant: 1,
+  //           isShelter: 1,
+  //           isDrinkingWater: 1,
+  //           isBar: 1,
+  //           isBench: 1,
+  //           isGarden: 1,
+  //           isFountain: 1,
+  //           isMonument: 1,
+  //         },
+  //         {
+  //           id: 2,
+  //           parkName: "Bryant Park",
+  //           isToilet: 1,
+  //           isCafe: 1,
+  //           isPlayground: 1,
+  //           isToiletHandicapAccess: 1,
+  //           isRestaurant: 1,
+  //           isShelter: 1,
+  //           isDrinkingWater: 1,
+  //           isBar: 1,
+  //           isBench: 1,
+  //           isGarden: 1,
+  //           isFountain: 1,
+  //           isMonument: 1,
+  //         },
+  //         {
+  //           id: 3,
+  //           parkName: "The High Line",
+  //           isToilet: 1,
+  //           isCafe: 1,
+  //           isPlayground: 1,
+  //           isToiletHandicapAccess: 1,
+  //           isRestaurant: 1,
+  //           isShelter: 1,
+  //           isDrinkingWater: 1,
+  //           isBar: 1,
+  //           isBench: 1,
+  //           isGarden: 1,
+  //           isFountain: 1,
+  //           isMonument: 1,
+  //         },
+  //       ];
+  //       setFavouriteParks(parks);
+  //     };
+
+  //     fetchFavouriteParks();
+  //   }, []);
 
   if (!userFirstName || !userEmail) {
     return (
