@@ -171,7 +171,7 @@ function MainContent() {
               onClick={scrollToSearchForm}
               className="jump-button"
             >
-              Get started
+              Get Started
             </button>
           </Col>
         </Row>
@@ -271,12 +271,16 @@ function MainContent() {
           <Element name="natParks">
             <div className="nat-parks-content">
               <h2 className="nat-parks-heading">
-                Explore the National Parks of NYC.
+                Explore the National Parks of NYC
               </h2>
               <span className="nat-parks-link">
                 <p>
-                  New York State is home to 24 National Park Sites. 10 are in
-                  New York City. <br /> Click the button to learn more.
+                  New York State is home to 24 National Park Sites. 
+                  <br /> 
+                  10 of these parks are located in New York City. 
+                </p>
+                <p>
+                  Click the button to learn more.
                 </p>
                 <button
                   className="nat-park-button"
