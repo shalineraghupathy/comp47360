@@ -241,7 +241,7 @@ function SignUp() {
             </Components.LeftOverlayPanel>
 
             <Components.RightOverlayPanel signinIn={!isSignInActive}>
-              <Components.Title>Hello, Friend!</Components.Title>
+              <Components.Title>Hey, New here?</Components.Title>
               <Components.Paragraph>
                 Enter your personal details and start your journey with us
               </Components.Paragraph>
