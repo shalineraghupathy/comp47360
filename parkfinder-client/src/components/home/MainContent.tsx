@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import ParkSearchForm, { Filters } from "../parksearch/ParkSearchForm";
@@ -129,24 +129,36 @@ function MainContent() {
 
   const faqItems = [ // Added FAQ items array
     {
-      question: "What is NYC Park Finder?",
-      answer: "NYC Park Finder is a tool to help you discover and explore parks in New York City."
+      question: "What is NYC ParkFinder?",
+      answer: "NYC Park Finder is an online tool to help you discover and explore parks in New York City. You can search for amenities, events, and more. We hope to inspire our users to discover the joy of being oudoors and active in a selection of parks around Manhattan."
     },
     {
       question: "How do I use the park search feature?",
-      answer: "Simply enter your location, date, time, and select your preferred amenities to find parks near you n/ with real-time crowd info."
+      answer: "Simply enter your location, date, time, and select your preferred amenities to find parks near you with real-time crowd info."
     },
     {
       question: "Can I see amenities available in the parks?",
-      answer: "Yes, you can view various amenities such as toilets, cafes, playgrounds, and more for each park."
+      answer: "Yes, you can view various amenities such as toilets, cafés, playgrounds, and more for each park."
     },
     {
-      question: "Is NYC Park Finder free to use?",
-      answer: "Yes, NYC Park Finder is completely free to use for everyone."
+      question: "Why should I create a personal profile?",
+      answer: "It is not neccessary to create a user profile to enjoy the full NYC ParkFinder experience. When users are logged in with their personal account, they can save their favourite parks for quicker access and easier planning at a later stage."
     },
     {
-      question: "Is there a mobile app version of NYC Park Finder?",
-      answer: "No, however there are plans to develop a mobile app in the near future."
+      question: "How can I find out about events taking place in parks?",
+      answer: "You can select 'Event Calendar' in the navigation bar at the top of page. Users can discover a selection of events taking place in Central Park. Dates and time serch filters can be used to gain insights into current and future events. We hope to expand this feature to other parks to enhance our user's experience."
+    },
+    {
+      question: "How can I use the 'maps' feature to help plan my visit?",
+      answer: "Users can rely on the map to visualise the level of busyness in different areas of Manhattan at a glance. We hope to add a route planner to this feature in the future, for more effective journey planning."
+    }, 
+    {
+      question: "Is NYC ParkFinder free to use?",
+      answer: "Yes, NYC ParkFinder is completely free to use for everyone. An internet connection is required, however."
+    },
+    {
+      question: "Is there a mobile app version of NYC ParkFinder?",
+      answer: "No, however there are plans to develop a mobile app in the near future. For now, enjoy all that our website has to offer from the comfort of your home or workspace!"
     }
   ];
 
@@ -220,6 +232,7 @@ function MainContent() {
                 letterSpacing: "1px",
                 transition: "all 0.3s ease-in-out",
                 marginRight: "1rem",
+                cursor: "pointer",
               }}
             >
               In the Spotlight
@@ -235,6 +248,7 @@ function MainContent() {
                 letterSpacing: "1px",
                 color: isHovered ? "whitesmoke" : "seagreen",
                 transition: "all 0.3s ease-in-out",
+                cursor: "pointer",
               }}
             >
               Manhattan's Most Popular Parks
@@ -297,6 +311,7 @@ function MainContent() {
       <Element name="aboutSection">
         <div className="faq-section">
           <h2 className="faq-heading">FAQ</h2>
+          <p className="faq-description">Discover more about our website here</p>
           <div className="faq">
             {faqItems.map((item, index) => ( // Added map function to render FAQ items
               <div
@@ -305,12 +320,21 @@ function MainContent() {
                 onClick={() => toggleQuestion(index)}
               >
                 <h4>{item.question} <span className="faq-arrow">{openQuestionIndex === index ? '▲' : '▼'}</span></h4>
-                {openQuestionIndex === index && <p>{item.answer}</p>}
+                {openQuestionIndex === index && (
+                  <p className="faq-answer">
+                    {item.answer.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </p>
+                )}
               </div>
             ))}
           </div>
         </div>
-      </Element>     
+      </Element>    
       <CustomFooter />
     </>
   );

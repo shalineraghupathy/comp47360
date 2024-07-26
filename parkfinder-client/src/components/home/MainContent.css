@@ -205,7 +205,13 @@
   font-weight: 450;
   margin-bottom: 2rem;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
+}
+
+.faq-description {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
 }
 
 .faq {
@@ -217,10 +223,11 @@
   padding: 1rem;
   border: 1.5px solid #ddd;
   border-radius: 20px; 
-  background-color: #3684615b;
+  background-color: #36846170;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s;
+  color: rgb(29, 57, 35); /* You can adjust the color value to your preference */
 }
 
 .faq-question h4 {
@@ -232,13 +239,18 @@
 }
 
 .faq-question p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin: 0;
   margin-top: 0.5rem;
 }
 
 .faq-question.open {
-  background-color: #2f735493; /* switches to a slightly darker background for an open question */
+  background-color: #347054a9; /* switches to a slightly darker background for an open question */
+  color: rgba(0, 0, 0, 0.314); /* You can adjust the color value to your preference */
+}
+
+.faq-answer {
+  color: rgb(248, 253, 250); /* You can adjust the color value to your preference */
 }
 
 .faq-arrow {
