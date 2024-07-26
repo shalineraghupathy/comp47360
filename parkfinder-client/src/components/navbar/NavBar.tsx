@@ -12,7 +12,6 @@ import "./NavBar.css";
 
 const NavBar: React.FC = () => {
   const [token, setToken] = useLocalStorage("token");
-  const [, setUserFirstName] = useLocalStorage("userFirstName");
   const navigate = useNavigate();
   const [showProfileCard, setShowProfileCard] = useState(false);
   const location = useLocation();

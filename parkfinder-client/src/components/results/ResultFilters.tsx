@@ -227,7 +227,6 @@ const ResultFilters = ({
                 type="checkbox"
                 label="Garden"
                 checked={isGarden === true}
-                checked={isGarden === true}
                 onChange={handleCheckboxChange(setIsGarden, "isGarden")}
                 style={{ borderRadius: "20px" }}
               />
@@ -235,7 +234,6 @@ const ResultFilters = ({
                 id="fountainSelect"
                 type="checkbox"
                 label="Decorative Fountain"
-                checked={isFountain === true}
                 checked={isFountain === true}
                 onChange={handleCheckboxChange(setIsFountain, "isFountain")}
                 style={{ borderRadius: "20px" }}
