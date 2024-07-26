@@ -20,4 +20,4 @@
 [Yanwen Yu](https://github.com/yanwennn)
 
 <a href="https://github.com/DAVIDWOOD5"></a>
-[David Woods](https://github.com/DAVIDWOOD5)
+- [David Woods](https://github.com/DAVIDWOOD5)
