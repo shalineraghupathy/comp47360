@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import ProfileCard from "./ProfileCard";
-import logo from "../../assets/NYC PARK FINDER LOGO.svg";
+import logo from "../../assets/NYC PARK FINDER LOGO.png";
 import './NavBar.css';
 
 const NavBar: React.FC = () => {
