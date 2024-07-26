@@ -193,7 +193,7 @@
 }
 
 .faq-section {
-  padding: 4rem 2rem;
+  padding: 4rem 14rem;
   background-color: var(--background-color);
   color: var(--text-color);
   text-align: left;
@@ -204,6 +204,7 @@
   font-weight: 450;
   margin-bottom: 2rem;
   text-align: center;
+  padding: 2rem;
 }
 
 .faq {
