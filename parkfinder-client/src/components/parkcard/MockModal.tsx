@@ -159,6 +159,15 @@ function ParkModal({
         </div>
         <div className="icons-section">
           <a
+            href="https://www.wikipedia.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="share-icons"
+            style={{ color: "black" }}
+          >
+            <i className="fa fa-wikipedia-w"></i>
+          </a>
+          <a
             href={whatsappShareUrl}
             target="_blank"
             rel="noopener noreferrer"
