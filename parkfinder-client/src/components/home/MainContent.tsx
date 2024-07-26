@@ -134,7 +134,7 @@ function MainContent() {
     },
     {
       question: "How do I use the park search feature?",
-      answer: "Simply enter your location, date, time, and select your preferred amenities to find parks near you with real-time crowd info."
+      answer: "Simply enter or select your location, date, time and preferred amenities to find parks near you, with real-time crowd information."
     },
     {
       question: "Can I see amenities available in the parks?",
@@ -158,7 +158,7 @@ function MainContent() {
     },
     {
       question: "Is there a mobile app version of NYC ParkFinder?",
-      answer: "No, however there are plans to develop a mobile app in the near future. For now, enjoy all that our website has to offer from the comfort of your home or workspace!"
+      answer: "Not at this moment. There are plans to develop a mobile app in the near future. For now, enjoy all that our website has to offer from the comfort of your home or workspace!"
     }
   ];
 
@@ -313,7 +313,7 @@ function MainContent() {
           <h2 className="faq-heading">FAQ</h2>
           <p className="faq-description">Discover more about our website here</p>
           <div className="faq">
-            {faqItems.map((item, index) => ( // Added map function to render FAQ items
+            {faqItems.map((item, index) => ( // Added map function to render the FAQ items
               <div
                 key={index}
                 className={`faq-question ${openQuestionIndex === index ? 'open' : ''}`}

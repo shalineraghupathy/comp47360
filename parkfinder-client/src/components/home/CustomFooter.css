@@ -1,6 +1,7 @@
 .footer {
-    border-top: 1px solid #e0e0e0;
     padding: 0 3rem 0 3rem;
+    box-shadow: 9px 1px 15px 7px rgba(177, 178, 178, 0.5); 
+    opacity: 0.85;
   }
   
   .footer-logo {
