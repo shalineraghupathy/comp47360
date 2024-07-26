@@ -13,7 +13,9 @@ import "./MainContent.css";
 function MainContent() {
   const [typingKey, setTypingKey] = useState<number>(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [openQuestionIndex, setOpenQuestionIndex] = useState<number | null>(null); 
+  const [openQuestionIndex, setOpenQuestionIndex] = useState<number | null>(
+    null
+  );
   const navigate = useNavigate();
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
@@ -123,11 +125,13 @@ function MainContent() {
     navigate("/nationalparks");
   };
 
-  const toggleQuestion = (index: number) => { // Added function to toggle question visibility
+  const toggleQuestion = (index: number) => {
+    // Added function to toggle question visibility
     setOpenQuestionIndex(openQuestionIndex === index ? null : index);
   };
 
-  const faqItems = [ // Added FAQ items array
+  const faqItems = [
+    // Added FAQ items array
     {
       question: "What is NYC ParkFinder?",
       answer: "NYC Park Finder is an online tool to help you discover and explore parks in New York City. You can search for amenities, events, and more. We hope to inspire our users to discover the joy of being oudoors and active in a selection of parks around Manhattan."
@@ -168,7 +172,7 @@ function MainContent() {
         <HeroImage />
         <Row className="justify-content-start align-items-start heading-row">
           <Col xs={12} sm={12} md={12} lg={12}>
-            <h1 className="main-heading">NYC PARK FINDER</h1>
+            <h1 className="main-heading">Find Your Perfect Park.</h1>
             <span className="tagline">
               In Manhattan, nature is just a click away. <br />
               Discover local parks, explore amenities, and plan your perfect

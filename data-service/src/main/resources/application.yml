@@ -36,3 +36,5 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.data.service.dataservice.entity
+
+routekey: "AIzaSyCqFc3nIbnoCRApKEXJ9_-KG-vDLAB5tSU"

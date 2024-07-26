@@ -105,3 +105,18 @@ function busynessRange(category: string): [number, number] {
     return [50, 60];
   }
 }
+export interface Park {
+  id: number;
+  parkName: string;
+  isToilet: number;
+  isCafe: number;
+  isPlayground: number;
+  isToiletHandicapAccess: number;
+  isRestaurant: number;
+  isShelter: number;
+  isDrinkingWater: number;
+  isBar: number;
+  isBench: number;
+  isGarden: number;
+  isFountain: number;
+  isMonument: number;}

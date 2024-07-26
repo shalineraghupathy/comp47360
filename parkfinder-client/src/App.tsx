@@ -12,11 +12,13 @@ import { UserProvider } from "./contexts/userContext";
 import NationalParks from "./components/nationalparks/nationalparks";
 import EventCalendar from "./components/calendar/EventCalendar";
 import Heatmap from "./components/maps/heatmap";
-
+import FavouritesPage from "./components/signup/FavouritesPage";
+import ProfilePage from "./components/signup/ProfilePage";
+import PrivateRoute from "./services/PrivateRoute";
 const App: React.FC = () => {
   return (
-    <UserProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
         <NavBar />
         <ToastContainer />
         <Routes>
@@ -27,9 +29,13 @@ const App: React.FC = () => {
           <Route path="/NationalParks" element={<NationalParks />} />
           <Route path="/EventCalendar" element={<EventCalendar />} />
           <Route path="/Heatmap" element={<Heatmap />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/favourites" element={<FavouritesPage />} />
+          </Route>
         </Routes>
-      </BrowserRouter>
-    </UserProvider>
+      </UserProvider>
+    </BrowserRouter>
   );
 };
 
