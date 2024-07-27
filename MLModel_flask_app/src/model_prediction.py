@@ -41,9 +41,7 @@ def fetch_weather_data(timestamp):
         print(f"Error fetching weather data: {e}")
         raise
 
-def adjust_day_of_week(day):
-    """Adjust day_of_week to make Sunday 0 and Monday 1."""
-    return (day + 1) % 7
+
 
 
 def predict(request_data):
@@ -52,7 +50,7 @@ def predict(request_data):
     month = dt.month
     day = dt.day
     hour = dt.hour
-    day_of_week = adjust_day_of_week(dt.weekday())
+    day_of_week = dt.weekday()
     weekend = 1 if day_of_week in [0, 6] else 0  # Updated logic for weekend
     season = determine_season(month)
     is_holiday = check_holiday(dt)
