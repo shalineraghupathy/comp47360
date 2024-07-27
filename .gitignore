@@ -3380,3 +3380,8 @@ data-service/bin/src/main/java/com/data/service/dataservice/service/ParkService.
 data-service/bin/src/main/java/com/data/service/dataservice/service/impl/ParkServiceImpl.class
 .vscode/launch.json
 .DS_Store
+MLModel_flask_app/__pycache__/app.cpython-312.pyc
+MLModel_flask_app/src/__pycache__/__init__.cpython-312.pyc
+MLModel_flask_app/src/__pycache__/feature_engineering.cpython-312.pyc
+MLModel_flask_app/src/__pycache__/model_prediction.cpython-312.pyc
+MLModel_flask_app/src/__pycache__/utils.cpython-312.pyc

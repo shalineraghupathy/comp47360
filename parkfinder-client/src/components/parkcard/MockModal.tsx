@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "../parkmodal/AmenityIcon";
