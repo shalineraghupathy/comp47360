@@ -26,9 +26,11 @@ A prediction for the level of busyness for each of the recommended parks will be
 
 <br />
 <p align="center">
-  <img width="929" alt="db_1" src="./parkfinder-client/src/assets/NYC_ParkFinder_NationalParksPage.png">
+  <img width="929" alt="db_1" src="parkfinder-client/src/assets/NationalParks_webpage_1.png">
 </p>
 <br />
+
+
 
 ## Contributors
 
