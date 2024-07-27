@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "../parkmodal/AmenityIcon";
@@ -49,7 +50,9 @@ function ParkModal({
   }, [show]);
 
   const fetchWeather = async () => {
-    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const apiKey =
+      (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
+      "6ae70477e5e1b628641f75264ebcb0c6";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=Manhattan&appid=${apiKey}&units=metric`;
     try {
       const response = await fetch(url);
