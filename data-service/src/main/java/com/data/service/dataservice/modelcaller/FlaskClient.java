@@ -12,7 +12,7 @@ public class FlaskClient {
     public static JSONObject sendPostRequest(JSONObject inputJson) throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:5000/predict")) // Change URL if needed
+                .uri(new URI("http://34.247.13.235:5000/predict")) // Change URL if needed
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(inputJson.toString()))
                 .build();
