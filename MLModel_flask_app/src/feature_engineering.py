@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 def encode_features(data, encoder=None):
     categorical_features = ['day', 'season', 'isHoliday?', 'hour', 'month','park_id']
     if encoder is None:  # During training phase-creates a new OneHotEncoder, fits it to the data, and then transforms the data
-        encoder = OneHotEncoder()
+        encoder = OneHotEncoder(handle_unknown='ignore')
         encoded_features = encoder.fit_transform(data[categorical_features])
     else: # During prediction phase-uses the passed encoder to transform the data without fitting it again.
         encoded_features = encoder.transform(data[categorical_features])

@@ -3,15 +3,15 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error
 import joblib
-from .feature_engineering import encode_features, scale_features
-from .data_preprocessing import preprocess_data  
-from .utils import determine_season, check_holiday
+from src.feature_engineering import encode_features, scale_features
+from src.data_preprocessing import preprocess_data  
+from src.utils import determine_season, check_holiday
 
 #run using python -m src.model_training
 
 def train_model(merged_data):
-    X = merged_data.drop(columns=['park_busyness'])
-    y = merged_data['park_busyness']        
+    X = merged_data.drop(columns=['park_busyness_percentile'])
+    y = merged_data['park_busyness_percentile']        
     
     # Convert categorical features to strings
     categorical_features = ['day', 'season', 'isHoliday?', 'hour', 'month','park_id']
@@ -48,5 +48,5 @@ if __name__ == "__main__":
         # Sample data for faster testing
         data_sample = merged_data.sample(frac=0.1, random_state=42)  #  10% ie 36k rows of data for testing
         # Train the model
-        model, params = train_model(data_sample)
-        print(f"Trained model with parameters: {params}")
+        model, params = train_model(data_sample) 
+        # print(f"Trained model with parameters: {params}") 

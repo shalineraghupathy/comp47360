@@ -57,47 +57,46 @@ function ParkModal({
 
   useEffect(() => {
     if (show) {
+      const fetchWeather = async () => {
+        const apiKey =
+          (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
+          "6ae70477e5e1b628641f75264ebcb0c6";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=Manhattan&appid=${apiKey}&units=metric`;
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          setWeather({
+            ...data,
+            sunrise: data.sys.sunrise,
+            sunset: data.sys.sunset,
+          });
+          console.log("weather log", data);
+        } catch (error) {
+          console.error("Failed to fetch weather...", error);
+          setWeather(null);
+        }
+      };
+
+      const fetchAirQuality = async () => {
+        const apiKey =
+          (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
+          "6ae70477e5e1b628641f75264ebcb0c6";
+        const lat = "40.7834";
+        const lon = "-73.9662";
+        const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        try {
+          const airQualityResponse = await fetch(airQualityUrl);
+          const airQualityData = await airQualityResponse.json();
+          console.log("Air quality data", airQualityData);
+          setAirQuality(airQualityData);
+        } catch (error) {
+          console.error("Failed to fetch air quality data...", error);
+        }
+      };
       fetchWeather();
       fetchAirQuality();
     }
   }, [show]);
-
-  const fetchWeather = async () => {
-    const apiKey =
-      (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
-      "6ae70477e5e1b628641f75264ebcb0c6";
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=Manhattan&appid=${apiKey}&units=metric`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setWeather({
-        ...data,
-        sunrise: data.sys.sunrise,
-        sunset: data.sys.sunset,
-      });
-      console.log("weather log", data);
-    } catch (error) {
-      console.error("Failed to fetch weather...", error);
-      setWeather(null);
-    }
-  };
-
-  const fetchAirQuality = async () => {
-    const apiKey =
-      (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
-      "6ae70477e5e1b628641f75264ebcb0c6";
-    const lat = "40.7834";
-    const lon = "-73.9662";
-    const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    try {
-      const airQualityResponse = await fetch(airQualityUrl);
-      const airQualityData = await airQualityResponse.json();
-      console.log("Air quality data", airQualityData);
-      setAirQuality(airQualityData);
-    } catch (error) {
-      console.error("Failed to fetch air quality data...", error);
-    }
-  };
 
   const getVariant = (busyness: number) => {
     if (busyness <= 33) return "success";

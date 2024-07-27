@@ -43,64 +43,6 @@ const ProfilePage: React.FC = () => {
 
     fetchFavouriteParks();
   }, []);
-  //     //fetch!
-  //     const fetchFavouriteParks = async () => {
-  //       // Mocked data
-  //       const parks = [
-  //         {
-  //           id: 1,
-  //           parkName: "Central Park",
-  //           isToilet: 1,
-  //           isCafe: 1,
-  //           isPlayground: 1,
-  //           isToiletHandicapAccess: 1,
-  //           isRestaurant: 1,
-  //           isShelter: 1,
-  //           isDrinkingWater: 1,
-  //           isBar: 1,
-  //           isBench: 1,
-  //           isGarden: 1,
-  //           isFountain: 1,
-  //           isMonument: 1,
-  //         },
-  //         {
-  //           id: 2,
-  //           parkName: "Bryant Park",
-  //           isToilet: 1,
-  //           isCafe: 1,
-  //           isPlayground: 1,
-  //           isToiletHandicapAccess: 1,
-  //           isRestaurant: 1,
-  //           isShelter: 1,
-  //           isDrinkingWater: 1,
-  //           isBar: 1,
-  //           isBench: 1,
-  //           isGarden: 1,
-  //           isFountain: 1,
-  //           isMonument: 1,
-  //         },
-  //         {
-  //           id: 3,
-  //           parkName: "The High Line",
-  //           isToilet: 1,
-  //           isCafe: 1,
-  //           isPlayground: 1,
-  //           isToiletHandicapAccess: 1,
-  //           isRestaurant: 1,
-  //           isShelter: 1,
-  //           isDrinkingWater: 1,
-  //           isBar: 1,
-  //           isBench: 1,
-  //           isGarden: 1,
-  //           isFountain: 1,
-  //           isMonument: 1,
-  //         },
-  //       ];
-  //       setFavouriteParks(parks);
-  //     };
-
-  //     fetchFavouriteParks();
-  //   }, []);
 
   if (!userFirstName || !userEmail) {
     return (
@@ -111,7 +53,7 @@ const ProfilePage: React.FC = () => {
   }
 
   const handleViewClick = () => {
-    navigate("/favourites", { state: { parks: favouriteParks } });
+    navigate("/favourites");
   };
 
   return (

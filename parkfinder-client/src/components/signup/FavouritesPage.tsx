@@ -1,13 +1,47 @@
-import { useLocation } from "react-router-dom";
 import { Park } from "../../services/parks";
 import { Container, Row, Col } from "react-bootstrap";
 import FavouritesCard from "../signup/FavouritesCard";
+import { useEffect, useState } from "react";
+import { DATA_URL } from "../../constants";
 
 function FavouritesPage() {
-  const location = useLocation();
+  // const location = useLocation();
   const userFirstName = localStorage.getItem("userFirstName");
-  const { parks } = location.state || { parks: [] };
+  // const { parks } = location.state || { parks: [] };
+  const [parks, setFavouriteParks] = useState<Park[]>([]);
   console.log(parks);
+
+  useEffect(() => {
+    const fetchFavouriteParks = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${DATA_URL}/parks/listAllFavorites`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch favourite parks");
+        }
+
+        const parks: Park[] = await response.json();
+        setFavouriteParks(parks);
+        console.log("hi");
+      } catch (error) {
+        console.error("Error fetching favourite parks:", error);
+      }
+    };
+
+    fetchFavouriteParks();
+  }, []);
   return (
     <Container fluid>
       <Row>

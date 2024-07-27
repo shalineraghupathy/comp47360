@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "../parkmodal/AmenityIcon";
@@ -69,21 +70,25 @@ function ParkModal({
     }
   };
 
-  const fetchAirQuality = async () => {
-    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-    const lat = "40.7834";
-    const lon = "-73.9662";
-    const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+      const fetchAirQuality = async () => {
+        const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+        const lat = "40.7834";
+        const lon = "-73.9662";
+        const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-    try {
-      const airQualityResponse = await fetch(airQualityUrl);
-      const airQualityData = await airQualityResponse.json();
-      console.log("Air quality data", airQuality);
-      setAirQuality(airQualityData);
-    } catch (error) {
-      console.error("Failed to fetch air quality data...", error);
+        try {
+          const airQualityResponse = await fetch(airQualityUrl);
+          const airQualityData = await airQualityResponse.json();
+          console.log("Air quality data", airQuality);
+          setAirQuality(airQualityData);
+        } catch (error) {
+          console.error("Failed to fetch air quality data...", error);
+        }
+      };
+      fetchWeather();
+      fetchAirQuality();
     }
-  };
+  }, [show]);
 
   function transformAQI(aqi: number) {
     if (aqi === 1) return "good";
