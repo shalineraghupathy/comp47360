@@ -1,6 +1,8 @@
 import { Park } from "../../services/parks";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import FavouritesCard from "../signup/FavouritesCard";
+import { useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 import { DATA_URL } from "../../constants";
 
@@ -9,6 +11,7 @@ function FavouritesPage() {
   const userFirstName = localStorage.getItem("userFirstName");
   // const { parks } = location.state || { parks: [] };
   const [parks, setFavouriteParks] = useState<Park[]>([]);
+  const navigate = useNavigate();
   console.log(parks);
 
   useEffect(() => {
@@ -42,6 +45,10 @@ function FavouritesPage() {
 
     fetchFavouriteParks();
   }, []);
+
+  const handleViewClick = () => {
+    navigate("/profile");
+  };
   return (
     <Container fluid>
       <Row>
@@ -83,7 +90,7 @@ function FavouritesPage() {
                   Check out your saved parks
                 </ul>
                 <ul>
-                  <a
+                  {/* <a
                     href="/profile"
                     style={{ textDecoration: "none", color: "seagreen" }}
                   >
@@ -93,7 +100,24 @@ function FavouritesPage() {
                       style={{ paddingRight: "0.5rem" }}
                     ></i>
                     Return to profile
-                  </a>
+                  </a> */}
+                  <Button
+                    className="button"
+                    style={{
+                      paddingLeft: "0",
+                      textDecoration: "none",
+                      fontSize: "0.9rem",
+                    }}
+                    variant="link"
+                    onClick={handleViewClick}
+                  >
+                    Return to Profile{" "}
+                    <i
+                      className="fa fa-arrow-right"
+                      style={{ paddingLeft: "0.3rem", marginTop: "1rem" }}
+                      aria-hidden="true"
+                    ></i>
+                  </Button>
                 </ul>
               </p>
             </div>
