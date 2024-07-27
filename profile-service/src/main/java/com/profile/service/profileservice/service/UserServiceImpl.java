@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService {
 				+ "            <p>Thank you for choosing our service!</p>\n"
 				+ "        </div>\n"
 				+ "        <div style=\"text-align: center;\">\n"
-				+ "            <a class=\"button\" href=\"http://34.245.187.188:3000/\">Go to Website</a>\n"
+				+ "            <a class=\"button\" href=\"http://34.240.252.150:3000/\">Go to Website</a>\n"
 				+ "        </div>\n"
 				+ "    </div>\n"
 				+ "</body>\n"
