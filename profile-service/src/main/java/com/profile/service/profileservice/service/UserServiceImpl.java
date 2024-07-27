@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
 		emailConfirmationRepository.save(confirmationToken);
 
-		String link = "http://34.247.13.235:8080/api/v1/auth/confirm?token=" + token;
+		String link = "http://34.240.252.150:8080/api/v1/auth/confirm?token=" + token;
 		emailService.send(
 				user.getUserEmail(),
 				buildEmail(user.getUserFirstName(), link));
