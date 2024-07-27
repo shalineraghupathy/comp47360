@@ -88,7 +88,7 @@ const GoogleMapProvider: React.FC<{ children: React.ReactNode }> = ({
           map,
           title: park.parkName,
           icon: {
-            url: "public/trees.svg",
+            url: "/trees.svg",
             scaledSize: new google.maps.Size(40, 40),
           },
         });
