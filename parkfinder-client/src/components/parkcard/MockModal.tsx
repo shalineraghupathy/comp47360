@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import amenityIcons from "../parkmodal/AmenityIcon";
@@ -51,9 +50,7 @@ function ParkModal({
   }, [show]);
 
   const fetchWeather = async () => {
-    const apiKey =
-      (import.meta.env.VITE_OPENWEATHER_API_KEY as string) ||
-      "6ae70477e5e1b628641f75264ebcb0c6";
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=Manhattan&appid=${apiKey}&units=metric`;
     try {
       const response = await fetch(url);
@@ -70,25 +67,21 @@ function ParkModal({
     }
   };
 
-      const fetchAirQuality = async () => {
-        const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-        const lat = "40.7834";
-        const lon = "-73.9662";
-        const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  const fetchAirQuality = async () => {
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const lat = "40.7834";
+    const lon = "-73.9662";
+    const airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-        try {
-          const airQualityResponse = await fetch(airQualityUrl);
-          const airQualityData = await airQualityResponse.json();
-          console.log("Air quality data", airQuality);
-          setAirQuality(airQualityData);
-        } catch (error) {
-          console.error("Failed to fetch air quality data...", error);
-        }
-      };
-      fetchWeather();
-      fetchAirQuality();
+    try {
+      const airQualityResponse = await fetch(airQualityUrl);
+      const airQualityData = await airQualityResponse.json();
+      console.log("Air quality data", airQualityData);
+      setAirQuality(airQualityData);
+    } catch (error) {
+      console.error("Failed to fetch air quality data...", error);
     }
-  }, [show]);
+  };
 
   function transformAQI(aqi: number) {
     if (aqi === 1) return "good";
@@ -137,7 +130,10 @@ function ParkModal({
                     src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
                     alt="Weather icon"
                   />
-                  {transformAQI(airQuality.list[0].main.aqi)} air quality
+                  {airQuality
+                    ? transformAQI(airQuality.list[0].main.aqi)
+                    : "unknown"}{" "}
+                  air quality
                 </span>
               </div>
             </div>
