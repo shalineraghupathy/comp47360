@@ -89,7 +89,7 @@ const NavBar: React.FC = () => {
             <Nav.Link
               as="span"
               className={isActive("/#natParks")}
-              onClick={() => handleNavLinkClick("natParks")}
+              onClick={() => handleNavLinkClick("nat-parks-section")}
             >
               National Parks
             </Nav.Link>
