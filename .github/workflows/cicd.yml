@@ -64,7 +64,7 @@ jobs:
       - name: Delete old container
         run: docker rm -f profile-service-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
+        run: docker run -d -p 8084:8080 --name profile-service-container shalineraghupathy/profile-service:latest
       - name: Wait for Service 1 to start
         run: sleep 30
       - name: Pull Image from docker hub
@@ -72,7 +72,7 @@ jobs:
       - name: Delete old container
         run: docker rm -f calendar-service-container
       - name: Run docker container
-        run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+        run: docker run -d -p 8080:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
       # - name: Pull image from docker hub
       #   run: docker pull shalineraghupathy/parkfinder-client:latest
       # - name: Delete Old Container
