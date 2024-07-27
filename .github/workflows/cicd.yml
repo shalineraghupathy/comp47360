@@ -51,26 +51,28 @@ jobs:
     needs: build
     runs-on: [aws-ec2-2]
     steps:
-      - name: Pull Image from docker hub
-        run: docker pull shalineraghupathy/data-service:latest
-      - name: Delete old container
-        run: docker rm -f data-service-container
-      - name: Run docker container
-        run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
-      - name: Wait for Service 1 to start
-        run: sleep 30
+      # - name: Pull Image from docker hub
+      #   run: docker pull shalineraghupathy/data-service:latest
+      # - name: Delete old container
+      #   run: docker rm -f data-service-container
+      # - name: Run docker container
+      #   run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
+      # - name: Wait for Service 1 to start
+      #   run: sleep 30
       - name: Pull Image from docker hub
         run: docker pull shalineraghupathy/profile-service:latest
       - name: Delete old container
         run: docker rm -f profile-service-container
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
-      # - name: Pull Image from docker hub
-      #   run: docker pull shalineraghupathy/calendar-service:latest
-      # - name: Delete old container
-      #   run: docker rm -f calendar-service-container
-      # - name: Run docker container
-      #   run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+      - name: Wait for Service 1 to start
+        run: sleep 30
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/calendar-service:latest
+      - name: Delete old container
+        run: docker rm -f calendar-service-container
+      - name: Run docker container
+        run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
       # - name: Pull image from docker hub
       #   run: docker pull shalineraghupathy/parkfinder-client:latest
       # - name: Delete Old Container
@@ -82,24 +84,24 @@ jobs:
     needs: build
     runs-on: [aws-ec2-3]
     steps:
-      # - name: Pull Image from docker hub
-      #   run: docker pull shalineraghupathy/data-service:latest
-      # - name: Delete old container
-      #   run: docker rm -f data-service-container
-      # - name: Run docker container
-      #   run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/data-service:latest
+      - name: Delete old container
+        run: docker rm -f data-service-container
+      - name: Run docker container
+        run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
       # - name: Pull Image from docker hub
       #   run: docker pull shalineraghupathy/profile-service:latest
       # - name: Delete old container
       #   run: docker rm -f profile-service-container
       # - name: Run docker container
       #   run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
-      - name: Pull Image from docker hub
-        run: docker pull shalineraghupathy/calendar-service:latest
-      - name: Delete old container
-        run: docker rm -f calendar-service-container
-      - name: Run docker container
-        run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
+      # - name: Pull Image from docker hub
+      #   run: docker pull shalineraghupathy/calendar-service:latest
+      # - name: Delete old container
+      #   run: docker rm -f calendar-service-container
+      # - name: Run docker container
+      #   run: docker run -d -p 8084:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest
       # - name: Pull image from docker hub
       #   run: docker pull shalineraghupathy/parkfinder-client:latest
       # - name: Delete Old Container
