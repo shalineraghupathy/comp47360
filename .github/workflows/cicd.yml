@@ -89,7 +89,7 @@ jobs:
       - name: Delete old container
         run: docker rm -f data-service-container
       - name: Run docker container
-        run: docker run -d -p 8082:8080 --name data-service-container shalineraghupathy/data-service:latest
+        run: docker run -d -p 8080:8080 --name data-service-container shalineraghupathy/data-service:latest
       # - name: Pull Image from docker hub
       #   run: docker pull shalineraghupathy/profile-service:latest
       # - name: Delete old container
