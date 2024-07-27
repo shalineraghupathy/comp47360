@@ -47,7 +47,7 @@ jobs:
       - name: Publish image to docker hub
         run: docker push shalineraghupathy/parkfinder-client:latest
 
-  deploy:
+  deploy_client:
     needs: build
     runs-on: [aws-ec2]
     steps:
@@ -58,23 +58,31 @@ jobs:
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name profile-service-container shalineraghupathy/profile-service:latest
 
-      - name: Pull Image from docker hub
-        run: docker pull shalineraghupathy/data-service:latest
-      - name: Delete old container
-        run: docker rm -f data-service-container
-      - name: Run docker container
-        run: docker run -d -p 8082:8082 --name data-service-container shalineraghupathy/data-service:latest
-
-      - name: Pull Image from docker hub
-        run: docker pull shalineraghupathy/calendar-service:latest
-      - name: Delete old container
-        run: docker rm -f calendar-service-container
-      - name: Run docker container
-        run: docker run -d -p 8084:8084 --name calendar-service-container shalineraghupathy/calendar-service:latest
-
       - name: Pull image from docker hub
         run: docker pull shalineraghupathy/parkfinder-client:latest
       - name: Delete Old Container
         run: docker rm -f parkfinder-client-container
       - name: Run docker container
         run: docker run -d -p 3000:80 --name parkfinder-client-container shalineraghupathy/parkfinder-client:latest
+
+  deploy_backend_1:
+    needs: build
+    runs-on: [aws-ec2-2]
+    steps:
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/data-service:latest
+      - name: Delete old container
+        run: docker rm -f data-service-container
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name data-service-container shalineraghupathy/data-service:latest
+
+  deploy_backend_2:
+    needs: build
+    runs-on: [aws-ec2-3]
+    steps:
+      - name: Pull Image from docker hub
+        run: docker pull shalineraghupathy/calendar-service:latest
+      - name: Delete old container
+        run: docker rm -f calendar-service-container
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name calendar-service-container shalineraghupathy/calendar-service:latest

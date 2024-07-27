@@ -1,6 +1,6 @@
 #spring.application.name=calendar-service
 server:
-  port: 8084
+  port: 8080
 
 spring:
   datasource:
