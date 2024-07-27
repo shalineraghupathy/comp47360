@@ -22,7 +22,13 @@ Users can plan their visit to a wide range of parks in the Manhattan area using 
 
 Through entering a current or desired location, along with date, time and their choice of ameities, the application will navigate to an addition webpage to display a number of recommendations for parks and green spaces that best suit the needs of the user.
 
-A prediction for the level of busyness for each of the recommended parks will be displayed on screen. This particular feature allows to user to make informed decisions and enhances the overall experience, through the user of historical data and machine learning model implementations.  
+A prediction for the level of busyness for each of the recommended parks will be displayed on screen. This particular feature allows to user to make informed decisions and enhances the overall experience, through the user of historical data and machine learning model implementations. 
+
+<br />
+<p align="center">
+  <img width="929" alt="db_1" src="./parkfinder-client/src/assets/NYC_ParkFinder_NationalParksPage.png">
+</p>
+<br />
 
 ## Contributors
 
