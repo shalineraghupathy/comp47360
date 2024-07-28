@@ -2,7 +2,7 @@ import pandas as pd
 import geopandas as gpd
 
 def load_data():
-    parks_data = gpd.read_file("data/parks_with_taxizones_full_details_50_new.geojson")
+    parks_data = gpd.read_file("data/park_busyness_normalized.geojson")
     weather_data = pd.read_csv("data/CLEANED_WEATHER_DATA_2022.csv")
     unique_parks = gpd.read_file("data/unique_parks_50_.geojson")
     return parks_data, weather_data, unique_parks
@@ -29,7 +29,7 @@ def preprocess_parks_data(parks_data):
     parks_data['weekend'] = parks_data['weekend'].astype(str).map({'True': 1, 'False': 0})
     parks_data['isHoliday?'] = parks_data['isHoliday?'].astype(str).map({'True': 1, 'False': 0})
     parks_data['season'] = parks_data['season'].astype(str).map({'Spring': 1, 'Autumn': 2, 'Summer': 3, 'Winter': 4})
-    parks_data['day_of_week'] = parks_data['day_of_week'].map({0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'})
+    parks_data['day_of_week'] = parks_data['day_of_week'].map({ 0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday',6: 'Sunday'})
     return parks_data
 
 def merge_data(parks_data, weather_data):
@@ -50,4 +50,4 @@ def preprocess_data():
 if __name__ == "__main__":
     merged_data = preprocess_data()
     merged_data.to_csv('data/parks_busyness_weather.csv', index=False)
-    # print("Preprocessed data saved to parks_busyness_weather.csv")
+    print("Preprocessed data saved to parks_busyness_weather.csv")

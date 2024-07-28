@@ -31,6 +31,20 @@ export async function getParks(
   }
 }
 
+export async function getHeatmapData(playTime: number) {
+  const url = `${DATA_URL}/parks/predictAll?time=${playTime}`;
+
+  try {
+    // console.log(url);
+    const response = await axios.get(url);
+    console.log("Data fetched successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching parks:", error);
+    throw error;
+  }
+}
+
 export function convertToTimestamp(date: string, time: string) {
   const timestamp = Math.floor(new Date(`${date}T${time}`).getTime() / 1000);
   return timestamp;
@@ -119,4 +133,5 @@ export interface Park {
   isBench: number;
   isGarden: number;
   isFountain: number;
-  isMonument: number;}
+  isMonument: number;
+}

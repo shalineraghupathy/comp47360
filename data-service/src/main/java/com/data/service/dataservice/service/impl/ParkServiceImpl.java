@@ -13,9 +13,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +41,8 @@ public class ParkServiceImpl implements ParkService {
 
     @Autowired
     private UserRepository userRepository;
+    private List<ParkOfHeatMap> cachedHeatMaps;
+    private LocalDateTime lastUpdateTime;
 
     @Value("${routekey}")
     private String googleApiKey;
@@ -48,6 +54,7 @@ public class ParkServiceImpl implements ParkService {
             park.setEntrances(park.parseEntrances(park.getParkEntrance()));
         }
         parkList = allParks;
+        refreshCache();
     }
     @Override
     public List<Park> findAll() {
@@ -147,8 +154,40 @@ public class ParkServiceImpl implements ParkService {
     }
 
     @Override
-    public List<ParkOfHeatMap> predictAll(int time) {
-        return parkList.stream().map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), time))).toList();
+    public List<ParkOfHeatMap> predictAll(int unixTime) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        // 将UNIX时间戳转换为LocalDateTime
+        LocalDateTime requestTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(unixTime), ZoneId.systemDefault());
+
+        System.out.println("Current time: " + currentTime);
+        System.out.println("Last update time: " + lastUpdateTime);
+        System.out.println("Time requested by API: " + requestTime);
+        System.out.println("Cache status: " + (cachedHeatMaps != null ? "Exists" : "Not exists"));
+
+        if (cachedHeatMaps != null && lastUpdateTime != null &&
+                currentTime.isBefore(lastUpdateTime.plusHours(1)) &&
+                lastUpdateTime.getHour() == requestTime.getHour()) {
+            System.out.println("Cache hit");
+            return cachedHeatMaps;
+        } else {
+            System.out.println("Cache miss or cache refresh required");
+            cachedHeatMaps = parkList.stream()
+                    .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), requestTime.getHour())))
+                    .collect(Collectors.toList());
+            lastUpdateTime = LocalDateTime.of(currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(),
+                    currentTime.getHour(), 0);
+            return cachedHeatMaps;
+        }
+    }
+
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void refreshCache() {
+        int currentHour = LocalDateTime.now().getHour();
+        cachedHeatMaps = parkList.stream()
+                .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), currentHour)))
+                .collect(Collectors.toList());
+        lastUpdateTime = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
     }
 
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
