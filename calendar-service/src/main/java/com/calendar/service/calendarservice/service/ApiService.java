@@ -41,12 +41,24 @@ public class ApiService {
 
     @Scheduled(fixedRate = 7 * 86400 * 1000)
     public void fetchAndSaveEvents() {
-        Set<Event> allEventFetched = getFutureDates(30).stream().map(this::fetchEventsByDate).flatMap(Set::stream).collect(Collectors.toSet());
-        eventService.saveEvents(allEventFetched);
+//        Set<Event> allEventFetched = getFutureDates(30).stream().map(this::fetchEventsByDate).flatMap(Set::stream).collect(Collectors.toSet());
+        try {
+            Set<Event> allEventFetched = new HashSet<>();
+            for (String date : getFutureDates(45)) {
+                Set<Event> eventsByDate;
+                eventsByDate = fetchEventsByDate(date);
+                allEventFetched.addAll(eventsByDate);
+            }
+            if (!allEventFetched.isEmpty()) {
+                eventService.saveEvents(allEventFetched);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         dailyEventService.refreshDailyEventIdMap();
     }
 
-    private Set<Event> fetchEventsByDate(String date) {
+    private Set<Event> fetchEventsByDate(String date) throws IOException {
         final OkHttpClient httpClient = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(apiUrl).newBuilder();
@@ -92,11 +104,8 @@ public class ApiService {
 
             // events.forEach(event -> testSet.add(event.getId()));
             return events;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
+
     }
 
     private static List<String> getFutureDates(int i) {
