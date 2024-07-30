@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +40,7 @@ public class ParkServiceImpl implements ParkService {
     @Autowired
     private UserRepository userRepository;
     private List<ParkOfHeatMap> cachedHeatMaps;
-    private LocalDateTime lastUpdateTime;
+    private int lastUpdateTime = -1;
 
     @Value("${routekey}")
     private String googleApiKey;
@@ -154,40 +152,37 @@ public class ParkServiceImpl implements ParkService {
     }
 
     @Override
-    public List<ParkOfHeatMap> predictAll(int unixTime) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        // 将UNIX时间戳转换为LocalDateTime
-        LocalDateTime requestTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(unixTime), ZoneId.systemDefault());
-
-        System.out.println("Current time: " + currentTime);
-        System.out.println("Last update time: " + lastUpdateTime);
-        System.out.println("Time requested by API: " + requestTime);
+    public List<ParkOfHeatMap> predictAll(int queryTime) {
         System.out.println("Cache status: " + (cachedHeatMaps != null ? "Exists" : "Not exists"));
-
-        if (cachedHeatMaps != null && lastUpdateTime != null &&
-                currentTime.isBefore(lastUpdateTime.plusHours(1)) &&
-                lastUpdateTime.getHour() == requestTime.getHour()) {
-            System.out.println("Cache hit");
-            return cachedHeatMaps;
+        System.out.println(lastUpdateTime);
+        if (cachedHeatMaps != null && lastUpdateTime > 0) {
+            int timeDifference = queryTime - lastUpdateTime;
+            if (timeDifference < 3600) {
+                System.out.println("Cache hit");
+                return cachedHeatMaps;
+            } else {
+                System.out.println("Cache miss or cache refresh required");
+                System.out.println(queryTime);
+            }
         } else {
             System.out.println("Cache miss or cache refresh required");
-            cachedHeatMaps = parkList.stream()
-                    .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), requestTime.getHour())))
-                    .collect(Collectors.toList());
-            lastUpdateTime = LocalDateTime.of(currentTime.getYear(), currentTime.getMonth(), currentTime.getDayOfMonth(),
-                    currentTime.getHour(), 0);
-            return cachedHeatMaps;
+            System.out.println(queryTime);
         }
+        return parkList.stream()
+                .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), queryTime)))
+                .collect(Collectors.toList());
     }
 
 
     @Scheduled(cron = "0 0 * * * *")
     public void refreshCache() {
-        int currentHour = LocalDateTime.now().getHour();
+        long timestampSeconds = System.currentTimeMillis() / 1000;
+        int currentTimestamp = (int) timestampSeconds;
         cachedHeatMaps = parkList.stream()
-                .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), currentHour)))
+                .map(park -> new ParkOfHeatMap(park, predictBusyness(park.getParkId(), currentTimestamp)))
                 .collect(Collectors.toList());
-        lastUpdateTime = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        lastUpdateTime = currentTimestamp;
+        System.out.println("update cache");
     }
 
     private static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -247,7 +242,5 @@ public class ParkServiceImpl implements ParkService {
         }
         return Double.MAX_VALUE;
     }
-
-
 
 }
